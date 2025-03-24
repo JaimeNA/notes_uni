@@ -1,0 +1,13 @@
+# Pandoc default settings for converting Markdown to PDF
+pdf-engine: xelatex
+
+# Enable raw LaTeX so you can use \[ \] math blocks
+from: markdown
+to: pdf
+standalone: true
+
+input-files:
+  - cover.md
+  - units/unit1.md
+  - units/unit2.md
+  - units/unit3.md

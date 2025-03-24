@@ -1,0 +1,63 @@
+4.1
+No encontre la clase TestAnalyzer.java en campus, estaba en el drive de Marengo.
+
+SimpleAnalyzer:
+	algorithms
+	and
+	data
+	structures
+	q
+	en
+	eda
+	ita
+	edu
+StandardAnalyzer:
+	algorithms
+	data
+	structures
+	2021
+	q1
+	en
+	eda.ita.edu
+WhitespaceAnalyzer:
+	Algorithms
+	and
+	data
+	structures;
+	2021-Q1
+	en
+	eda.ita.edu
+StopAnalyzer:
+	algorithms
+	and
+	data
+	structures
+	q
+	en
+	eda
+	ita
+	edu
+SpanishAnalyzer:
+	algorithms
+	and
+	data
+	structur
+	2021
+	q1
+	eda.ita.edu
+
+4.2
+Resultado:
+	Algorithm
+	Data
+	Structur
+	2021
+	Q1
+	En
+	Eda.ita.edu
+
+Esto devuelve todos los tokens que devuelve el Standard analyzer, luego les aplica filtros, siendo estos: Primer pasar todo a lowercase, despues stop elimina palabras comunes, redice palabras a su raiz y capitalization capitaliza la primera letra.
+
+5.
+
+

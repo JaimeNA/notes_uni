@@ -1,0 +1,1 @@
+prefixDir=/home/jasha/Documents/notes_uni/estructura_datos_algoritmos/practice/tp02/lucenesearch
