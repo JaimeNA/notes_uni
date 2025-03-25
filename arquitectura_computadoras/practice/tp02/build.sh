@@ -1,7 +1,7 @@
-nasm -f elf arg_amount.asm
+nasm -f elf fork.asm
 nasm -f elf libasm.asm
 
-ld -m elf_i386 arg_amount.o libasm.o -o out
+ld -m elf_i386 fork.o libasm.o -o out
 
 ./out
 
