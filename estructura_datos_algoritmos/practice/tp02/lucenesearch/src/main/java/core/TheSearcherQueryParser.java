@@ -1,30 +1,26 @@
 package core;
 
-import org.apache.lucene.search.Explanation;
-import org.apache.lucene.search.FuzzyQuery;
+
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.WildcardQuery;
-import org.apache.lucene.search.PrefixQuery;
+
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.BytesRef;
+
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
 
-public class TheSearcher {
+public class TheSearcherQueryParser {
 	
 	private static IndexReader getIndexReader() throws IOException {
 		
@@ -43,26 +39,14 @@ public class TheSearcher {
         	IndexSearcher searcher= new IndexSearcher(index);
         	searcher.setSimilarity(new ClassicSimilarity());
         	
+ 	
+        	String queryStr= "content:agem~2";
         	
-        	// field of interest
-        	String queryStr= "ga";
-        	
-        	// Term myTerm = new Term(fieldName, queryStr);
-        	// Query query= new TermRangeQuery(fieldName, new BytesRef("gam"), new BytesRef("gum"), true, true); // ["gam", "gum"]
-        	// Query query= new TermRangeQuery(fieldName, new BytesRef("game"), new BytesRef("game"), true, true); // ["game", "game"], equivale a hacer la busqueda por termino
-        	// Query query= new TermRangeQuery(fieldName, new BytesRef("gaming"), new BytesRef("gum"), false, false); // ("gaming", "gum")
-        	// Query query= new TermRangeQuery(fieldName, new BytesRef("gum"), new BytesRef("gam"), true, true);
-
-			// Query query = new PhraseQuery(fieldName, "video", "game"); // No encuentra
-			// Query query = new PhraseQuery(fieldName, "game video"); // Encuentra
-        	
-			Term myTerm = new Term("content", queryStr);
-			//Query query = new WildcardQuery(myTerm);
-
-			Query query = new PrefixQuery(myTerm);
+        	QueryParser queryparser = new QueryParser(null, new StandardAnalyzer() );
+         	Query query= queryparser.parse(queryStr);
         	
         	// run the query
-        	long startTime = System.currentTimeMillis();       	
+        	long startTime = System.currentTimeMillis();
         	TopDocs topDocs = searcher.search(query, 20);
         	long endTime = System.currentTimeMillis();
         	
@@ -86,14 +70,11 @@ public class TheSearcher {
 				// print docID, score
 				System.out.println(aD);
 				
-				// obtain ALL the stored fields
+				// obtain the stored fields
 				Document aDoc = searcher.doc(docID);
-				System.out.println("Stored fields: " + aDoc);
-				System.out.println(aDoc.get("path"));
-				System.out.println(aDoc.get("content"));
-				 /*
-				Explanation rta = searcher.explain(query, docID);
-	            System.out.println(rta);*/
+				System.out.println("stored fields: " + aDoc);
+//				Explanation rta = searcher.explain(query, docID);
+//	            System.out.println(rta);
 	         
 	            position++;
 	            System.out.println();

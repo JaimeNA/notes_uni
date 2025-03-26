@@ -30,19 +30,18 @@ public class TestAnalyzer  {
 		// SpanishAnalyzer
 		
 	 	//CharArraySet sw = StopFilter.makeStopSet("de", "y");
-	
-        
 
-	      Analyzer a = CustomAnalyzer.builder()
-            .withTokenizer("standard")
-            .addTokenFilter("lowercase")
-            .addTokenFilter("stop")
-            .addTokenFilter("porterstem") // Word family
-            .addTokenFilter("capitalization")
-            .build();
+		Analyzer a = new StandardAnalyzer();
+		// Analyzer a = CustomAnalyzer.builder()
+        //     .withTokenizer("standard")
+        //     .addTokenFilter("lowercase")
+        //     .addTokenFilter("stop")
+        //     .addTokenFilter("porterstem") // Word family
+        //     .addTokenFilter("capitalization")
+        //     .build();
 
-		  String fieldValue= "Algorithms and data structures; 2021-Q1  en eda.ita.edu";
-		  
+		String fieldValue= "Algorithms and data structures; 2021-Q1  en eda.ita.edu";
+
 		  TokenStream tokenStream = a.tokenStream("fieldName", fieldValue);
 		  CharTermAttribute attr = tokenStream.addAttribute(CharTermAttribute.class);
 		  tokenStream.reset();

@@ -58,6 +58,8 @@ Resultado:
 
 Esto devuelve todos los tokens que devuelve el Standard analyzer, luego les aplica filtros, siendo estos: Primer pasar todo a lowercase, despues stop elimina palabras comunes, redice palabras a su raiz y capitalization capitaliza la primera letra.
 
-5.
+6.
+
+	(p1 TO p2) OR (p2 TO p1)
 
 

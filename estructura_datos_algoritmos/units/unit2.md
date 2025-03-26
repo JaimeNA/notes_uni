@@ -388,8 +388,37 @@ Como se le asigna el id al doc? Si quiero el nombre y no el id? Para eso sirve e
 ### Ranking de documentos
 
 Si busco un **query** y trae varios documentos, cual documento aparece primero? cual es mas relevante que otro? Esto se decide a partir de una formula.
+$$
+    \text{Score}(DOC_i, query) = \text{FormulaLocal}(DOC_i, query) \cdot \text{FormulaGlobal}(DOC, query)
+$$
 
-### Usage
+**Formula local**: Quiere calcular que tan relevante es esa query respecto a un documento en particular a rankear. Por lo tanto, si busco un paper en Java, me va a importar mas el que mencione mas dicho lenguaje. Si dos documentos tienen la misma cantidad de apariciones, se elije el de mayor volumen.
+$$
+    \text{FormulaLocal}(DOC_i, query) = \sqrt{\frac{\#\text{frec term en }DOC_i}{\#\text{term existentes en }DOC_i}}
+$$
+
+**Formula global**: Quiere calcular que tan relevante es esa query respecto a la coleccion de documentos existente. Tampoco se quiere linealidad, sino que tiene escala logaritmica.
+$$
+    \text{FormulaGlobal}(DOC, query) = 1 + \log_e (\frac{1 + \# \text{docs en la coleccion }}{1 + \# \text{docs que contienen la query}})
+$$
+
+#### Multi-Query
+
+Si es una query multi termino, el score queda: 
+
+**AND**
+$$
+    \text{Score}(DOC_i, query) = \Sigma_{\text{term in query, without NOT}} \text{FormulaLocal}(DOC_i, term) \cdot \text{FormulaGlobal}(DOC, term)
+$$
+
+**OR**
+$$
+    \text{Score}(DOC_i, query) = \Sigma_{\text{term in query, without NOT}} \text{FormulaLocal}(DOC_i, term) + \text{FormulaGlobal}(DOC, term)
+$$
+
+
+
+### Queries
 
 Vamos a usar dos aplicaciones: IndexBuilder y TheSearcher(se encarga de aceptar consultas, utiliza el indice, solo devuelve los ids). **SOLO** usar las versiones de las teoricas, sino no nos va a funcionar porque cambio la API.
 
@@ -400,8 +429,102 @@ Hay dos maneras para hacer **queries**(Una mas alto nivel que otra):
     - `PrefixQuery`
     - `PhraseQuery`
     - `WildcardQuery`
-    - `FuzzyQuery` <- Usa Damerau-Levenstein con un MaxEdit=2
+    - `FuzzyQuery` <- Usa Damerau-Levenstein(Con transposicion) con un MaxEdit=2
     - `BooleanQuery`
     - etc
 - **Lenguaje lado cliente**
+    - `TermQuery`: Con `content:game`.
+    - `PrefixQuery`: Con `content:ga*`.
+    - `TermRangeQuery`: Con `content:{gaming TO gum]`, donde `{` es abierto y `]` cerrado.
+    - `PraseQuery`: Con `content:\"store game\"`, busca frase donde la primer palabra sea 'store' y la segundo 'game'.
+    - `WildcardQuery`: Con `content:g??e`.
+    - `FuzzyQuery`: Con `content:gno~2`, no se toman mas de 2, estaria muy lejos.
+    - etc.
 
+El  `QueryParser` es una extension que permite simplificar los query. Ejemplo de uso:
+
+``` java
+    String queryStr= "content:game";
+    
+    QueryParser queryparser = new QueryParser(null, new StandardAnalyzer() );
+    Query query= queryparser.parse(queryStr);
+```
+
+Si busco 'ga' con `content:ga` no va a encontrar 'game', pero si quiero buscar el analogo a `PrefixQuery` busco prefijo `ga` con `content:ga*`. Si ya se que las queries siempre van a ser en `content`, se podria pasar como default y no tener que poner el prefijo.
+
+``` java
+    String queryStr= "game";
+    
+    QueryParser queryparser = new QueryParser("content", new StandardAnalyzer() );
+    Query query= queryparser.parse(queryStr);
+```
+
+
+> **Nota**: Si pones `content:store content:game` lo va a tomar como `content:store OR content:game`, hay que tener cuidado. Tambien acepta `||` como **or**.
+
+### Analyzers
+
+Si buscamos 'Game' no lo va a encontrar, esto lo solucionamos con un analyzer, el cual se va a encargar de pasar a minuscula, sacar numeros, etc. Permite separar los tokens, en el ejemplo anterior usamos el `StandardAnalyzer`, pero hay muchos mas, permitionme filtrar con precision lo que quiero que se indexe y lo que no.
+Si ninguno te sirve, podes usar un `CustomAnalyzer` y personalizarlo como quieras.
+
+``` java
+Analyzer a = CustomAnalyzer.builder()
+            .withTokenizer("standard")
+            .addTokenFilter("lowercase")
+            .addTokenFilter("stop")
+            .addTokenFilter("porterstem") // Word family
+            .addTokenFilter("capitalization")
+            .build();
+```
+
+El `SpanishAnalyzer` busca la raiz de la palabra ya que podria ser similar al del castellano(Stemmer Algorithm).
+
+### Solr y Elasticsearch
+
+Lucene no ofrece escabilidad, para ello se utiliza Solr o Elasticsearch.
+Para realizar bsuquedas de gran escala, se ditribuye la busqueda en varias computadoras. Una compuradora dirije y pide la busqueda y el resto realiza la busqueda en diferentes documentos.
+
+## Indices y estructuras posibles
+
+En la seccion anterior se utiliza un indice como estructura auxiliar para guardar los terminos. Es muy importante poder realizar busquedas de la manera mas eficiente posible. 
+Se utiliza una clave de busqueda que permite encontrar rapidamente al resto de la informacion(como un mapa). Por ejemplo, puedo buscar la informacion de un aluno por legajo, por edad, etc.
+Para el caso de la edad, el indice esta **descompactado** ya que aparece el 20 mas de una vez. Si el indice esta **compactado**, aparece una edad una unica vez con una lista asociada de los alumnos con dicha edad.
+
+### Operaciones
+
+Ahora bien, el indice no solo se utiliza para buscar, sino que tambien hay operaciones:
+
+- Busqueda
+- Insercion
+- Borrado
+
+La complejidad temporal de cada una depende del tipo de estructura, por ejemplo, si se trata de un arregla con espacio prealocado, si quiero insertar es simplemente cuestion de insertar al final, pero todo cambia si tiene que ser ordenado o tengo que aumentar el espacio.
+
+No hay estruturas de datos perfectas, dependen del caso. Nosotros vamos a utilizar un arreglo ordenado,
+
+## Teorema maestro
+
+Permite calcular la complejidad temporal de un algoritmo recursivo, solo sirve para recurrencias simetricas. Si formulando la cantidad de operaciones de un algoritmo recursiva me queda como:
+$$
+    T(N) = a \cdot T(\frac{N}{b}) + c \cdot N^d
+$$
+Entonces estamos en condiciones de utilizar el teorema maestro.
+
+Donde: 
+
+- N es el tamano de entrada del problema
+- $a \in N_{\ge 1}$ es la cantidad de invocaciones recursivas realiza ese paso
+- $b \in N_{>1}$ es la tasa en la que se reduce el tamano del input
+- ...
+
+### Casos
+
+- Si $a < b^d$ entonces el algoritmo es $O(N^d)$
+- Si $a = b^d$ entonces el algoritmo es $O(N^d \cdot \log(N^d))$
+- ...
+
+> **Nota**: No siempre se puede aplicar el teorema, como el caso de Fibonacci
+
+## Expansion recursiva
+
+Otra manera de encontrar la complejidad de los algoritmos recursivas, lo importante es encontrar Times(N), si esta mal despues todo va a estar mal.
