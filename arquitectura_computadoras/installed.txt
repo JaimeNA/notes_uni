@@ -3,3 +3,5 @@ edb-debugger with yay
 docker with pacman
 nasm with pacman
 qemu with pacman (chose qemu-base)
+
+Added .gdbinit to home directory

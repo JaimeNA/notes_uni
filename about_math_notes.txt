@@ -1,0 +1,6 @@
+So I tried to rewrite my math lectures notes with markdown and latex(as well as by hand) hoping that the spaces repetition might help, but it prove to be quite time consuming, averaging 1.5hs of rewriting for a 2 hour lecture.
+For that reason and the fact that the homework is piling up faster than expected I decided to stop doing it for the math classes, but I will keep doing for the more programming related classes.
+
+Additionaly, I will put the material that is provided via campus under the resources folders, in that way I get to keep at least some part of the data digitally.
+
+Last updated: March 2025
