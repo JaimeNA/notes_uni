@@ -10,11 +10,9 @@ _start:
 Read: 
 	mov eax,3			; Specify sys_read call
 	mov ebx,0			; Specify File Descriptor 0: Standard Input
-	mov ecx,[Buff]		; Pass offset of the buffer to read to
+	mov ecx, Buff		; Pass offset of the buffer to read to
 	mov edx,1			; Tell sys_read to read one char from stdin
 	int 80h				; Call sys_read
-	cmp eax,0			; Look at sys_read's return value in EAX
-	je Exit				; Jump If Equal to 0 (0 means EOF) to Exit
 
 	; or fall through to test for lowercase
 	cmp byte [Buff],61h ; Test input char against lowercase 'a'
@@ -39,3 +37,7 @@ Exit:
 	mov eax,1			; Code for Exit Syscall
 	mov ebx,0			; Return a code of zero to Linux
 	int 80H				; Make kernel call to exit program
+
+; ERRORES:
+; [Buff] no existe, no hace falta pasarle el valor en buff
+; byte es inecesario

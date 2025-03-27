@@ -231,6 +231,8 @@ Pero no es practico usar `ESP`, por ello se arma un **stack fram**, es decir, se
 
 Vamos a usar las syscalls de linux, sino habria que buscar en la doc cual es el codigo de lada syscall. En `EAX` pones el numero de la syscall que queres ejecutar y en `EDX` pones el numero de retorno. Hay syscall con argumentos variables y otras con argumentos tanto obligatorios como opcionales(depende del sistema operativo).
 
+Una syscall es una funcion del sistema operativo, dependen del sistema operativo y permiten interactuar con el sistema. Estan ubicadas en el sistema operativo mismo, es decir que en tiempo de ejecucion estan en la memoria dedicada al kernel space, son parte del Kernel. 
+
 **Ejemplo**: Llamada a syscall print.
 
 ``` asm

@@ -1,6 +1,7 @@
 package core;
 
 
+import org.apache.lucene.search.Explanation;
 import org.apache.lucene.search.IndexSearcher;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -40,7 +41,7 @@ public class TheSearcherQueryParser {
         	searcher.setSimilarity(new ClassicSimilarity());
         	
  	
-        	String queryStr= "content:agem~2";
+        	String queryStr= "content:store";
         	
         	QueryParser queryparser = new QueryParser(null, new StandardAnalyzer() );
          	Query query= queryparser.parse(queryStr);
@@ -73,8 +74,8 @@ public class TheSearcherQueryParser {
 				// obtain the stored fields
 				Document aDoc = searcher.doc(docID);
 				System.out.println("stored fields: " + aDoc);
-//				Explanation rta = searcher.explain(query, docID);
-//	            System.out.println(rta);
+				Explanation rta = searcher.explain(query, docID);
+	            System.out.println(rta);
 	         
 	            position++;
 	            System.out.println();
