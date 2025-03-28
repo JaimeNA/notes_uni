@@ -48,7 +48,7 @@ public class IndexWithDuplicates implements IndexService{
 
         int pos = this.getClosestPosition(key);
         
-        for (int i = elemCount-1; i > pos; i--)
+        for (int i = elemCount; i > pos; i--)
             array[i] = array[i-1];
 
         elemCount++;
@@ -63,7 +63,7 @@ public class IndexWithDuplicates implements IndexService{
         if (search(key))
         {
             elemCount--;
-            for (int i = pos; i < elemCount; i--)
+            for (int i = pos; i < elemCount; i++)
                 array[i] = array[i+1];
         }
     }
@@ -96,16 +96,19 @@ public class IndexWithDuplicates implements IndexService{
     }
 
     private int getClosestPositionRec(int key, int low, int high) {
-        
-        if (high <= 0)
-            return 0;
+        if (low > high) {
+            if (high < 0)
+                return 0;
+                
+            return low;
+        }
 
-        int mid = (high - low) / 2;
+        int mid = (high + low) / 2;
 
-        if (low > high || array[mid] == key)
+        if (array[mid] == key)
             return mid;
 
-        if (key < array[mid])
+        if (key <= array[mid])
             return getClosestPositionRec(key, low, mid - 1);
 
         return getClosestPositionRec(key, mid + 1, high);
@@ -123,22 +126,51 @@ public class IndexWithDuplicates implements IndexService{
         return s.toString();
     }
 
-    // NOTE: Use getClosestPositions
+    private int lastOcurrence(int key) {
+        for (int i = elemCount; i >= 0; i--) {
+            if (array[i] == key)
+                return i;
+        }       
+        return -1;
+    }
+    
+    private int firstOcurrence(int key) {
+        for (int i = 0; i <= elemCount; i++) {
+            if (array[i] == key)
+                return i;
+        }       
+        return -1;
+    }
+
     @Override
     public int[] range(int leftKey, int rightKey, boolean leftIncluded, boolean rightIncluded) {
         int[] toReturn;
-        int i = 0;
+        
+        int low = firstOcurrence(leftKey);
+        int high = lastOcurrence(rightKey);
 
-        if (leftIncluded && rightIncluded)
-            toReturn = new int[elemCount];
-        else if (rightIncluded) {
-            toReturn = new int[elemCount-1];
-            i = 1;
-        } else if (leftIncluded) {
-                toReturn = new int[elemCount-1];
-        } else {
-            toReturn = new int[elemCount-2];
+        // Include or not if found
+        if (!rightIncluded && high != -1) {
+            high--;
         }
+        if (!leftIncluded && low != -1) {
+            low++;
+        }
+
+        // If number not found, go from the closest position
+        if(low == -1)
+            low = getClosestPosition(leftKey);
+
+        if(high == -1)
+            high = getClosestPosition(rightKey);
+        
+        toReturn = new int[high - low + 1];
+        int index = 0;
+        for (int i = low; i <= high; i++) {
+            toReturn[index++] = array[i]; 
+        }
+
+        return toReturn;
     }
 
     @Override

@@ -74,7 +74,7 @@ Particiona en subarreglos:
 
 En el peor caso no se puede aplicar teorema maestro, el peor caso es cuando el arreglo viene ordenado(acendente o decendentemente). Esto se debe a que no se parte a la mitad.
 
-Entonces, usamos otra forma para calcular la copmlejidad temporal para el peor de los casos.
+Entonces, usamos otra forma para calcular la complejidad temporal para el peor de los casos.
 $$
     Times(N) = N + Times(N-1)
 $$
@@ -95,4 +95,24 @@ Como mejorar quicksort para que cuendo venga casi ordenado no de una complejidad
 
 ### Mergesort
 
-Hay dos versiones, una facil que genera un arreglo paralelo y otra dificil que es **in situ**(no crea otro arreglo).
+Hay dos versiones, una facil que genera un arreglo paralelo y otra dificil que es **in situ**(no crea otro arreglo). Funciona de la siguiente manera:
+
+1. Divide el arreglo en dos mitades recursivamente hasta que no se pueda dividir mas
+2. Recursivamente ordenar cada mitad
+3. Unir las dos mitades
+
+#### Coplejidad temporal 
+
+Primero planteo el numero de ecuaciones:
+
+$$
+    Times(N) = 5 + (N-1) \cdot 4 + 2 \cdot Times(\frac{N}{2})
+$$
+
+Veo que tiene la forma del teorema maestro, entonces:
+
+$$
+    Times(N) = N \cdot 4 + 2 \cdot Times(\frac{N}{2})
+$$
+
+Sera $O(N \cdot \log(N))$
