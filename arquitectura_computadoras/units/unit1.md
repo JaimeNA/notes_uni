@@ -299,7 +299,7 @@ Luego para desarmar el stack es la operacion opuesta.
     pop ebp
 ```
 
-Estas son las operaciones que realiza una funcoin en C para asegurarse de no perder el `ESP`. Para retornar un valor, si el valor es menor a 32 bits se retorna el `EAX`, si es mayor retorna la parte alta en `EDX` y la parte baja en `EAX`. Si es mas complejo (ej. Estructura de datos) retorna un puntero formado por `EDX:EAX`.
+Estas son las operaciones que realiza una funcoin en C para asegurarse de no perder el `ESP`. Para retornar un valor, si el valor es menor a 32 bits se retorna el `EAX`, si es mayor retorna la parte alta en `EDX` y la parte baja en `EAX`. Si es mas complejo (ej. Estructura de datos) retorna un puntero formado por `EDX:EAX`. En el decompilado de C existe una macro llamada `leave`, esta realiza el desarmado del stack frame.
 
 > **Nota**: Se llama base donde empieza la pila.
 
@@ -333,4 +333,16 @@ Tenemos dos formas de ver el codigo C convertido en ASM:
 - Usando GDB
 
 Va a haber operaciones que podrian no tener sentido, pero para que el compilador pueda compilar la infinidad de combinaciones diferentes de programas hay veces que lo que resulve dan ese tipo de cosas.
-Lo que ocurre es que el compilador va de a bloques y siempre avanza, no lo vuelve a revisar. 
+Lo que ocurre es que el compilador va de a bloques y siempre avanza, no lo vuelve a revisar.
+
+> **Nota**: `mov DWORD PTR[esp], 0x3` especifica que queres que el numero 3 sea guardado en 4 bytes(a pesar de que ocupa 2 bits como minimo).
+
+### Compilacion
+
+Para la mayoria de los casos la compilacion se hace en una sola pasada, eso causa que al analizar codigo compilado aparescan operaciones que pueden no tener sentido, aunque no afectan el funcionamiento del codigo. Por ejemplo, reservar espacio de mas en la pila. Sin embargo, hay casos en los que si se hacen mas de una pasado, por ejemplo, los sistemas operativos, los cuales tienen millones de lineas de codigo y necesitan toda la optimizacion que puedan conseguir.
+
+### Deteccion stack smashing
+
+Lo que hace `gcc` cuando no agregas ninguna flag, pone en el stack lo que se conoce como `canary`. Si al ejecutarse se detecta que cambio alguno de los `canary` entonces interrumpe la ejecucion pues detecto un `stack smashing`(aborta ejecucion).
+
+Lo pone justo despues de armar el stack frame, el valor es un valor random que saca de una seccion de memoria. Luego, antes de que termine el programa llama a una funcion llamada `__stack_chk_fail` para verificar si el `canary` siga igual.
