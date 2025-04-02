@@ -93,9 +93,6 @@ public class IndexWithDuplicates implements IndexService{
 
     private int getClosestPositionRec(int key, int low, int high) {
         if (low > high) {
-            if (high < 0)
-                return 0;
-                
             return low;
         }
 
@@ -123,53 +120,43 @@ public class IndexWithDuplicates implements IndexService{
     }
 
     private int lastOcurrence(int key) {
-        for (int i = elemCount; i >= 0; i--) {
-            if (array[i] == key)
-                return i;
-        }       
-        return -1;
+        return getClosestPosition(key + 1) - 1;
     }
     
     private int firstOcurrence(int key) {
-        for (int i = 0; i <= elemCount; i++) {
-            if (array[i] == key)
-                return i;
-        }       
-        return -1;
+        return getClosestPosition(key - 1);
     }
 
     // Ot(N), Oe()
     @Override
     public int[] range(int leftKey, int rightKey, boolean leftIncluded, boolean rightIncluded) {
 
-        if (leftKey > rightKey) {
+        if (leftKey > rightKey || rightKey < getMin() || leftKey > getMax()) {
             return new int[0];  // Return empty array
         }
 
         int[] toReturn;
 
-        int low = firstOcurrence(leftKey);
-        int high = lastOcurrence(rightKey);
+        int low = -1;
+        int high = -1;
 
-        // Include or not if found
-        if (!rightIncluded && high != -1) {
-            high--;
+        // Include or not
+        if (leftIncluded) {
+            low = firstOcurrence(leftKey);
+        } else {
+            low = lastOcurrence(leftKey) + 1;
         }
-        if (!leftIncluded && low != -1) {
-            low++;
+
+        if (rightIncluded) {
+            high = lastOcurrence(rightKey);
+        } else {
+            high = firstOcurrence(rightKey) - 1;
         }
 
-        // If number not found, go from the closest position
-        if(low == -1)
-            low = getClosestPosition(leftKey);
-
-        if(high == -1)
-            high = getClosestPosition(rightKey);
-        
         toReturn = new int[high - low + 1];
         int index = 0;
         for (int i = low; i <= high; i++) {
-            toReturn[index++] = array[i]; 
+            toReturn[index++] = array[i];
         }
 
         return toReturn;

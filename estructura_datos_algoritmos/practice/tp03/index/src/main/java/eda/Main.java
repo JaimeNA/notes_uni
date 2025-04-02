@@ -4,25 +4,9 @@ public class Main {
     public static void main(String[] args) {
         IndexWithDuplicates myIndex = new IndexWithDuplicates();
 
-        myIndex.delete(10);
+        myIndex.initialize(new int[] {100, 50, 30, 50, 80, 100, 100, 30}); // 30, 30, 50, 50, 80, 100, 100, 100
 
-
-        myIndex.insert(10);
-        myIndex.insert(10);
-        myIndex.insert(22);
-        myIndex.insert(30);
-
-        myIndex.delete(34);
-        
-        myIndex.insert(76);
-        myIndex.insert(76);
-        myIndex.insert(76);
-
-        myIndex.insert(10);
-        myIndex.insert(4);
-        myIndex.insert(76);
-
-        int[] range = myIndex.range(10, 76, false, true);
+        int[] range = myIndex.range(10, 20, false, false);
 
         for(int i : range) {
             System.out.print(i + " ");
