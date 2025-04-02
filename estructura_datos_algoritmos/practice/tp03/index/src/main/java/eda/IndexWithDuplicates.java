@@ -23,14 +23,10 @@ public class IndexWithDuplicates implements IndexService{
             throw new RuntimeException("Invalid data");
         }
 
-        // elemCount = elements.length;
-        // Arrays.sort(elements);
+        elemCount = elements.length;
+        Arrays.sort(elements);
 
-        // array = Arrays.copyOf(elements, elemCount);
-
-        for (int i = 0; i < elements.length; i++) {
-            this.insert(elements[i]);
-        }
+        array = Arrays.copyOf(elements, elemCount);
     }
 
     @Override
@@ -142,10 +138,16 @@ public class IndexWithDuplicates implements IndexService{
         return -1;
     }
 
+    // Ot(N), Oe()
     @Override
     public int[] range(int leftKey, int rightKey, boolean leftIncluded, boolean rightIncluded) {
+
+        if (leftKey > rightKey) {
+            return new int[0];  // Return empty array
+        }
+
         int[] toReturn;
-        
+
         int low = firstOcurrence(leftKey);
         int high = lastOcurrence(rightKey);
 
