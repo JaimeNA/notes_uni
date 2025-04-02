@@ -42,7 +42,7 @@ Donde:
 ### Casos
 
 - Si $a < b^d$ entonces el algoritmo es $O(N^d)$
-- Si $a = b^d$ entonces el algoritmo es $O(N^d \cdot \log(N^d))$
+- Si $a = b^d$ entonces el algoritmo es $O(N^d \cdot \log(N))$
 - Si $a > b^d$ entonces el algoritmo es $O(N^{\log_b (a)})$
 
 > **Nota**: No siempre se puede aplicar el teorema, como el caso de Fibonacci
