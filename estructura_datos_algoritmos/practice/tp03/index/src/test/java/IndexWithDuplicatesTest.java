@@ -8,7 +8,7 @@ import eda.IndexWithDuplicates;
 
 public class IndexWithDuplicatesTest {
 
-    IndexService myIndex = new IndexWithDuplicates();
+    IndexService<Integer> myIndex = new IndexWithDuplicates<>();
 
 
     @Test
@@ -41,35 +41,35 @@ public class IndexWithDuplicatesTest {
     @Test
     void rangeTest() {
 
-        myIndex.initialize(new int[] {100, 50, 30, 50, 80, 100, 100, 30}); // 30, 30, 50, 50, 80, 100, 100, 100
+        myIndex.initialize(new Integer[] {100, 50, 30, 50, 80, 100, 100, 30}); // 30, 30, 50, 50, 80, 100, 100, 100
 
-        int[] range = myIndex.range(50, 100, false, false);
-        int[] expected = {80};
+        Integer[] range = myIndex.range(50, 100, false, false);
+        Integer[] expected = {80};
 
         assertArrayEquals(expected, range);
         
         range = myIndex.range(30, 50, true, false);
-        int[] expected1 = {30, 30};
+        Integer[] expected1 = {30, 30};
 
         assertArrayEquals(expected1, range);
         
         range = myIndex.range(45, 100, false, false);
-        int[] expected2 = {50, 50, 80};
+        Integer[] expected2 = {50, 50, 80};
 
         assertArrayEquals(expected2, range);
         
         range = myIndex.range(45, 100, true, false);
-        int[] expected3 = {50, 50, 80};
+        Integer[] expected3 = {50, 50, 80};
 
         assertArrayEquals(expected3, range);
 
         range = myIndex.range(10, 20, false, false);
-        int[] expected4 = {};
+        Integer[] expected4 = {};
 
         assertArrayEquals(expected4, range);
 
         range = myIndex.range(100, 45, false, false);
-        int[] expected5 = {};
+        Integer[] expected5 = {};
 
         assertArrayEquals(expected5, range);
     }
