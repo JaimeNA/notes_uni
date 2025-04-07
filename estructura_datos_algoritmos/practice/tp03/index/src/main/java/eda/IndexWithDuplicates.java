@@ -127,7 +127,7 @@ public class IndexWithDuplicates<T extends Comparable<T>> implements IndexServic
     @SuppressWarnings("unchecked")
     private int lastOcurrence(T key) {
         int i = getClosestPosition(key);
-        while (i < elemCount && ((T)array[i]).compareTo(key) <= 0);
+        while (i < elemCount && ((T)array[i]).compareTo(key) <= 0)
             i++;
 
         return i-1;
