@@ -1,0 +1,17 @@
+Mi suposicion:
+
+1.	No hace nada
+
+2.	Reserva en stack y asigna los valores.
+
+3.	Nada, luego reserva espacio en stack, luego le asigna el valor en el indice 10, creo que a a tener que agrandar el arreglo primero.
+
+4.	Directamente reserva el espacio y asigna.
+
+5.	Nada
+
+6.	Se reserva el espacio.
+
+Lo que paso:
+
+(Hacer)
