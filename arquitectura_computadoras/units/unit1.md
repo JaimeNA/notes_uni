@@ -346,3 +346,7 @@ Para la mayoria de los casos la compilacion se hace en una sola pasada, eso caus
 Lo que hace `gcc` cuando no agregas ninguna flag, pone en el stack lo que se conoce como `canary`. Si al ejecutarse se detecta que cambio alguno de los `canary` entonces interrumpe la ejecucion pues detecto un `stack smashing`(aborta ejecucion).
 
 Lo pone justo despues de armar el stack frame, el valor es un valor random que saca de una seccion de memoria. Luego, antes de que termine el programa llama a una funcion llamada `__stack_chk_fail` para verificar si el `canary` siga igual.
+
+### Secciones del programa
+
+![Secciones del programa y para que son](graphics/sections_asm.png)

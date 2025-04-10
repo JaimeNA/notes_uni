@@ -158,7 +158,44 @@ Primero, dejar la biblioteca que quieras agregar en un path sin blancos. Luego, 
 </dependency>
 ```
 
-## Queue
+## Stack
 
+En esta estructura nos enfocamos en el orden de llegada de los elementos. Por ejemplo, los editores de texto implementan este tipo de estructura para "deshacer" acciones. Las operaciones que ofrece son:
 
+- `push`
+- `pop`
+- `isEmpty`
+- `peek`, no obligatorio, pero muy util.
 
+### Implementacion
+
+Con una simple lista encadenada o un arreglo se puede implemeentar. En caso de arreglo la contiguedad esta garanttizada y nunca hara falta mover elementos, pero si se acaba el espacio se debe buscar espacio conttiguo en otro lugar. Por otro lado, si se uttiliza una lista lineal simplementte ecadenada, el elemento mas a la "izquierda" sera el tope. 
+Java ya cuenta con una implementacion para el Stack, pero no es muy buena ya que al ectender otra clase, tiene un monton de metodos innecesarios. Es decir, desde el punto de vista OOP, es una mal practica.
+
+Se nos permite usar la implementacion de Java, pero es recomendable que hagamos nuestra propia version. Podemos usar la de Java, pero solo con los metodos mencionados anteriormente, por ejemplo, no podemos usar el `add`.
+
+### Caso de uso: Evaluador de expresiones
+
+En este caso solo vamos a considerar los operadores binarios. Las expresiones se pueden clasificar la la siguiente manera: prefija(operador antes de operandos), infija(operador enntre operandos) y postfija(Operados despues de operandos). Un problema con la infija es que hay operadores con mayor procedencia, tambien se pueden operar de izquierda a derecha, pero en casos como la potencia es de derecha a izquierda, hay que tener en cuenta esto. Tambien, exite la polaca, infija reversa, etc. pero solo nos enfocamos en las tres de antes.
+
+Hay varios algoritmos para evaluar expresiones, el siguiente algoritmo toma expresiones posfijas:
+
+1. Cada operador es una expresion posfija se refiere a los operandos previos a la misma.
+2. Cuando aparece un operando hay que postergarlo porque no se puede hacer nada con el hasta que no llegue el operador, se pushea al stack.
+3. Cuando aparezca un operador en la expresion implica que llego el momento de aplicarselo a los operandos, se procede a popearlos del stack.
+4. Cuando se termine de analizar la expresion de entrado el resulltado de su evaluacion es el unico valor que debe quedar en la pila.
+
+> **Nota**: La clase `Scanner` de Java es muy util para este tipo de aplicaciones pues permite recibir un input por archivo, recivir un input por entrada estandar, separalo en toquens. Hay que tener cuidados con los metalenguaje, como con el +, hay que escparlos con `\\`.
+
+### Infija a posfija
+
+Existe un algorimo muy famoso para realizar esta operacion. La idea es que ada vez que aparezcan varios operadores se consultara una tabla que indique cual se evalua primero. Si dos operadores tienen la misma precedencia, se utiliza la regla de asociatividad para saber cual se evalua primero.  
+Para comparar, vamos a usar una tabla donde en la primer columna va el operador previo y en la primera fila el operador actual. Entonces, si en fila hay un * y en columna un +, entonces se devuelve un `false` pues el que estaba en tope de la fila tiene menos precedencia sobre el elemento actual.
+
+Pasos del algoritmo:
+
+1. Si la pila esta vacia, se pushea el operador **current** ya que no se lo puede comparar.
+2. Si la pila no esta vacia:
+    - Si el tope de la pila tiene mayor precedencia que el current, entonces se realiza un pop.
+    - Si el tope tiene menor precedencia, el current no se puede ir todavia.
+3. Al finalizar, se popea lo que haya quedado en el stack.
