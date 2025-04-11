@@ -14,4 +14,16 @@ Mi suposicion:
 
 Lo que paso:
 
-(Hacer)
+1. Reserva el espacio y vuelve.
+
+2. Sep
+
+3. Siempre comienza reservando el espacio en stack.
+
+4. Yep
+
+5.
+
+6.
+
+

@@ -199,3 +199,67 @@ Pasos del algoritmo:
     - Si el tope de la pila tiene mayor precedencia que el current, entonces se realiza un pop.
     - Si el tope tiene menor precedencia, el current no se puede ir todavia.
 3. Al finalizar, se popea lo que haya quedado en el stack.
+
+Esto funciona para los operadores asociativos a izquierda, pero ahora si queremos implementar el operador exponencial necesitamos considerar el asociativo a izquierda, pero no hace falta cambiar el algoritmo, simplemente basta con modificar la tabla.
+Es un buen disano debido a su flexibilidad.
+
+|       | +     | -     | *     | /     | ^     |
+| ----  | ----  | ----  | ----  | ----  | ----  | 
+| +     | true  | true  | false | false | false |
+| -     | true  | true  | false | false | false |
+| *     | true  | true  | true  | true  | false |
+| /     | true  | true  | true  | true  | false |
+| ^     | true  | true  | true  | true  | false |
+
+Par agregar soporte para parentesis, hay que considerar lo siguiente:
+
+1. Si se encuentra un parentesis que abre, debe postergarse hasta encontrar uno cerrado.
+2. Si el operador current es un parentesis que cierra el mismo debe sacar todos los operadores del stack hasta encontrar el parentesis que abre. Luego, se sca el parentesis que abre de la pila y de lo descarta(no hay parentesis en postfija.
+
+Para incorporar esto vamos a usar la tabla. Notar que no tiene sentido que en el stack haya un parentesis que cierra.
+
+|       | +     | -     | *     | /     | ^     | (     | )     |
+| ----  | ----  | ----  | ----  | ----  | ----  | ----  | ----  |
+| +     | true  | true  | false | false | false | false | true  |
+| -     | true  | true  | false | false | false | false | true  |
+| *     | true  | true  | true  | true  | false | false | true  |
+| /     | true  | true  | true  | true  | false | false | true  |
+| ^     | true  | true  | true  | true  | false | false | true  |
+| (     | false | false | false | false | false | false | false |
+
+## Cola
+
+Son muy utilizadas para algoritmos, por ejemplo, BFS en grafos. O simplemente se usan para manejar una fila the eventos como el caso de un **pipe**.
+
+### Definicion: Queue
+
+Coleccion de datos ordenada por orden de llegada. La unica forma de acceso es por medio de dos elmentos distinguidos: FIRST(El mas antiguo) y LAST. Las operaciones que ofrece son:
+
+- `queue(element)`
+- `deque()`
+- `peek()`
+- `isEmpty()`
+- `size()`, esta es opcional, pero puede ser util.
+
+Si se implementa como lista, conviene que el `first` sea el primer elemento y `last` el utlimo. Esto permite O(1) para obtener `first`. 
+
+En el caso de implementarlo com arreglo, ambas maneras tienen un problema, tengo que mover todo si `last` es el primero y si `first` es el primero va a haber espacios en blanco cada vez que haga un `deque()`. Si se acaba el espacio, hay que realocar(conocido como **unbounded queue**), pero existe una forma de arreglar esto: Utilizando un arreglo circular. Si no el arreglo no va a crecer, entonces se conoce como **bounded queue**, este seria el caso del queue circular.
+
+En conclusion, si se tiene un unbounded queue la mejor implementacion es la que utiliza una lista, pero si tengo un bounded queue la mejor implementacion es la qu utiliza un arreglo.
+
+## Lista
+
+Supera el problema de contiguedad y re-alocacion de espacio, podemos pensar en estructuras de datos que permitan que los elementos esten "fisicamente aislados y logicamente conectados". Sin embargo, nunca superara una lista ordenada al arreglo ordenado.
+
+### Lista lineal simplemente encadenada
+
+Es una estructura de datos que esta compuesta por 0 o mas nodos. Cada nodo(elemento) tiene referencia al siguiente.
+
+### Insertar
+
+Hay tres maneras de insertar un nodo, tenemos que saber y entender las 3:
+
+1. Iterativa desde afuera de nodo.
+2. Recursiva desde afuera de nodo.
+3. El nodo mismo debe tener su propia funcion insert. Se conoce como **delegacion**.
+
