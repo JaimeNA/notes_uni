@@ -1,0 +1,14 @@
+Complejidades:
+- insert1:	O(N)
+- insert2:	O(N)
+- insert3:	O(N)
+
+- remove1:	O(N)
+- remove2:	O(N)
+- remove3:	O(N)
+
+Comparando con un arreglo ordenado, la complejidad temporal es la misma salvo la busqueda(binaria) que es O(log(N)), pero la espacial no debido a que en una lista cada nodo requiere un puntero al siguiente.
+
+Ademas, en las implementacines recursivas la complexidad espacial es O(N) debido a que con cada llamada a la funcion se genera un nuevo stack frame. No es lo mismo para las versiones iterativas, las cuales son O(1).
+
+

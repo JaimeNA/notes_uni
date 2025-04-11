@@ -1,0 +1,2 @@
+Por copia: Se pasa cada campo de la estructura por stack.
+Por referencia: Se pasa una referencia a cada campo de la estructura por stack.

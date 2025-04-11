@@ -1,0 +1,6 @@
+1. Ot(1) Oe(1)
+2. Ot(1) Oe(1)
+3. Ot(n) Oe(1)
+4. Ot(log(N)) Oe(log(N))
+5. Hecho en apuntes
+6. Usaronel Quicksort
