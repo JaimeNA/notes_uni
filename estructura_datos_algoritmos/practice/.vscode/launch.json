@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Lista",
+            "request": "launch",
+            "mainClass": "core.C1_2024.Lista",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "core.Main"
