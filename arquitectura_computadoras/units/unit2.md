@@ -60,3 +60,54 @@ La mas rapida, existe DRAM(Dinamic RAM) y SRAM(Static RAM), pierde la informacio
 
 > **Nota**: A diferencia de la latencia, la **transferencia** es lo que tarda en viajar la informacion de un lugar a otro.
 
+## Decodificacion
+
+Para conectar mas de un dispositivo al procesador, tenemos que hacer "decodificacion". Para hacer esto necesitamos herramientas electronicas:
+
+- Compuertas
+- Decodificadores
+
+### Compuertas
+
+Los circuitos integrados vienen con mas de una, se pueden usar simultaneamente pues son independientes. Sin embargo, hoy en dia se utilizan compuertas en vez de decodificadores.
+
+1. NOT
+2. OR
+3. AND
+4. NAND, es como tener una compuerta AND seguida de una NOT
+5. NOR
+6. XOR
+
+![Gates logicas parte 1]("graphics/gates.png")
+![Gates logicas parte 2]("graphics/gates1.png")
+
+> **NOTA**: El buffer es muy de bajo nivel y no lo vamos a ver, pero basicamente si tenes 4.8V lo pasa a 5V para que llegue a ser un 1.
+
+### Decodificadores
+
+La idea es que cada periferico se encienda cuando el procesador intente de acceder a las direcciones de memoria a la que estan mapeados.
+
+![Buses de memorias]("graphics/buses.png")
+
+Del bus de direcciones van a salir cables al **circuito decodificador**, entonces cuando quiera acceder a la RAM, el circuito decodificador enviara una senal para activar la RAM, se conoce como CS(Chip Select). Entonces, cuando se cumplen las direcciones que corresponded a la RAM, se enviara un 1 por CS.
+
+Ningun periferico esta construido para ir en una direccion de memoria, solo pueden ver su propia memoria interna. 
+Hay dos sistemas que vamos a ver:
+
+- **Sistema 1**: Un procesador y una ROM, la ROM ocupa toda la memoria. Entonces, deja el CS en 1 siempre.
+- **Sistema 2**: Varios perifericos a la vez.
+
+Los decodificadores tienen una tabla de verdad donde una salida siempre es 1. Entonces, por ejemplo, existe un decodificador que pasa 3 inputs a 8 outputs mediante una tabla de verdad. Se prende el output 4 si el numero en binario de los 3 inputs es 4, eso es basicamente lo que hace la tabla. Muy importante, solo una esta prendida a la vez, el resto se mantiene apagadas. 
+
+
+
+**Ejercicio**: Se dispone de un microprocesador con 16 lineas de bus de direcciones y 8 lineas de bus de datos. 
+Se desea conectar el procesador con dos integrados de ROM de 32k x 8. Aclaracion: Siempre esta el bus de control aunque no se lo mencione(sino no funcionaria).
+
+Analizando, con 16 bits de direcciones, tenemos 2^16 direcciones, entonces son 2^6 * 2^10 y eso significa que son 64K de direcciones. Como es como cada direccino son 8 bits, seran hasta 64KB de memoria. 
+
+Entonces, cuando la direccion que envie el procesador tenga el A_15 = 0, entonces el chip select de la primer ROM sera 1. Caso contrario, el chip select de la otra ROM sera 1. 
+Notar que generalmente el circuito codificador se termina de definir al final del analisis.
+
+
+
