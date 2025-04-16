@@ -78,8 +78,8 @@ Los circuitos integrados vienen con mas de una, se pueden usar simultaneamente p
 5. NOR
 6. XOR
 
-![Gates logicas parte 1]("graphics/gates.png")
-![Gates logicas parte 2]("graphics/gates1.png")
+![Gates logicas parte 1](graphics/gates.png)
+![Gates logicas parte 2](graphics/gates1.png)
 
 > **NOTA**: El buffer es muy de bajo nivel y no lo vamos a ver, pero basicamente si tenes 4.8V lo pasa a 5V para que llegue a ser un 1.
 
@@ -87,7 +87,7 @@ Los circuitos integrados vienen con mas de una, se pueden usar simultaneamente p
 
 La idea es que cada periferico se encienda cuando el procesador intente de acceder a las direcciones de memoria a la que estan mapeados.
 
-![Buses de memorias]("graphics/buses.png")
+![Buses de memorias](graphics/buses.png)
 
 Del bus de direcciones van a salir cables al **circuito decodificador**, entonces cuando quiera acceder a la RAM, el circuito decodificador enviara una senal para activar la RAM, se conoce como CS(Chip Select). Entonces, cuando se cumplen las direcciones que corresponded a la RAM, se enviara un 1 por CS.
 

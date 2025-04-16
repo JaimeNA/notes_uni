@@ -263,3 +263,17 @@ Hay tres maneras de insertar un nodo, tenemos que saber y entender las 3:
 2. Recursiva desde afuera de nodo.
 3. El nodo mismo debe tener su propia funcion insert. Se conoce como **delegacion**.
 
+### Iterador
+
+Vemos que la lista no presenta ventajas en comparacion con un arreglo pues la complejidad de la busqueda, insercino  y borrado es O(N). Hay un caso especial que seria el del iterador, ya que utilizando el iterador y quiero eliminar un elemento, al ya estar apuntadno al elemento, las operaciones seran O(1).
+
+Siguiendo las especificaciones de Java: 
+
+- `remove()` de iterador tiene que invocarse luego de un `next()`.
+- No se pueden invocar 2 `remove()` seguidos(tiene que haber un `next()` en el medio).
+- Si no se satisfacen esas condiciones de lanza una `IllegalStateException`.
+
+Hay cosas que no vamos a poder validar y que haran la lista inconsistente(responsabilidad del programador, no nuestra):
+
+- Tener dos iteradores anidados.
+- Tener dos iteradores anidados y hacer el remove del segundo iterador y luego el del primer iterador(estas eliminando el elemento sobre el que estas iterando).

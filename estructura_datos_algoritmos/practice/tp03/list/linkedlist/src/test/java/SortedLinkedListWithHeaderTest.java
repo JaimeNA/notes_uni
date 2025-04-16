@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,32 @@ public class SortedLinkedListWithHeaderTest {
 		assertEquals(true, l.remove("veo"));
 		assertEquals(false, l.find("veo"));
         assertEquals("tito", l.getMax());
+    }
+
+
+    @Test
+    void iteratorRemoveTest() {
+		l.insert("bio");
+		l.insert("tito");
+		l.insert("hola");
+		l.insert("aca");
+        
+        Iterator<String> it = l.iterator();
+        String current;
+
+        while(it.hasNext()) {
+            current = it.next();
+            if (current == "aca" || current == "veo")
+                it.remove();
+            
+        }
+        
+		assertEquals(false, l.find("aca"));
+        assertEquals("tito", l.getMax());
+        assertEquals("ah", l.getMin());
+
+
+        assertEquals(5, l.size());
     }
 }
 

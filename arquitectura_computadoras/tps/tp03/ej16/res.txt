@@ -1,0 +1,1 @@
+1. Al tratarse de 32 bits, recibira los parametros a travez de la pila. Primero el entero con la cantidad de elementos y segundo el byte correspondiente a la direccion de memoria.

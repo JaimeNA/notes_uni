@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SortedLinkedListWithHeader",
+            "request": "launch",
+            "mainClass": "core.SortedLinkedListWithHeader",
+            "projectName": "LinkedList"
+        },
+        {
+            "type": "java",
+            "name": "SortedLinkedList",
+            "request": "launch",
+            "mainClass": "core.SortedLinkedList",
+            "projectName": "LinkedList"
+        },
+        {
+            "type": "java",
             "name": "Lista",
             "request": "launch",
             "mainClass": "core.C1_2024.Lista",

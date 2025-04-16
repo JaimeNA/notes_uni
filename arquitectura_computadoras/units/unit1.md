@@ -350,3 +350,7 @@ Lo pone justo despues de armar el stack frame, el valor es un valor random que s
 ### Secciones del programa
 
 ![Secciones del programa y para que son](graphics/sections_asm.png)
+
+### 64-bits
+
+GCC por convencino, al recibir parametros por registros, lo primero que hace es copiar los valores al stack. Si estoy solo usando assebler puedo usar directamente los registros. No hace `push`, sino que primero hace `sub` del `rsp` y va haciendo `mov`.

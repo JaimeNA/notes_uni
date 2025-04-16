@@ -2,7 +2,7 @@ package core;
 
 
 // lista simplemente encadenada
-public interface SortedListService<T extends Comparable<? super T>> {
+public interface SortedListService<T extends Comparable<? super T>> extends Iterable<T>{
 
 	
 	// no acepta nulls=> lanza exception

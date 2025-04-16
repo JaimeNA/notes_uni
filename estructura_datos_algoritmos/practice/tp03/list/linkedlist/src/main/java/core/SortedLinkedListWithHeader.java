@@ -1,20 +1,23 @@
 package core;
 
+import java.util.Iterator;
+
+import org.w3c.dom.Node;
+
 public class SortedLinkedListWithHeader<T extends Comparable<? super T>> implements SortedListService<T>{
 
-	private Node root;
-	private Node last;
-    private int size;
+	private Header header;
 
-    public SortedLinkedListWithHeader() {
-        size = 0;
-    }
+	public SortedLinkedListWithHeader() {
+		super();
+		header = new Header();
+	}
 
 	@Override
 	public boolean insert(T data) {
         boolean inserted = insert2(data);
 
-        size += inserted ? 1 : 0;
+       header.size += (inserted ? 1 : 0);
 
 		return inserted;
 	}
@@ -26,7 +29,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 			throw new IllegalArgumentException("data cannot be null");
 
 		Node prev= null;
-		Node current = root;
+		Node current = header.first;
 
 		while (current!=null && current.data.compareTo(data) < 0) {
 			// avanzocurrent.data == data
@@ -43,12 +46,12 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		Node aux= new Node(data, current);
 
         if (aux.next == null)
-            last = aux;
+            header.last = aux;
 
 		// es el lugar para colocarlo
-		if (current == root) {
+		if (current == header.first) {
 			// el primero es un caso especial: cambia root
-			root= aux;
+			header.last= aux;
 		}
 		else {
 			// nodo interno
@@ -65,7 +68,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 			throw new IllegalArgumentException("data cannot be null");
 		
 		boolean[] rta = new boolean[1];
-		root = insertRec(data, root, rta);
+		header.first = insertRec(data, header.first, rta);
 		return rta[0];
 	}
 	
@@ -77,7 +80,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
             Node toReturn = new Node(data, current);
 
             if (current == null)
-                last = toReturn;
+			header.last = toReturn;
 
 			return toReturn;
 		}
@@ -97,13 +100,13 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	// insert resuelto delegando al nodo
 	private boolean insert3(T data) {
 
-		if (this.root == null) {
-			this.root = new Node(data, null);
+		if (this.header.first == null) {
+			this.header.first = new Node(data, null);
 			return true;
 		}
 
 		boolean[] rta = new boolean[1];
-		root = root.insert(data, rta);
+		header.first = header.first.insert(data, rta);
 
 		return rta[0];
 	}
@@ -115,9 +118,12 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	
 	@Override
 	public boolean remove(T data) {
+		if (data == null) 
+			throw new IllegalArgumentException("data cannot be null");
+			
         boolean removed = remove3(data);
 
-        size -= removed ? 1 : 0;
+        header.size -= removed ? 1 : 0;
 
 		return removed;
 	}
@@ -128,7 +134,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 			throw new IllegalArgumentException("data cannot be null");
 
 		Node prev= null;
-		Node current = root;
+		Node current = header.first;
 
 		while (current!=null && current.data.compareTo(data) < 0) {
 			// avanzocurrent.data == data
@@ -137,13 +143,13 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		}
 
 		if (current!=null && current.data.compareTo(data) == 0) {
-			if (current == root)
-				root = current.next;
+			if (current == header.first)
+				header.first = current.next;
 			else
 				prev.next = current.next;
 
             if (prev.next == null)
-                last = prev;
+				header.last = prev;
 
 			return true;
 		}
@@ -159,7 +165,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 			throw new IllegalArgumentException("data cannot be null");
 		
 		boolean[] rta = new boolean[1];
-		root = removeRec(data, root, rta);
+		header.first = removeRec(data, header.first, rta);
 		return rta[0];
 	}
 	
@@ -179,7 +185,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		current.next = removeRec(data, current.next, rta);
 
         if (current.next == null)
-            last = current;
+			header.last = current;
 
 		return current;
 
@@ -189,13 +195,13 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	// delete resuelto delegando al nodo
 //	@Override
 	public boolean remove3(T data) {
-		if (this.root == null) {
-			this.root = new Node(data, null);
+		if (this.header.first == null) {
+			this.header.first = new Node(data, null);
 			return true;
 		}
 
 		boolean[] rta = new boolean[1];
-		root = root.remove(data, rta);
+		header.first = header.first.remove(data, rta);
 
 		return rta[0];
 	}
@@ -204,18 +210,18 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	
 	@Override
 	public boolean isEmpty() {
-		return root == null;
+		return header.first == null;
 	}
 
 	@Override
 	public int size() {
-		return size;
+		return header.size;
 	}
 
 	
 	@Override
 	public void dump() {
-		Node current = root;
+		Node current = header.first;
 
 		while (current!=null ) {
 			// avanzo
@@ -233,8 +239,8 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		@SuppressWarnings("unchecked")
 		SortedLinkedListWithHeader<T> auxi = (SortedLinkedListWithHeader<T>) other;
 		
-		Node current = root;
-		Node currentOther= auxi.root;
+		Node current = header.first;
+		Node currentOther= auxi.header.first;
 		while (current!=null && currentOther != null ) {
 			if (current.data.compareTo(currentOther.data) != 0)
 				return false;
@@ -250,7 +256,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	
 	// -1 si no lo encontro
 	protected int getPos(T data) {
-		Node current = root;
+		Node current = header.first;
 		int pos= 0;
 		
 		while (current!=null ) {
@@ -266,23 +272,23 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 	
 	@Override
 	public T getMin() {
-		if (root == null)
+		if (header.first == null)
 			return null;
 		
-		return root.data;
+		return header.first.data;
 	}
 
 
 	@Override
 	public T getMax() {
 		
-		if (last == null)
+		if (header.last == null)
 			return null;
 		
-		return last.data;
+		return header.last.data;
 	}
 
-	private final class Node {
+	private class Node {
 		private T data;
 		private Node next;
 	
@@ -292,7 +298,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		}
 		
 		public Node insert(T data, boolean[] rta) {
-			if (data == null) 
+			if (data == null)
 				throw new IllegalArgumentException("data cannot be null");
 			
             if (this.data.compareTo(data) > 0) {
@@ -307,7 +313,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
                  Node aux = new Node(data, null);
                  this.next = aux;
      
-                 last = aux;
+                 header.last = aux;
 
                  return this;
              }
@@ -343,29 +349,113 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 			this.next = this.next.remove(data, rta);
 
             if (this.next == null)  // If return value is null, then the last one was deleted
-                last = this;
+				header.last = this;
 
 			return this;
 		}
 
 	}
 	
-
+	private final class Header {
+        private Node first;
+        private Node last;
+        private int size;
+        public Header(){
+            first = last = null;
+            size = 0;
+        }
+    }
 	
+	@Override
+	public Iterator<T> iterator() {
+		return new ListWithHeaderIterator();
+	}
 
-	
+	class ListWithHeaderIterator implements Iterator<T> {
+
+		Node next = header.first;
+		Node current;
+		Node prev;
+
+		boolean canRemove = false;
+
+		@Override
+		public boolean hasNext() {
+			return next != null;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext())
+				throw new RuntimeException("Reached end of list");
+
+			canRemove = true;
+
+			prev = current;
+			current = next;
+
+			next = next.next;
+
+			return current.data;
+		}
+
+		@Override
+		public void remove() {
+
+			if (!canRemove)
+				throw new IllegalStateException();
+
+			if (current != null)  {
+				header.size -= 1;
+				current = current.next;
+
+				if (current == null)	// Reached end, update header pointers
+					header.last = prev;
+				
+				if (prev != null)
+					prev.next = current;
+				else
+					header.first = current;		// Deleted the first element
+
+			}
+
+			canRemove = false;
+		}
+
+	}
+
 	public static void main(String[] args) {
-		SortedLinkedList<String> l = new SortedLinkedList<>();
+		SortedLinkedListWithHeader<String> l = new SortedLinkedListWithHeader<>();
 	
 		System.out.println(l.insert("hola"));
 		System.out.println(l.insert("tal"));
 		System.out.println(l.insert("ah"));
 		System.out.println(l.insert("veo"));
+		l.insert("bio");
+		l.insert("tito");
+		l.insert("hola");
+		l.insert("aca");
 		l.dump();
 
+		for (String str : l) {
+			System.out.println(str);
+		}
 
-		l.remove("veo");
-		l.find("veo");
-        l.getMax();
+        Iterator<String> it = l.iterator();
+        String current;
+
+        while(it.hasNext()) {
+            current = it.next();
+            if (current == "aca" || current == "veo")
+                it.remove();
+            
+        }
+
+		for (String str : l) {
+			System.out.println(str);
+		}
+
+		System.out.println(l.getMax());
+        
 	}
 }

@@ -1,5 +1,8 @@
 package core;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 // lista simplemente encadenada, no acepta repetidos (false e ignora) ni nulls (exception)
 public class SortedLinkedList<T extends Comparable<? super T>> implements SortedListService<T>{
 
@@ -128,7 +131,6 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 		return false;
 	}
 	
-	
 	// delete resuelto todo en la clase SortedLinkedList, recursivo
 //	@Override
 	public boolean remove2(T data) {
@@ -159,7 +161,6 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 
 	}
 
-
 	// delete resuelto delegando al nodo
 //	@Override
 	public boolean remove3(T data) {
@@ -173,8 +174,6 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 
 		return rta[0];
 	}
-	
-	
 	
 	@Override
 	public boolean isEmpty() {
@@ -272,11 +271,6 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 		
 		return current.data;
 	}
-
-
-
-
-	
 	
 	private final class Node {
 		private T data;
@@ -288,8 +282,6 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 		}
 		
 		public Node insert(T data, boolean[] rta) {
-			if (data == null) 
-				throw new IllegalArgumentException("data cannot be null");
 			
 			if (this.data.compareTo(data) == 0) {
 				System.err.println(String.format("Insertion failed. %s repeated", data));
@@ -298,7 +290,7 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 			}
 
 			if (this.data.compareTo(data) > 0) {
-				rta[0] = true;
+		 		rta[0] = true;
 
 				Node aux = new Node(data, this);
 				return aux;
@@ -340,9 +332,29 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 
 	}
 	
+	@Override
+	public Iterator<T> iterator() {
+		return new Iterator<>() {
 
-	
+			Node current = root;
 
+			@Override
+			public boolean hasNext() {
+				return current != null;
+			}
+
+			@Override
+			public T next() {
+				if (!hasNext())
+					throw new NoSuchElementException();
+
+				T toReturn = current.data;
+				current = current.next;
+
+				return toReturn;
+			}
+		};
+	}
 	
 	public static void main(String[] args) {
 		SortedLinkedList<String> l = new SortedLinkedList<>();
@@ -358,10 +370,14 @@ public class SortedLinkedList<T extends Comparable<? super T>> implements Sorted
 
 		l.dump();
 
+		for (String str : l)
+			System.out.println(str);
+
 
 		l.remove("veo");
 		l.find("veo");
         System.out.println(l.getMax());
 	}
+
 
 }
