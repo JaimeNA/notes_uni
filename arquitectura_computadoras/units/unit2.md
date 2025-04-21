@@ -110,4 +110,15 @@ Entonces, cuando la direccion que envie el procesador tenga el A_15 = 0, entonce
 Notar que generalmente el circuito codificador se termina de definir al final del analisis.
 
 
+> **NOTA**: La suma de todas las patitas que van al dispositivo y las que van al decodificador deben ser igual a la suma de patitas que tiene el bus de address. Sirve para verificar que hayas resuelto bien los ejercicios.
 
+Los decodificadoes se pueden reutilizar solo si el tamano de los bit significativos siguen siendo los mismo, sino va a ver que usar otro. (Santi recomienda ver dark mirror). 
+
+**Ejercicio**: Si tengo un sensor de humedad y temperatura, este tendra una patita read, otra CS, 8 para el BD y una para la direccion(o temp o humedad). Por lo tanto necesito un decodificador que tome todas las direcciones y para una direccion prenda el CS del sensor. 
+
+### Pin IO/M
+
+En los primeros procesadores, Intel necesitaba poder acceder a mas perifericos sin tener que modificar los registros. Entonces, se agrego al CPU un pin llamado IO/M(Input/Output memory(en realidad la barra deberia ir arriba de la M para indigar que esta negada)), de manera que permitio tener dos mapas de memoria, uno para la memoria y otro para los perifericos(basicamente son identicos).
+Para ello se crearon dos intrucciones nuevas de 16 bits, `IN` y `OUT`. Si un programadoe escribe `mov ah, [1234h]`, la direccion va a salir por BA, el IO/M va a estar en 0, read en 1 y write en 0. IO/M va a salir al decodificador para prender el CS de la memoria. Si un programador escribe `IN ah, 1234h`, notar que **no** tiene corchetes, el IO/M va en 1 y el CS de algun periferico se va a prender. Basicamente, son maneras de agregar funcionalidad, como `*` en C.
+
+> **NOTA**: Nosotros solo vamos a usar cosas que funcionan con PC, por ejemplo, el teclado esta en la direccion 60h.
