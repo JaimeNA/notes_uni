@@ -5,10 +5,13 @@ import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.search.PrefixQuery;
+import org.apache.lucene.analysis.core.SimpleAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TermQuery;
@@ -45,7 +48,7 @@ public class TheSearcher {
         	
         	
         	// field of interest
-        	String queryStr= "ga";
+        	String queryStr= "Fly OR Moon";
         	
         	// Term myTerm = new Term(fieldName, queryStr);
         	// Query query= new TermRangeQuery(fieldName, new BytesRef("gam"), new BytesRef("gum"), true, true); // ["gam", "gum"]
@@ -57,9 +60,9 @@ public class TheSearcher {
 			// Query query = new PhraseQuery(fieldName, "game video"); // Encuentra
         	
 			Term myTerm = new Term("content", queryStr);
-			//Query query = new WildcardQuery(myTerm);
 
-			Query query = new PrefixQuery(myTerm);
+			QueryParser queryparser = new QueryParser(null, new SimpleAnalyzer() );
+			Query query = queryparser.parse("content:Fly OR content:Moon");
         	
         	// run the query
         	long startTime = System.currentTimeMillis();       	

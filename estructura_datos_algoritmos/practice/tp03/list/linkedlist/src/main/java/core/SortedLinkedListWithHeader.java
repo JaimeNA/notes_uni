@@ -402,10 +402,7 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 		@Override
 		public void remove() {
 
-			if (!canRemove)
-				throw new IllegalStateException();
-
-			if (current != null)  {
+			if (current != null && canRemove)  {
 				header.size -= 1;
 				current = current.next;
 
@@ -417,6 +414,8 @@ public class SortedLinkedListWithHeader<T extends Comparable<? super T>> impleme
 				else
 					header.first = current;		// Deleted the first element
 
+			} else {
+				throw new IllegalStateException();
 			}
 
 			canRemove = false;
