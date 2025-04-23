@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ClosedHashingWithColision",
+            "request": "launch",
+            "mainClass": "core.ClosedHashingWithColision",
+            "projectName": "parametricindex"
+        },
+        {
+            "type": "java",
+            "name": "ClosedHashing",
+            "request": "launch",
+            "mainClass": "core.ClosedHashing",
+            "projectName": "parametricindex"
+        },
+        {
+            "type": "java",
             "name": "SortedLinkedListWithHeader",
             "request": "launch",
             "mainClass": "core.SortedLinkedListWithHeader",

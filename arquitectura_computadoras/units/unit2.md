@@ -116,9 +116,16 @@ Los decodificadoes se pueden reutilizar solo si el tamano de los bit significati
 
 **Ejercicio**: Si tengo un sensor de humedad y temperatura, este tendra una patita read, otra CS, 8 para el BD y una para la direccion(o temp o humedad). Por lo tanto necesito un decodificador que tome todas las direcciones y para una direccion prenda el CS del sensor. 
 
+> **NOTA**: Si solo podes usar un deco con 3 patitas y solo vas a usar una, conectar las patitas restantes a la misma. Dejarlas sin conectar las deja vunerables a ruido. 
+> **NOTA**: La ROM generalmente conviene colocarla al final del las direcciones de memoria debido a que es muy poco probable que se modifique, mientras que la RAM puede aumentarse, etc. De manera que deja espacio para perifericos que sean modificables.
+
 ### Pin IO/M
 
 En los primeros procesadores, Intel necesitaba poder acceder a mas perifericos sin tener que modificar los registros. Entonces, se agrego al CPU un pin llamado IO/M(Input/Output memory(en realidad la barra deberia ir arriba de la M para indigar que esta negada)), de manera que permitio tener dos mapas de memoria, uno para la memoria y otro para los perifericos(basicamente son identicos).
 Para ello se crearon dos intrucciones nuevas de 16 bits, `IN` y `OUT`. Si un programadoe escribe `mov ah, [1234h]`, la direccion va a salir por BA, el IO/M va a estar en 0, read en 1 y write en 0. IO/M va a salir al decodificador para prender el CS de la memoria. Si un programador escribe `IN ah, 1234h`, notar que **no** tiene corchetes, el IO/M va en 1 y el CS de algun periferico se va a prender. Basicamente, son maneras de agregar funcionalidad, como `*` en C.
 
 > **NOTA**: Nosotros solo vamos a usar cosas que funcionan con PC, por ejemplo, el teclado esta en la direccion 60h.
+
+### Palabra y procesador trasparente
+
+Una palabra para un procesador generico siempre sera la cantidad de bits del BUS de datos, mientras que para los procesadores Intel, para mantener retrocompatibilidad, las palabras son de 1 byte. Por otro lado, en ASM Intel, una `word` son 2 bytes. Un procesador transparente es aquel que realiza su función sin alterar el contenido original o sin que el usuario lo perciba directamente. Por ejemplo, las memorias de 8 bits deben funcionar con el procesador de BD de 16 bits. 
