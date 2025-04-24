@@ -71,7 +71,7 @@ Hay dos maneras de resolverlo, la mas complicada es la primera:
 1. **Open Addressing or Closed Hashing**: Cuando hace la colision, busca un lugar disponible dentro de la tabla. Guarda los elementtos que colisionaros denttro de la misma tabla.
 2. **Open hashing or Closed Addressing or Chaining**: Fuera del hashing se almacenan los elementos que colisionaros, pueden ser listas o arboles. Comienza a degradarse e orden 1.
 
-### Open Addressing
+### Closed hashing
 
 Cada ranura puede tener null(vacio o baja fisica). Aunque la ranura no este vacia puede ser que el elemento no este(Se haya borrado, pero no se lo quito), ya que hay que manejar el concepto de bajas logicas(ademos de las fisicas). Es decir, una ranura representa 3 estados. Formas de resolver:
 
@@ -91,4 +91,25 @@ El intervalo entre ranuras a usar, si hubiera colision, sera cuadratica.
 
 #### Deterministica
 
-Siempre conviene que la ulltima sea rehasheo lineal.
+Siempre conviene que la ultima sea rehasheo lineal.
+
+### Open hashing
+
+Linear hashing es muy eficiente para implementar la resolucion de colisiones, la desventaja se presenta cuando el factor de cargo es alto(primary clustering).
+
+Lo que hace almacenar los elementos colisinados fuera del hashing. Cada ranura puede tener null, o bien una estructura auxiliar con las componentes que colisionaron en dicha ranura(zona overflow). La zona overflow se administra a demanda(no a prori).
+
+- **Borrado**: Si la ranura esta null, el elemento no existia. Si hay zona overflow, se lo navega para borrarlo(si estuniera)....
+- **Buscado**: Si la ranura esta en null, el elemento no restta..
+- **Insertar**: Si se le asigna una ranura vacia, se habilita la zona de overflow. La insercion se hace...
+
+#### Factor de carga
+
+Hay varias maneras, global y local, de implementarlo. Global sera por cantidad de zonas de overflow y local seria por el size de las zonas de overflow, ambas validas. Lo de rehasher es similar, se dumplica una vez se pasa el threshold. Idealmente, deberia haber un numero primo de slots, pero en la practica se termina usando metodos mas sensillos.
+
+#### Aclaraciones
+
+En hashing, no hay orden de elementos. No es razonable pedir que el key sea comparable y no vamos a usar una lista ordenada simplementte ordenada, sino una lista. Podemos usar LinkedList.
+
+En la implementacino de Java, si una ranura tiene poca ocupacion se usa una lista, pero si tiene muchos elementos, se usa un arbol balanceado, por lo tanto la busqueda termina siendo O(log(N)). Ordenando por ee hashCode. Sin embargo, podria ser que el hashCode sea el mismo para dos elementos distintos(depende del usuario), entonces tienen una estrategia en la cual implementan repetidos en el arbol, es una implementacion especial de java dedicada a esto.
+
