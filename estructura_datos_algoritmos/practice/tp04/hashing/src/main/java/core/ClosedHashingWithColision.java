@@ -51,38 +51,27 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		if (loadFactor() > THRESHOLD)
 			rehash();
 
-		if (Lookup[ hash( key) ] == null || Lookup[ hash( key) ].deleted) {	// If its removed, add it
-			Lookup[hash(key)] = new Slot<K, V>(key, data);
-			Lookup[ hash( key) ].deleted = false;
+		int i = hash( key);
+		int firstDeleted = -1;
+
+		while (Lookup[i] != null && Lookup[i].key != key) {	// Go until match or physically removed
+			if (firstDeleted == -1 && Lookup[i].deleted)	// Store first deleted
+				firstDeleted = i;
+
+			i = (i+1) % Lookup.length;
+		}
+
+		if (Lookup[i] == null) {
+			if (firstDeleted != -1)
+				Lookup[firstDeleted] = new Slot<K, V>(key, data);
+			else {
+				Lookup[i] = new Slot<K, V>(key, data);
+			}
 		} else {
-			int i = hash( key) + 1;
-			int firstDeleted = -1;
-
-			while (i < Lookup.length && Lookup[i] != null && Lookup[i].key != key) {	// Go until match or physically removed
-				if (firstDeleted == -1 && Lookup[i].deleted)	// Store first deleted
-					firstDeleted = i;
-
-				i++;
-			}
-
-			if (i >= Lookup.length) {
-				if (firstDeleted != -1)
-					Lookup[firstDeleted] = new Slot<K, V>(key, data);
-				else
-					throw new RuntimeException("Reached end of array");
-			}else if (Lookup[i] == null) {
-				if (firstDeleted != -1)
-					Lookup[firstDeleted] = new Slot<K, V>(key, data);
-				else {
-					Lookup[i] = new Slot<K, V>(key, data);
-				}
-			} else {
-				Lookup[i].value = data;	// Update value
-			}
-
-			Lookup[i].deleted = false;
-		} 
-
+			Lookup[i].value = data;	// Update value
+			Lookup[i].deleted = false;	
+		}
+ 
 		size++;
 	}
 	
@@ -122,24 +111,17 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		if (key == null)
 			return null;
 
-		Slot<K, V> entry = Lookup[hash(key)];
-		if (entry == null)
-			return null;
+		int i = hash( key);
+		int stopIndex =  (hash(key) + Lookup.length-1) % Lookup.length;	// So it doesnt loop
+		while (Lookup[i] != null && i != stopIndex) {
 
-		if (Lookup[ hash( key) ].deleted || !key.equals(entry.key)) {	// Look for it
-			int i = hash( key);
-			while (Lookup[i] != null && Lookup[i++].key == key) {
-				if (!Lookup[i].deleted || key.equals(Lookup[i].key))
-					return Lookup[i].value;
+			if (Lookup[i].key.equals(key) && !Lookup[i].deleted)
+				return Lookup[i].value;
 
-				if (i >= Lookup.length)
-					return null;
-			}
-
-			return null;	// If it reached here, then it didnt find it
+			i = (i+1) % Lookup.length;
 		}
 
-		return entry.value;
+		return null;
 	}
 
 	public boolean remove(K key) {
@@ -150,26 +132,26 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		if (Lookup[ hash( key) ] == null)	// Physically removed
 			return false;
 		
-		if (Lookup[ hash( key) ].deleted) {	// logically removed
 
-			int i = hash( key);
-			while (Lookup[i] != null && Lookup[i].key != key) {
-				i++;
-				if (i >= Lookup.length)
-					return false;
+		int i = hash( key);
+		int stopIndex =  (hash(key) + Lookup.length-1) % Lookup.length;	// So it doesnt loop
+		while (Lookup[i] != null) {
+			if (i == stopIndex)
+				return false;
 
+			if (Lookup[i].key.equals(key) && !Lookup[i].deleted) {
+				if (Lookup[(i+1) % Lookup.length] == null)
+					Lookup[ i ] = null;	// Remove it physically
+				else
+					Lookup[i].deleted = true;	// Remove it logically
+
+				size--;
+				return true;
 			}
 
-			if (Lookup[i] == null || Lookup[i].deleted)	// Couldnt find it
-				return false;
-			else if (Lookup[i + 1] == null)
-				Lookup[ i ] = null;	// Remove it physically
-			else
-				Lookup[i].deleted = true;	// Remove it logically
-
-			size--;
+			i = (i+1) % Lookup.length;
 		}
-		
+
 		return false;
 	}
 
@@ -178,6 +160,8 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		for(int rec= 0; rec < Lookup.length; rec++) {
 			if (Lookup[rec] == null)
  				System.out.println(String.format("slot %d is empty", rec));
+			else if (Lookup[rec].deleted)
+				System.out.println(String.format("slot %d is logically deleted", rec));
 			else
 				System.out.println(String.format("slot %d contains %s",rec, Lookup[rec]));
 		}
@@ -222,6 +206,11 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		myHash.insertOrUpdate(67, "Layla");
 		myHash.insertOrUpdate(77, "Layla");
 		myHash.insertOrUpdate(66, "Alex");
+
+		myHash.remove(32);
+		myHash.remove(52);
+		myHash.insertOrUpdate(32, "Lo");
+		myHash.remove(52);
 		myHash.dump();
 
 		System.out.println(String.format("Current size is %d, and load factor is %f", myHash.size(), myHash.loadFactor()));

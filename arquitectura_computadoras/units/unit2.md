@@ -128,4 +128,4 @@ Para ello se crearon dos intrucciones nuevas de 16 bits, `IN` y `OUT`. Si un pro
 
 ### Palabra y procesador trasparente
 
-Una palabra para un procesador generico siempre sera la cantidad de bits del BUS de datos, mientras que para los procesadores Intel, para mantener retrocompatibilidad, las palabras son de 1 byte. Por otro lado, en ASM Intel, una `word` son 2 bytes. Un procesador transparente es aquel que realiza su función sin alterar el contenido original o sin que el usuario lo perciba directamente. Por ejemplo, las memorias de 8 bits deben funcionar con el procesador de BD de 16 bits. 
+Una palabra para un procesador generico siempre sera la cantidad de bits del BUS de datos o de los registros(La cantidad de bits que se pueden obtener en un ciclo). Por otro lado, en ASM Intel, una `word` son 2 bytes. Un procesador transparente es aquel que realiza su función sin alterar el contenido original o sin que el usuario lo perciba directamente. Por ejemplo, las memorias de 8 bits deben funcionar con el procesador de BD de 16 bits. 
