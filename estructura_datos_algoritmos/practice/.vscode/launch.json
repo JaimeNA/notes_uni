@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "StringEval",
+            "request": "launch",
+            "mainClass": "core.C2_2022.StringEval",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "Corredores",
+            "request": "launch",
+            "mainClass": "core.C2_2022.Corredores",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "ClosedHashingWithColision",
+            "request": "launch",
+            "mainClass": "core.ClosedHashingWithColision",
+            "projectName": "Hashing"
+        },
+        {
+            "type": "java",
             "name": "OpenHashing",
             "request": "launch",
             "mainClass": "core.OpenHashing",

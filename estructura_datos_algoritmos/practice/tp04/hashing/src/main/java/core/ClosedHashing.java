@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -58,22 +57,6 @@ public class ClosedHashing<K, V> implements IndexParametricService<K, V> {
 
 		if (loadFactor() > THRESHOLD) 
 			rehash();
-	}
-	
-	// My version, havent checked if its ok
-	@SuppressWarnings({"unchecked"})
-	private void rehashAlt(){
-		Lookup = Arrays.copyOf(Lookup, Lookup.length * 2);
-
-		for (int i = 0; i < Lookup.length; i++) {	// Move the elements to their new places
-			Slot<K,V> e = Lookup[i];
-
-			if (e != null && !e.equals(Lookup[hash(e.key)])) {	// Update position of new hash is different
-				Lookup[hash(e.key)] = e;
-				Lookup[i] = null;
-			}
-
-		}
 	}
 
 	// Simple version, aux array

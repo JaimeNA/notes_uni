@@ -1,12 +1,5 @@
 package core;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.function.Function;
 
@@ -57,9 +50,9 @@ public class OpenHashing<K, V> implements IndexParametricService<K, V> {
         if (idx < 0) {
             Lookup[hash(key)].addLast(new Slot<K, V>(key, data));
             size++;
-        } else
+        } else {
             Lookup[hash(key)].get(idx).value = data;
-
+		}
 
 		if (loadFactor() > THRESHOLD) 
 			rehash();
@@ -176,6 +169,7 @@ public class OpenHashing<K, V> implements IndexParametricService<K, V> {
 		myHash.insertOrUpdate(63, "Esther");
 		myHash.insertOrUpdate(67, "Layla");
 		myHash.insertOrUpdate(66, "Alex");
+
 		myHash.dump();
 
 		System.out.println(String.format("Current size is %d, and load factor is %f", myHash.size(), myHash.loadFactor()));

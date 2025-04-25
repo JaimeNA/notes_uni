@@ -39,7 +39,7 @@ public class ClosedHashingTest {
 		myHash.insertOrUpdate(32, "Lo");
 		myHash.remove(52);
         
-        assertEquals(10, myHash.size());
+        assertEquals(9, myHash.size());
     }
 
 }

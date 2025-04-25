@@ -5,13 +5,13 @@ public interface IndexParametricService<K, V> {
 
 	
 	// no acepta nulls ni en key ni en data=> lanza exception
-	// si el key está, realizar un update en el valor
+	// si el key est, realizar un update en el valor
 	// si no existia lo inserta. Si hace falta crece de a chunks
 	void insertOrUpdate(K key, V data);
 
 	
 	// nunca nunca nunca debe tirar exception
-	// devuelve el valor asociado si lo encuentra o null si no está.
+	// devuelve el valor asociado si lo encuentra o null si no est.
 	V find(K data);
 	
 	// nunca nunca nunca debe tirar exception

@@ -1,14 +1,7 @@
 package core;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.function.Function;
-
-import javax.management.RuntimeErrorException;
 
 public class ClosedHashingWithColision<K, V> implements IndexParametricService<K, V> {
 	final private int initialLookupSize= 10;
@@ -29,14 +22,14 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 	}
 
 	// ajuste al tama�o de la tabla
-	private int hash(K key) {
+	private int hash(final K key) {
 		if (key == null)
 			throw new IllegalArgumentException("key cannot be null");
 
 		return prehash.apply(key) % Lookup.length;
 	}
 	
-	public void insertOrUpdate(K key, V data) {
+	public void insertOrUpdate(final K key, final V data) {
 		if (key == null || data == null) {
 			String msg= String.format("inserting or updating (%s,%s). ", key, data);
 			if (key==null)
@@ -54,7 +47,7 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		int i = hash( key);
 		int firstDeleted = -1;
 
-		while (Lookup[i] != null && Lookup[i].key != key) {	// Go until match or physically removed
+		while (Lookup[i] != null && !Lookup[i].key.equals(key)) {	// Go until match or physically removed
 			if (firstDeleted == -1 && Lookup[i].deleted)	// Store first deleted
 				firstDeleted = i;
 
@@ -67,27 +60,14 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 			else {
 				Lookup[i] = new Slot<K, V>(key, data);
 			}
+			size++;
+		} else if (Lookup[i].deleted) {
+			Lookup[i] = new Slot<K, V>(key, data);
+			size++;
 		} else {
 			Lookup[i].value = data;	// Update value
-			Lookup[i].deleted = false;	
 		}
  
-		size++;
-	}
-	
-	// My version, havent checked if its ok
-	private void rehashAlt(){
-		Lookup = Arrays.copyOf(Lookup, Lookup.length * 2);
-
-		for (int i = 0; i < Lookup.length; i++) {	// Move the elements to their new places
-			Slot<K,V> e = Lookup[i];
-
-			if (e != null && !e.equals(Lookup[hash(e.key)])) {	// Update position of new hash is different
-				Lookup[hash(e.key)] = e;
-				Lookup[i] = null;
-			}
-
-		}
 	}
 
 	// Simple version, aux array
@@ -107,7 +87,7 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 	}
 	
 	// find or get
-	public V find(K key) {
+	public V find(final K key) {
 		if (key == null)
 			return null;
 
@@ -124,7 +104,7 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		return null;
 	}
 
-	public boolean remove(K key) {
+	public boolean remove(final K key) {
 		if (key == null)
 			return false;
 		
@@ -172,7 +152,7 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		return this.size;
 	}
 
-	public float loadFactor() {
+	private float loadFactor() {
 		return (float)size() / Lookup.length;
 	}
 
@@ -208,9 +188,6 @@ public class ClosedHashingWithColision<K, V> implements IndexParametricService<K
 		myHash.insertOrUpdate(66, "Alex");
 
 		myHash.remove(32);
-		myHash.remove(52);
-		myHash.insertOrUpdate(32, "Lo");
-		myHash.remove(52);
 		myHash.dump();
 
 		System.out.println(String.format("Current size is %d, and load factor is %f", myHash.size(), myHash.loadFactor()));
