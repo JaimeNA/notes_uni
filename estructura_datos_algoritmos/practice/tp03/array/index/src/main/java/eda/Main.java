@@ -6,7 +6,7 @@ public class Main {
 
         myIndex.initialize(new Integer[] {100, 50, 30, 50, 80, 100, 100, 30}); // 30, 30, 50, 50, 80, 100, 100, 100
 
-        Integer[] range = myIndex.range(50, 100, false, false);
+        Integer[] range = myIndex.range(50, 100, false, true);
 
         for(int i : range) {
             System.out.print(i + " ");

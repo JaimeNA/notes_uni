@@ -142,7 +142,7 @@ public class Evaluator {
                 s += token.toString();
                 s += " ";
             }
-            else {
+            else {  // Compares whats on the stack with what isnt
                 while(!sp.isEmpty() && getPrecedence(sp.peek(), token)) {
                     s += sp.pop();
                     s += " ";

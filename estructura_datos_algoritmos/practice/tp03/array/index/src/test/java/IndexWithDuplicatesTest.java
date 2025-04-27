@@ -10,7 +10,6 @@ public class IndexWithDuplicatesTest {
 
     IndexService<Integer> myIndex = new IndexWithDuplicates<>();
 
-
     @Test
     void ocurrencesTest() {
         assertEquals(myIndex.occurrences(10), 0);

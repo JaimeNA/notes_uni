@@ -18,9 +18,6 @@ public class Corredores {
 
         int mid = (high + low) / 2;
 
-        if (array[mid] == key)  
-            return mid;
-
         if (key <= array[mid])
             return getClosestPositionRec(array, key, low, mid - 1);
 
@@ -38,10 +35,7 @@ public class Corredores {
     
     private int firstOcurrence(int[] array, int key) {
         int i = getClosestPosition(array, key);
-        while (i >= 0 && array[i] >= key)
-            i--;
-
-        return i+1;
+        return i;
     }
 
     // Ot(N), Oe()
@@ -51,8 +45,6 @@ public class Corredores {
         if (leftKey > rightKey || rightKey < array[0] || leftKey > array[array.length-1]) {
             return 0;  
         }
-
-        int toReturn = 0;
 
         int low = -1;
         int high = -1;

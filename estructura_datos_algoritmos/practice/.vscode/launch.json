@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ConcatenarArrays",
+            "request": "launch",
+            "mainClass": "core.sin_fecha.ConcatenarArrays",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "MinPathFinder",
+            "request": "launch",
+            "mainClass": "core.C1_2023.MinPathFinder",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "URLfy",
+            "request": "launch",
+            "mainClass": "core.C1_2022.URLfy",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "eda.Main",
+            "projectName": "Index"
+        },
+        {
+            "type": "java",
             "name": "StringEval",
             "request": "launch",
             "mainClass": "core.C2_2022.StringEval",

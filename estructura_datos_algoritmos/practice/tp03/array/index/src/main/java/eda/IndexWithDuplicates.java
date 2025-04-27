@@ -68,47 +68,55 @@ public class IndexWithDuplicates<T extends Comparable<T>> implements IndexServic
     @Override
     @SuppressWarnings("unchecked")
     public int occurrences(T key) {
-        int toReturn = 0;
-        for (int i = 0; i < elemCount; i++) {
-            if (((T)array[i]).compareTo(key) == 0)
-                toReturn++;
-        }
+        int first = firstOcurrence(key);
+        int last = lastOcurrence(key);
 
-        return toReturn;
+        if(first >= 0 && first < elemCount && ((T)array[first]).equals(key))
+            return first - last;
+
+        return 0;
     }
 
     // Si no existe la key, devuelve donde insertarla
     // Si existe, devuelve la posicion de alguna repeticion
     @SuppressWarnings("unchecked")
-    private int getClosestPositionAlt(T key) {
-        int closest = 0;
+    private int getClosestPositionIt(T key, int left, int right) {
 
-        while (closest < elemCount && ((T)array[closest]).compareTo(key) < 0) {
-            closest++;
+        while (left <= right) {
+
+            int mid = (left + right) / 2;
+
+            // Element is smaller or equal than mid(if its equal, go check if there are any earlier occurrences)
+            if (((T)array[mid]).compareTo(key) >= 0) {
+                right = mid - 1;
+
+            // Else the element can only be greater
+            } else {
+                left = mid + 1;
+            }  
         }
 
-        return closest;
+        // No Element Found
+        return left;
     }
     
     private int getClosestPosition(T key) {
         return getClosestPositionRec(key, 0, elemCount - 1);
     }
 
+    // Returns first occurrence
     @SuppressWarnings("unchecked")
-    private int getClosestPositionRec(T key, int low, int high) {
-        if (low > high) {
-            return low;
+    private int getClosestPositionRec(T key, int left, int right) {
+        if (left > right) {
+            return left;
         }
 
-        int mid = (high + low) / 2;
+        int mid = (right + left) / 2;
 
-        // if (array[mid].compareTo(key) == 0)  // I need to return the most left value
-        //     return mid;
+        if (((T)array[mid]).compareTo(key) >= 0)
+            return getClosestPositionRec(key, left, mid - 1);
 
-        if (key.compareTo(((T)array[mid])) <= 0)
-            return getClosestPositionRec(key, low, mid - 1);
-
-        return getClosestPositionRec(key, mid + 1, high);
+        return getClosestPositionRec(key, mid + 1, right);
     }
 
     @Override
@@ -142,7 +150,7 @@ public class IndexWithDuplicates<T extends Comparable<T>> implements IndexServic
     @SuppressWarnings("unchecked")
     public T[] range(T leftKey, T rightKey, boolean leftIncluded, boolean rightIncluded) {
 
-        if (leftKey.compareTo(rightKey) > 0 || rightKey.compareTo(getMin()) < 0 || rightKey.compareTo(getMax()) > 0) {
+        if (leftKey.compareTo(rightKey) > 0 || rightKey.compareTo(getMin()) < 0 || leftKey.compareTo(getMax()) > 0) {
             return (T[]) Array.newInstance(leftKey.getClass(), 0);  // Return empty array
         }
 

@@ -14,7 +14,7 @@ Ahora bien, el indice no solo se utiliza para buscar, sino que tambien hay opera
 
 - Busqueda
 - Insercion
-- Borrado
+- Borrado 
 
 La complejidad temporal de cada una depende del tipo de estructura, por ejemplo, si se trata de un arregla con espacio prealocado, si quiero insertar es simplemente cuestion de insertar al final, pero todo cambia si tiene que ser ordenado o tengo que aumentar el espacio.
 
@@ -87,7 +87,7 @@ $$
     Times(N) = Times(\frac{N}{2}) + \frac{N}{2}
 $$
 
-Sera $O(N \cdot \log(2N))$
+Sera $O(N \cdot \log(N))$
 
 Notas que en el mejor caso si se puede aplicar el teorema maestro y se llega al mismo resultado.
 
@@ -123,7 +123,7 @@ Sera $O(N \cdot \log(N))$
 
 Java es un lenguaje estaticamente tipado, hay que decir que tipo es una variable antes de usarla. Sin generics, son casteos son una posibilidad de errores que se detectan en tiempo de ejecucion. Generics esta pensado para parametrizar y minimizar errores.
 
-Tecnicamente hablando, Generics fue implementado usando la **Tecnica de Erasure**, la cual consiste en reemplazar todo tipo de parametro...(SEGUIR)
+Tecnicamente hablando, Generics fue implementado usando la **Tecnica de Erasure**, la cual consiste en reemplazar todo tipo de parametro con su "bound/restriccion" y si no lo hay reemplaza por Objects.
 
 **Por ejemplo**:
 

@@ -11,7 +11,7 @@ Se denota $\Sigma$ y es el conjunto de simbolos o caracteres.
 
 Dado un alfabeto $\Sigma$ y $k_{ \ge 0} \in N$, un string `S` es un elemento de $\Sigma^k$
 
-La longitud del stt=ring es $k$ y si $k=0$ entonces se lo denota $\lambda$. 
+La longitud del string es $k$ y si $k=0$ entonces se lo denota $\lambda$. 
 
 ## Por que se lo denota $\lambda$?
 
@@ -93,7 +93,7 @@ Soundex siempre devuelve un `OUT` de exactamente 4 caracteres formados por:
 1. Pasar todo a mayuscula y dejar solo las letras(digitos, simbolos de punctuacion, espacio, etc., se eliminan)
 2. Colocar `OUT[0] = IN[0]` - La primera se la quedan pues es la mas importante
 3. Se calcula la variable `last` como el peso fonetico de `IN[0]`
-    3,1 Calcular variable `current` con un peso fonetico de `iter`. Si es diferente a 0 y no concide con `last`.
+    3.1 Calcular variable `current` con un peso fonetico de `iter`. Si es diferente a 0 y no concide con `last`.
     3.2 `last = current`
 4. Para cada letra en `IN`, iterar hasta completar 3 digitos o terminar de procesar `IN`. 
 
@@ -111,7 +111,7 @@ Comparo caracter a caracter y cuento cuantas veces coicidieron. Si ninguno conci
 
 ### Metaphone
 
-Aparece en 1990 y presenta mejoras en relacion a Soundex, no hace la clasificacion, sino que la salida son letras que representan los osnidos.
+Aparece en 1990 y presenta mejoras en relacion a Soundex, no hace la clasificacion, sino que la salida son letras que representan los sonidos.
 Genera un encoding de longitud arbitraria. En wikipedia esta bien documentado el algoritmo, pero recomiendad usar la version en ingles pues es la que esta mejor explicada.
 
 > Se recomienda ver la implementacion en `apache/commons-codec` una vez implementaste tu version, ahi hay muchos algoritmos conocidos.
@@ -170,7 +170,7 @@ La ultima celda sera el resultado.
 
 #### Normalizacion
 
-La distancia es un numero cualquiero, si quiero un numero entre 0 y 1, se obtiene de:
+La distancia es un numero cualquiera, si quiero un numero entre 0 y 1, se obtiene de:
 
 $$
     LevenshteinNormalize(str1, str2) = 1 - \frac{Levenshtein(str1, str2)}{\max{(str1.len, str2.len)}}
@@ -222,7 +222,7 @@ Si Q es 1 se generan componentes de longitud 1. Si Q es 2 se generan **bi-gramas
 
 #### String matching
 
-Para comparar dos strings, se compararn los arreglos de dos palabras y se cuenta cuantos elementos tienen en comun. Luego, la distancia sera la cantidad de elementos en comun. La implementacion que es mas usada, es tri-grama y esa es la que vamos a usar nosottros. Si al comparar aparece el mismo patron dos veces en uno y una vez en el otro, solo se cuenta una vez, es decir, la comparacion es 1 en 1.<D-p>
+Para comparar dos strings, se compararn los arreglos de dos palabras y se cuenta cuantos elementos tienen en comun. Luego, la distancia sera la cantidad de elementos en comun. La implementacion que es mas usada, es tri-grama y esa es la que vamos a usar nosottros. Si al comparar aparece el mismo patron dos veces en uno y una vez en el otro, solo se cuenta una vez, es decir, la comparacion es 1 en 1.
 
 #### Normalizacion
 
@@ -302,7 +302,7 @@ Es muy astuta la implementacion y tiene complejidad temporal O(n).
 
 Para calcular el `search` sin el **backtracking**, avanza entre la tabla del `query` y el `target`, cuando no haya coincidencias se **shifttea** el `query` de la siguiente manera:
 
-...(Falta completar)
+Supongamos que un `rec` que apunta al caracter en `target` y que `pqueary` que apunta a un caracter en `query`. Mientras haya coincidencia, avanzo en ambos. Cuando no la haya se **shiftea** query a `next[pquery-1]`, salvo que `pquery` sea 0, en cuyo caso hay que avanzar `rec` en `target`.
 
 Finalmente, la complejidad temporal sera O(n+m)
 

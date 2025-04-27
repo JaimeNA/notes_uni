@@ -14,7 +14,7 @@ public class Soundex {
         char[] in = in_str.toCharArray();
         char[] out = new char[CODE_LENGTH];
 
-        // Step twp
+        // Step two
         out[0] = in[0];
 
         // Step three 
