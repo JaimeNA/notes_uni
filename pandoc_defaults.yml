@@ -1,5 +1,6 @@
 # Pandoc default settings for converting Markdown to PDF
 pdf-engine: xelatex
+include-in-header: /home/jasha/personal_repos/notes_uni/note_style.tex
 
 # Enable raw LaTeX so you can use \[ \] math blocks
 from: markdown
