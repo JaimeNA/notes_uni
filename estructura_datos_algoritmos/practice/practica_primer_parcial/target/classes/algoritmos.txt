@@ -25,4 +25,4 @@ BigO:
 
     a < B^d -> O(N^d)
     a = b^d -> O(N^d * log(N))
-    a > b^d -> O(N^(log_b(a)))
+    a > b^d -> O(N^(log_b(a)))j

@@ -13,26 +13,28 @@ import java.util.TreeMap;
 public class Main {
     public static void main(String[] args) {
         
-        String[] words = new String[100]; // Bad
-        try {   // Really bad
-            words = getWordsLowerCase("/home/jasha/Documents/notes_uni/estructura_datos_algoritmos/practice/tp02/phonicalgorithms/product.txt");
-        } catch(Exception e) {
-            System.out.println("File not found or invalid data");
-        }
+        System.out.println(QGrams.qGrams("JOHN", "JOE", 3));
 
-        System.out.println("Found words: ");
+        // String[] words = new String[100]; // Bad
+        // try {   // Really bad
+        //     words = getWordsLowerCase("/home/jasha/personal_repos/notes_uni/estructura_datos_algoritmos/practice/tp02/phonicalgorithms/product.txt");
+        // } catch(Exception e) {
+        //     System.out.println("File not found or invalid data");
+        // }
 
-        for (String str : words) {
-            System.out.println(str);
-        }
+        // System.out.println("Found words: ");
 
-        String[] results = search(words, "seca plato");
+        // for (String str : words) {
+        //     System.out.println(str);
+        // }
 
-        System.out.println("Resultados de la busqueda:");
+        // String[] results = search(words, "seca plato");
 
-        for (String str : results) {
-            System.out.println(str);
-        }
+        // System.out.println("Resultados de la busqueda:");
+
+        // for (String str : results) {
+        //     System.out.println(str);
+        // }
     }
 
     public static String[] search(String[] words, String query)

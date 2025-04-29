@@ -8,7 +8,10 @@ public class QGrams {
 
     public static float qGrams(String str1, String str2, int q) {
 
-        return 1 - ((float)sum(str1, str2, q) - notShared(str1, str2, q)) / sum(str1, str2, q);
+        int sum = str1.length() + 2*(q-1) + str2.length();
+        int shared = shared(str1, str2, q); 
+
+        return (float)(shared*2) / sum;
     }
 
     public static void printTokens(String str, int q) {
@@ -51,18 +54,6 @@ public class QGrams {
         }
         
         return count;
-    }
-
-    private static int notShared(String str1, String str2, int q){
-        return sum(str1, str2, q) - 2*shared(str1, str2, q);
-    }
-
-    private static int sum(String str1, String str2, int q) {
-
-        HashMap<String, Integer> s1 = nGrams(str1, q);
-        HashMap<String, Integer> s2 = nGrams(str2, q);
-
-        return s1.keySet().size() + s2.keySet().size();
     }
 
 }

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NWordsQGrams",
+            "request": "launch",
+            "mainClass": "core.parcial_1.NWordsQGrams",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
             "name": "ConcatenarArrays",
             "request": "launch",
             "mainClass": "core.sin_fecha.ConcatenarArrays",
