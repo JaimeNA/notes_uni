@@ -2,8 +2,6 @@ package core;
 
 import java.util.ArrayList;
 
-import javax.management.RuntimeErrorException;
-
 public class KMP {
 
 	private static int[] nextComputation1(char[] query) {

@@ -1,4 +1,4 @@
-# Hashing
+# Unidad 4: Hashing
 
 Es una alternativa para solucionar varios problemas, se utiliza para hacer lookup rapidos de alguna componente. Sin embargo, problemas que soluciona:
 

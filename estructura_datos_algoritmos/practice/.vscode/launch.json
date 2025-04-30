@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LaberintoFix",
+            "request": "launch",
+            "mainClass": "core.C1_2025.LaberintoFix",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "Laberinto",
+            "request": "launch",
+            "mainClass": "core.C1_2025.Laberinto",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
+            "name": "SortedCompactedList",
+            "request": "launch",
+            "mainClass": "core.C1_2025.SortedCompactedList",
+            "projectName": "Practica-Primer-Parcial"
+        },
+        {
+            "type": "java",
             "name": "NWordsQGrams",
             "request": "launch",
             "mainClass": "core.parcial_1.NWordsQGrams",
