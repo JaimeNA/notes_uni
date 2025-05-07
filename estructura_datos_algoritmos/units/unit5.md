@@ -11,7 +11,8 @@ Para la implementacion tenemos dos casos, si el token es un parentesis entonces 
 ### Caracteristicas
 
 - Permite representar expresiones en notacion infija(no esta ordenado por el contenido).
-- ....
+- Asi como usabamos una pila y una tabla de precedencia de operadores para pasar de una expresion en notacion infija a postfija(para eliminar ambiguedad) y luego con una pila evaluabamos la expresion, 
+ahora tambien a partir de una expresion contruiremos el arbol de expresiones asociado y lo evaluaremos para devolver el valor de la expresion.
 
 ### Aclaracion
 

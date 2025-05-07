@@ -48,68 +48,41 @@ public class ExpTreeVars implements ExpressionService {
 		  lineScanner.close();
 	}
     
+    
     @Override
     public double eval() {
-       Stack<Double> sp = new Stack<>();
+       return evalRec(root);
+    }
 
-       Scanner scannerLine = new Scanner(root.postorderNode()).useDelimiter("\\s+");
-
-        while(scannerLine.hasNext() )
-        {
-
-            String token = scannerLine.next();
-            System.out.println(token);
-            if (token.matches("\\+|-|/|\\*|\\^")) {
-
-                // First, get operands
-                if (sp.isEmpty())
-                    throw new RuntimeException("Invalid expression");
-                Double a = sp.pop();
-
-
-                if (sp.isEmpty())
-                    throw new RuntimeException("Invalid expression");
-                Double b = sp.pop();
-
-                switch (token) {
-                    case "+":
-                        sp.push(a + b);
-                        break;
-                
-                    case "-":
-                        sp.push(b - a);   // Not conmutative like sum
-                        break;
-                
-                    case "*":
-                        sp.push(a * b);
-                        break;
-                
-                    case "/":
-                        sp.push(b / a);
-                        break;
-                
-                    case "^":
-                        sp.push(Math.pow(b, a));
-                        break;
-                }
-            } else if (token.matches("-{0,1}[0-9]+")) {
-                Double num = Double.parseDouble(token);
-                sp.push(num);
-            } else if (variables.containsKey(token)) {
-                Double num = variables.get(token);
-                sp.push(num);
-            }
+    private double evalRec(Node current) {
+        if (current.left == null || current.right == null) {
+            if (variables.containsKey(current.data))
+                return variables.get(current.data);
             else
-                throw new RuntimeException("Invalid token");
-            
+                return Double.parseDouble(current.data);
         }
 
-        if (sp.isEmpty())
-            throw new RuntimeException("Invalid expression");
+        Double a = evalRec(current.right);
+        Double b = evalRec(current.left);
 
-        scannerLine.close();
-
-        return sp.pop();
+        switch (current.data) {
+            case "+":
+                return a + b;
+            
+            case "-":
+                return a - b;
+            
+            case "*":
+                return a * b;
+            
+            case "/":
+                return a / b;
+            
+            case "^":
+                return Math.pow(a, b);
+        }
+    
+        throw new RuntimeException("Invalid symbol");
     }
 
     @Override
