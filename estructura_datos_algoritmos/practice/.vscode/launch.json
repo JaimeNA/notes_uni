@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ExpTreeVars",
+            "request": "launch",
+            "mainClass": "core.ExpTreeVars",
+            "projectName": "exptree"
+        },
+        {
+            "type": "java",
+            "name": "ExpTree",
+            "request": "launch",
+            "mainClass": "core.ExpTree",
+            "projectName": "exptree"
+        },
+        {
+            "type": "java",
             "name": "LaberintoFix",
             "request": "launch",
             "mainClass": "core.C1_2025.LaberintoFix",
