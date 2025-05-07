@@ -1,0 +1,30 @@
+1. Si el IP empieza en la direccion 0xFFFFFF00, que le debe especificar al programador? 
+    Rta: Se le debe especificar que su programa debe comenzar en esa direccion de memoria.
+
+2. Que es una system call? Quien la escribio? Donde se encuentra ubicada?
+    Rta: na system call es función ofrecida por el sistema operativo al usuario para realizar
+    determinadas operaciones. Fueron escritas por los desarrolladores del kernel de (en este caso) Linux y
+    se encuentran ubicadas en el kernel space, donde también se encuentra el sistema operativo.
+
+3. Que consideraciones debe tener para poder compilar y linkeditar un archivo .asm y un archivo .c?
+    Rta: Se deben tener en cuenta las convenciones de C, es decir, los parametros se pasan por stack(32 bits) o tambien por registros(64 bits), se retorna en eax.
+    En el archivo C, las funciones que queramos llamar del archivo .asm deben tener su prototipo, para que el linkeditor pueda luego buscar esa funcion en el asm. 
+    En el archivo .asm, las funciones que deben ser utilizadas por el .C deben ser declaradas como GLOBAL y las funciones que seran usadas por el .asm deberan ser declaradas
+    con el EXTERN. Se deben compilar los codigo objetos para la misma arquitectura.
+
+4. Que es el numero ID que aparece en la clase teorica?
+    Rta: Los programas que están corriendo tienen un valor identificatorio en el sistema
+    operativo. Se llama “pid” o process id. El número de ID para las sys calls es un número de identificación único que tiene cada una para
+    saber a cuál estamos llamando. Es el número que pasamos como parámetro en eax.
+
+5. Hay algun mecanismo para evitar que mediante el overflow se permita ejecutar otra funcion?
+    Rta: Para evitar que esto ocurra el compilador agrega datos a la pila durante la ejecucion del programa, estos se conocen como canary y son obtenidos
+    de una posicion de memoria preestablecida. De manera que si al terminar de ejecutar una funcion, se verifica que el canary ya no esta(comparando el dato de
+    la posicion de memoria donde se lo coloca con el dato de donde fue extraido al inicio), entonces se corre una rutina que se encarga del overflow.
+    Se coloca entre el EBP y las variables locales. 
+
+Notas: 
+    - Si se pasa una struct como parametro a una funcion, internamente se reserva espacio en el stack y se copian los valores del struct ahi. 
+    Si se pasa por parametro, se pasa una referencia al struct.
+    - El stack siempre se alinea a 4 bytes por convencion y para evitar bugs y/o errores.
+    - No se debe pasar como parametro a una funcion de assembler un char* declarado como constante, pues este no podra ser modificado y dara seg fault.
