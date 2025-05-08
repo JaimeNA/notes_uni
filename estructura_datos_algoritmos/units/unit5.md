@@ -42,4 +42,63 @@ Es importante poder hacerlo de manera formal, hace que el proceso sea mucho mas 
         assertEquals( "15 3 + ", outContent.toString());
 ```
 
+---
+
+## Arboles binarios en general
+
+Si quisieramos guardar los datos en un arcihvo de texto, para luego recontruirlo en otro momento desde el archivo de texto, algun recorrido vendria bien. 
+Que convenciones hay que tener en cuenta para generar un archivo de texto en el cual se guarde un arbol y que tmb se pueda reconstruir?
+Queremos poder: 
+
+- Recontruir leyendolo.
+- Sin haber contruido nunca, editar un archivo, escribir la info con su estructura y leer.
+
+Podria servir: preorder, postorder, inorder y por niveles. **Por niveles** es la mas facil de leer para las personas y mucho mas linda, la representacion coincide con el grafico(cosa que no se puede mantener con las otras opciones). Para pasar a texto, hay que colocal un *dummy*, simbolo para completar los espacios, vamos a usar un metalenguaje `?`(suponiendo que no se usan en los demas datos). Quedaria, por ejemplo:
+
+```
+    * 
+++     -10
+  /
+++     -10  
+ ?3.5
+```
+
+Pasa a:
+
+```
+* 
+++ -10 
+? / ? ? 
+? ? ++ -10 ? ? ? ?
+? ? ? ? ? 3.5
+```
+
+### Algoritmo
+
+Tiene 3 acciones a contemplar
+
+1. Genero raiz y postergo que hay que hacer con ella, hasta que llegue el token. Ni siquiera se si tendra cero, uno o dos hijos. Le asigno peso a cada nodo, para diferenciarlos cuando se resuelve esto en papel(primero es $20).
+2. Saco pendiente y leo token. Completo dato, como no se si $20 tendra cero, uno o dos hijos(depende del token), pido que cuando llegue el momento se los proceso, los agrego al queue a los hijos.
+3. Si me encuentro con signo de pregunta, tengo que consumirlo y avisar que tiene que consumir dos token, entonces agrego al queue dos nodos null.
+
+Todo esto se realiza con un queue interno.
+
+> **Nota**: En informatica, codigo y dato son intercambiables. Si es dato puedo pasarlo a accion y viceversa.
+
+### Definicion: Arbol binario completo(complete)
+
+Un arbol binario es completo si todos sus niveles tienen todos los nodos posibles, excepto posiblemente el ultimo. El ultimo nivel tiene los nodos lo mas a la izquierda posible(completa de izquierda a derecha).
+]
+### Definicion: Arbol binario lleno(full)
+
+Un arbol binario esta lleno si todos los niveles tienen todos los nodos posibles. No es lo mismo que el completo necesariamente.
+
+---
+
+**La estrategia de serializar a disco generico un arbol de que tipo respecto al concepto de completitud/lleno?**
+
+Es completo, lo garantiza. No necesariamente full al menos que hayamos especificado que complete hasta el final el ultimo nivel.
+
+---
+
 

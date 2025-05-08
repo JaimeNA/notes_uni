@@ -3,6 +3,7 @@
 #include <lib.h>
 #include <moduleLoader.h>
 #include <naiveConsole.h>
+#include <colorConsole.h>
 
 extern uint8_t text;
 extern uint8_t rodata;
@@ -100,5 +101,9 @@ int main()
 	ncNewline();
 
 	ncPrint("[Finished]");
+
+	ncClear();
+
+	ccPrint("ARQUI", 129);
 	return 0;
 }

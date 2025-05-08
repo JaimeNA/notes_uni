@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BinaryTreeAlt",
+            "request": "launch",
+            "mainClass": "core.BinaryTreeAlt",
+            "projectName": "binarytree"
+        },
+        {
+            "type": "java",
+            "name": "BinaryTree",
+            "request": "launch",
+            "mainClass": "core.BinaryTree",
+            "projectName": "binarytree"
+        },
+        {
+            "type": "java",
             "name": "ExpTreeVars",
             "request": "launch",
             "mainClass": "core.ExpTreeVars",
