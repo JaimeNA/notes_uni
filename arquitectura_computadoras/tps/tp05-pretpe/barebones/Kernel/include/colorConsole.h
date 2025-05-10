@@ -9,7 +9,7 @@ void ccNewline();
 void ccPrintDec(uint64_t value, uint8_t color);
 void ccPrintHex(uint64_t value, uint8_t color);
 void ccPrintBin(uint64_t value, uint8_t color);
-void ccPrintBase(uint64_t value, uint8_t base, uint8_t color);
+void ccPrintBase(uint64_t value, uint32_t base, uint8_t color);
 void ccClear();
 
 #endif

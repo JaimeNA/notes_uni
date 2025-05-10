@@ -5,6 +5,11 @@
 #include <naiveConsole.h>
 #include <colorConsole.h>
 
+extern uint8_t rtc(uint8_t selection);
+extern uint8_t keyboard_status();
+extern char keyboard_output();
+
+
 extern uint8_t text;
 extern uint8_t rodata;
 extern uint8_t data;
@@ -81,6 +86,23 @@ void * initializeKernelBinary()
 	return getStackBase();
 }
 
+int getSeconds() {
+	return rtc(0);
+}
+
+int getMinutes() {
+	return rtc(2);
+}
+
+int getHours() {
+	return rtc(4);
+}
+
+uint8_t pollKeyboard() {
+	while(!(keyboard_status() & 0x01));
+	return keyboard_output();
+}
+
 int main()
 {	
 	ncPrint("[Kernel Main]");
@@ -104,6 +126,23 @@ int main()
 
 	ncClear();
 
-	ccPrint("ARQUI", 129);
+	ccPrint("ARQUITECTURA DE COMPUTADORAS :3", 0xF2);
+	ccNewline();
+	ccNewline();
+	ccNewline();
+
+	ccPrint("Current time: ", 0x0F);
+	ccPrintDec(getHours(), 0x0F);
+	ccPrint(":", 0x0F);
+	ccPrintDec(getMinutes(), 0x0F);
+	ccPrint(":", 0x0F);
+	ccPrintDec(getSeconds(), 0x0F);
+
+	for (int i = 0; i < 100; i++) {
+		ccPrintChar(pollKeyboard(), 0x0F);
+	}
+
 	return 0;
 }
+
+

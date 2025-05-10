@@ -1,4 +1,7 @@
 GLOBAL cpuVendor
+GLOBAL rtc
+GLOBAL keyboard_status
+GLOBAL keyboard_output
 
 section .text
 	
@@ -25,3 +28,40 @@ cpuVendor:
 	mov rsp, rbp
 	pop rbp
 	ret
+
+; uint8_t rtc(uint8_t selection)
+rtc:
+	push rbp
+	mov rbp, rsp
+
+	mov al, dil	; Get selection
+
+	out 70h, al		; Pass selection
+	in al, 71h
+	
+	leave
+	ret
+
+; uint8_t keyboard_status()
+keyboard_status:
+	push rbp
+	mov rbp, rsp
+
+	xor rax, rax
+	in al, 64h		; Read status register
+
+	leave
+	ret
+
+; uint8_t keyboard_output()
+keyboard_output:
+	push rbp
+	mov rbp, rsp
+	
+	xor rax, rax
+	in al, 60h		; Read output register
+
+	leave
+	ret
+
+
