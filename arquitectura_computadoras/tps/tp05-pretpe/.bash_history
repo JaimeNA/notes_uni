@@ -32,3 +32,6 @@ groupadd -g 1000 -o jasha
 docker exec –u jasha -it tp05-pretpe /bin/bash
 docker exec –u jasha -it tp05-pretpe /bin/bashe
 exit
+groupadd -g 1000 -o jasha
+useradd -m -u 1000 -g 1000 -o -s /bin/bash jasha
+exit
