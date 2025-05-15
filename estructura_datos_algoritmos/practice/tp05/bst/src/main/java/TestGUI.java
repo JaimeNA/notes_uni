@@ -59,6 +59,9 @@ public class TestGUI extends Application {
 		System.out.println(myTree.getMax());
 		System.out.println(myTree.getMin());
 		myTree.printByLevels();
+		
+		//myTree.delete(10);
+		//myTree.delete(40);
 
 		return myTree;
 	}

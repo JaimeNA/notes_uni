@@ -3,34 +3,106 @@ package core;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> {
 
     private NodeInner<T> root;
+    private Traversal traversal;
+
+    class BSTInOrderIterator implements Iterator<T> {
+        Stack<NodeTreeInterface<T>> stack;
+        NodeTreeInterface<T> current;
+
+        public BSTInOrderIterator() {
+            stack= new Stack<>();
+            current= root;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return ! stack.isEmpty() || current != null;
+        }
+
+        @Override
+        public T next() {
+            while(current != null) {
+                stack.push(current);
+                current= current.getLeft();
+            }
+
+            NodeTreeInterface<T> elementToProcess= stack.pop();
+            current= elementToProcess.getRight();
+            return elementToProcess.getData();
+        }
+
+    }
+
+    class BSTByLevelIterator implements Iterator<T> {
+        NodeInner<T> current = root;
+        Queue<NodeInner<T>> queue;
+
+        @Override
+        public boolean hasNext() {
+            if (queue == null) {
+                queue = new LinkedList<>();
+
+                if (root != null)
+                    queue.add(root);
+            }
+
+            return queue.isEmpty();
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext())
+                throw new IllegalStateException();
+
+            current = queue.remove();
+
+            queue.add(current.getLeft());
+            queue.add(current.getRight());
+
+            T toReturn = current.getData();
+
+            return toReturn;
+        }
+    }
+
+    // version iterativa
+    public void inOrderIter() {
+        Stack<NodeTreeInterface<T>> stack= new Stack<>();
+        NodeTreeInterface<T> current = root;
+        while ( ! stack.isEmpty() || current != null) {
+            if (current != null) {
+                stack.push(current);
+                current= current.getLeft();
+            } else {
+                NodeTreeInterface<T> elementToProcess = stack.pop();
+                System.out.print(elementToProcess.getData() + "\t");
+                current= elementToProcess.getRight();
+            }
+        }
+    }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<>() {
 
-            @Override
-            public boolean hasNext() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'hasNext'");
-            }
+        switch (traversal) {
+            case INORDER:
+                return new BSTInOrderIterator();
+                
+            case BYLEVELS:
+                return new BSTByLevelIterator();
+        }
 
-            @Override
-            public T next() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'next'");
-            }
-            
-        };
+        throw new IllegalArgumentException("Invalid traversal type");
     }
 
     @Override
     public void setTraversal(Traversal traversal) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTraversal'");
+        this.traversal = traversal;
     }
 
     @Override
@@ -56,7 +128,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         System.out.println(inorderRec(root));
     }
 
-    private String preorderRec(NodeTreeInterface<T> current) {  // This one is no good, need to be delegated to NodeInner. Same with others
+    private String preorderRec(NodeInner<T> current) {  // This one is no good, need to be delegated to NodeInner. Same with others
         
         String toReturn = new String();
 
@@ -71,7 +143,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         return toReturn;
     }
 
-    private String inorderRec(NodeTreeInterface<T> current) {
+    private String inorderRec(NodeInner<T> current) {
 
         String toReturn = new String();
 
@@ -86,7 +158,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         return toReturn;
     }
 
-    private String postorderRec(NodeTreeInterface<T> current) {
+    private String postorderRec(NodeInner<T> current) {
         
         String toReturn = new String();
 
@@ -102,7 +174,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
     }
 
     @Override
-    public NodeTreeInterface<T> getRoot() {
+    public NodeInner<T> getRoot() {
         return root;
     }
 
@@ -111,7 +183,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
 		return getHeightRec(root) - 1; // Dont count the root node
 	}
 
-	public int getHeightRec(NodeTreeInterface<T> current) {
+	public int getHeightRec(NodeInner<T> current) {
 		if (current == null)
 			return 0;
 
@@ -129,7 +201,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         return containsRec(root, myData);
     }
 
-    private boolean containsRec(NodeTreeInterface<T> current, T myData) {
+    private boolean containsRec(NodeInner<T> current, T myData) {
 
         if (current == null)
             return false;
@@ -154,7 +226,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         return getMaxRec(root);
     }
 
-    private T getMaxRec(NodeTreeInterface<T> current) {
+    private T getMaxRec(NodeInner<T> current) {
 
         if (current.getRight() == null)
             return current.getData();
@@ -170,7 +242,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         return getMinRec(root);
     }
 
-    private T getMinRec(NodeTreeInterface<T> current) {
+    private T getMinRec(NodeInner<T> current) {
 
         if (current.getLeft() == null)
             return current.getData();
@@ -184,8 +256,55 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
 
     @Override
     public void delete(T myData) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        if (myData == null)
+            throw new IllegalArgumentException("Argument cannot be null");
+
+        if (root != null)
+            root = deleteRec(root, myData);
+    }
+
+    private NodeInner<T> deleteRec(NodeInner<T> current, T myData) {
+        if (current == null)
+            return null;
+
+        int cmp = current.getData().compareTo(myData);
+
+        NodeInner<T> next = current.getRight();
+
+        if (cmp < 0)
+            next = current.getRight();
+        else if (cmp > 0)
+            next = current.getLeft();
+        else {
+            if (current.isLeaf())
+                return null;
+
+            if (current.getLeft() == null)
+                return current.getLeft();
+
+            if (current.getRight() == null)
+                return current.getRight();
+                
+            // Has both childs
+            T toReplace = getAdyacentLexi(current).getData();
+
+            current = deleteRec(current, toReplace);
+
+            current.setData(toReplace);
+        }
+
+        return deleteRec(next, myData);
+    }
+
+    private NodeInner<T> getAdyacentLexi(NodeInner<T> toDelete) {
+
+        NodeInner<T> current = toDelete.getLeft();
+
+        while (current.getRight() != null) {
+            current = current.getRight();
+        }
+
+        return current;
     }
 
     @Override
@@ -193,9 +312,9 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
         if (root == null)
             return;
         // create an empty queue and enqueue the root node
-        Queue<NodeTreeInterface<T>> queue = new LinkedList<>();
+        Queue<NodeInner<T>> queue = new LinkedList<>();
         queue.add (root);
-        NodeTreeInterface<T> currentNode;
+        NodeInner<T> currentNode;
         
         while (!queue.isEmpty()) {
             currentNode = queue.remove();
