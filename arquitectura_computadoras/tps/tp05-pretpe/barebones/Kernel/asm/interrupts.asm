@@ -13,14 +13,17 @@ GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
 
+GLOBAL sysCall
+
 GLOBAL _exception0Handler
 
 EXTERN irqDispatcher
 EXTERN exceptionDispatcher
 EXTERN ccPrint
 EXTERN keyPress
-
 EXTERN keyboard_output
+
+EXTERN sysCallDispatcher
 
 SECTION .text
 
@@ -129,10 +132,15 @@ _irq00Handler:
 
 ;Keyboard
 _irq01Handler:
-    call keyboard_output
+    ;call keyboard_output
 
-    mov rdi, rax
-    call keyPress
+    ;mov rdi, rax
+    ;call keyPress
+
+	mov rax, 0h
+	mov rdi, 1
+	mov rsi, iq01_msg
+	syscall
 
 	irqHandlerMaster 1
 
@@ -157,6 +165,20 @@ _irq05Handler:
 ;Zero Division Exception
 _exception0Handler:
 	exceptionHandler 0
+
+; int 80h, syscalls. Recieves sysCall code in rax, and args in rdi, rsi, etc
+sysCall:
+   	pushState
+
+	mov rdi, rax
+	mov rsi, rbx
+	mov rdx, rcx
+	
+	call sysCallDispatcher
+
+	popState
+	iretq
+
 
 haltcpu:
 	cli

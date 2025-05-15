@@ -1,5 +1,5 @@
 #include <sysCalls.h>
-#include<colorConsole.h>
+#include <colorConsole.h>
 
 int write(int fd, char * buff, int length) {
     switch (fd) {
@@ -13,4 +13,10 @@ int write(int fd, char * buff, int length) {
     };
 
     return length;  // TODO: improve
+}
+
+void sysCallDispatcher(uint64_t rax, ...) {
+
+    if (rax == 0)
+        write(1, "hola", 0);
 }
