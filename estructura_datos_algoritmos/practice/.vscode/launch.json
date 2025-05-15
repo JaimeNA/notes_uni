@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TestGUI",
+            "request": "launch",
+            "mainClass": "TestGUI",
+            "projectName": "BST"
+        },
+        {
+            "type": "java",
+            "name": "TestGUI",
+            "request": "launch",
+            "mainClass": "TestGUI",
+            "projectName": "bst"
+        },
+        {
+            "type": "java",
+            "name": "BinaryTreeParametric",
+            "request": "launch",
+            "mainClass": "core.BinaryTreeParametric",
+            "projectName": "BinaryTree"
+        },
+        {
+            "type": "java",
+            "name": "BinaryTreeAlt",
+            "request": "launch",
+            "mainClass": "core.BinaryTreeAlt",
+            "projectName": "BinaryTree"
+        },
+        {
+            "type": "java",
             "name": "BinaryTreeAlt",
             "request": "launch",
             "mainClass": "core.BinaryTreeAlt",

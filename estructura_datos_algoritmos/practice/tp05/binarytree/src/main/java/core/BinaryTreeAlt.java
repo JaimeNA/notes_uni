@@ -1,6 +1,5 @@
 package core;
 
-
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,8 +10,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.function.Function;
 
-
-
+// 		---------------- BinaryTreeParametric is more complete ------------------
+// This one is not parametric and the equals implementation doesnt work
 public class BinaryTreeAlt implements BinaryTreeService {
 	
 	private Node root;
@@ -120,8 +119,7 @@ public class BinaryTreeAlt implements BinaryTreeService {
 
 	// Uses ├── , │  and └── 
 	public void printHierarchy() {
-		//System.out.println(printHierarchyRec(root, ""));
-		System.out.println(getTree());
+		System.out.println(printHierarchyRec(root, ""));
 	}
 
 	private String printHierarchyRec(Node current, String padding) {
@@ -174,6 +172,7 @@ public class BinaryTreeAlt implements BinaryTreeService {
 					level.add(null);
 				}
 
+				toReturn += " ";
 			}
 
 			//toReturn += "\n"; 	// For debugging
@@ -191,6 +190,41 @@ public class BinaryTreeAlt implements BinaryTreeService {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+
+		if (o instanceof BinaryTreeAlt other) {
+
+			if (this.root == null || other.root == null)
+				return this.root == other.root;
+
+			return this.root.equals(other.root);
+		}
+
+		return false;
+	}
+
+
+	@Override
+	public int getHeight() {
+		return getHeightRec(root) - 1; // Dont count the root node
+	}
+
+	public int getHeightRec(Node current) {
+		if (current == null)
+			return 0;
+
+		int leftHeight = getHeightRec(current.left);
+		int rightHeight = getHeightRec(current.right);
+
+		if (leftHeight > rightHeight)
+			return getHeightRec(current.left) + 1;
+
+		return getHeightRec(current.right) + 1;
 	}
 
 	// hasta el get() no se evalua
@@ -220,6 +254,32 @@ public class BinaryTreeAlt implements BinaryTreeService {
 			return left == null && right == null;
 		}
 
+		@Override
+		public boolean equals(Object o){
+			
+			if (o instanceof Node other) {
+
+				boolean dataEquals, leftEquals, rightEquals;
+
+				dataEquals = other.data.equals(this.data);
+
+				if (other.left == null || this.left == null) {
+					leftEquals = other.left == this.left;
+				} else {
+					leftEquals = other.left.equals(this.left);
+				}
+
+				if (other.right == null || this.right == null) {
+					rightEquals = other.right == this.right;
+				} else {
+					rightEquals = other.right.equals(this.right);
+				}
+
+				return dataEquals && leftEquals && rightEquals;
+			}
+
+			return false;
+		}
 
 	}  // end Node class
 
@@ -245,14 +305,27 @@ public class BinaryTreeAlt implements BinaryTreeService {
 		
 	}
 	
-
-	
 	public static void main(String[] args) throws FileNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		BinaryTreeService rta = new BinaryTreeAlt("data0_3");
 		rta.preorder();
 		rta.postorder();
 		
 		rta.printHierarchy();
+		System.out.println(rta.getHeight());
+
+		// try {
+		// 	rta.toFile("tp05/binarytree/src/main/resources/test");
+		// } catch (IOException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
+
+		BinaryTreeService rtaReconstructed = new BinaryTreeAlt("test");
+
+		rta.printHierarchy();
+		rtaReconstructed.printHierarchy();
+
+		System.out.println(String.format("Los arboles son %s\n", rta.equals(rtaReconstructed) ? "iguales" : "diferentes"));
 	}
 
-}  
+}

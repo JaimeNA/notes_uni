@@ -58,8 +58,11 @@ void ccClear()
 {
 	int i;
 
-	for (i = 0; i < height * width; i++)
-		video[i * 2] = ' ';
+	for (i = 0; i < height * width; i+=2) {
+		video[i] = ' ';
+		video[i+1] = 0x00;
+	}
+
 	currentVideo = video;
 }
 

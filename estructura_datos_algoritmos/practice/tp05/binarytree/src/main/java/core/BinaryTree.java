@@ -217,4 +217,12 @@ public class BinaryTree implements BinaryTreeService {
 		throw new UnsupportedOperationException("Unimplemented method 'toFile'");
 	}
 
+
+
+	@Override
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'getHeight'");
+	}
+
 }  

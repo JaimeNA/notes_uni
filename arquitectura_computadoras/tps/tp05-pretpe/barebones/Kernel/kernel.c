@@ -6,6 +6,7 @@
 #include <naiveConsole.h>
 #include <idtLoader.h>
 #include <keyboard.h>
+#include <sysCalls.h>
 #include <colorConsole.h>
 
 extern uint8_t rtc(uint8_t selection);
@@ -86,21 +87,29 @@ void * initializeKernelBinary()
 	return getStackBase();
 }
 
-int getHours() {
+uint8_t getHours() {
 	return rtc(4);
+}
+
+uint8_t getMinutes() {
+	return rtc(2);
+}
+
+uint8_t getSeconds() {
+	return rtc(0);
 }
 
 void printTime(){
 	int hours = getHours();
-	int	minutes = (hours * 60) % 60;
-	int	seconds = (minutes * 60) % 60;
+	int	minutes = getMinutes();
+	int	seconds = getSeconds();
 
 	ccPrint("Current time: ", 0x0F);
-	ccPrintDec(hours, 0x0F);
+	ccPrintHex(hours, 0x0F);	// Esta en UTC
 	ccPrint(":", 0x0F);
-	ccPrintDec(minutes, 0x0F);
+	ccPrintHex(minutes, 0x0F);
 	ccPrint(":", 0x0F);
-	ccPrintDec(seconds, 0x0F);
+	ccPrintHex(seconds, 0x0F);
 
 	ccNewline();
 }
@@ -136,9 +145,17 @@ int main()
 
 	printTime();
 
-	ccNewline();
-	ncClear();
-	while(1);
+	write(2, "ERROR", 2);
+
+	int prev = getSeconds();
+	
+	while(1) {
+		if (getSeconds() != prev) {
+			ccClear();
+			printTime();
+			prev = getSeconds();
+		}
+	}
 	return 0;
 }
 

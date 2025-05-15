@@ -37,6 +37,8 @@ rtc:
 	mov al, dil	; Get selection
 
 	out 70h, al		; Pass selection
+
+	xor rax, rax
 	in al, 71h
 	
 	leave

@@ -1,4 +1,4 @@
-# Arboles binarios
+# Unidad 5: Arboles binarios
 
 Por ejemplo, se utilizan para compilar expresiones, como las matematicas. Se pueden usar estrategias para optimizar las expresiones a la hora de evaluarlas(re estructurar el BT), como sacar factor comun, por ejemplo.
 Se pueden utilizar para cualquier cosa que tenga una representacion jerarquica. Tambien, si el BT estuviera ordenado, podria usarse como soporte para indices.
@@ -101,4 +101,17 @@ Es completo, lo garantiza. No necesariamente full al menos que hayamos especific
 
 ---
 
+### Definicion: Altura
 
+Longitud(cantidad de ejes) del camino mas largo desde la raiz hacia las hojas. Un nodo formado por una raiz tiene altura 0.
+
+## Arboles de busqueda - BST
+
+Los usos de los arboles son multiples, uno es manejar una lista ordenada. El BST es un árbol binario donde cada nodo no vacío cumple la siguiente condición: todos los datos de su subárbol izquierdo son menores o iguales que su dato, y todos los datos de su subárbol derecho son mayores que su dato.
+
+### Operaciones
+
+- **Insertar**: Crece desde las hojas, si es mayor o igual que el nodo, se inserta como hoja a la derecha y si es menor se inserta como hoja a la izquierda. Empieza en root, si es mayor o igual va al subarbol derecho y viceversa, de esa manera con todos los nodos hasta llegar a una hoja. CHEQUEAR
+- **Borrado**: 
+
+**Nota**: El projecto de BST lo vamos a estructurar de manera MVC(Model View Controller).

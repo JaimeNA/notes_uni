@@ -12,4 +12,6 @@ public interface BinaryTreeService {
 
 	void toFile(String filename) throws IOException ; // Added by me
 
+	int getHeight(); // Added by me
+
 }
