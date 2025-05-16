@@ -112,6 +112,38 @@ Los usos de los arboles son multiples, uno es manejar una lista ordenada. El BST
 ### Operaciones
 
 - **Insertar**: Crece desde las hojas, si es mayor o igual que el nodo, se inserta como hoja a la derecha y si es menor se inserta como hoja a la izquierda. Empieza en root, si es mayor o igual va al subarbol derecho y viceversa, de esa manera con todos los nodos hasta llegar a una hoja. CHEQUEAR
-- **Borrado**: 
+- **Borrado**: Si el nodo a eliminar es una hoja, actualizar a quien lo apunta a el. Si el nodo a eliminar tiene un solo hijo, le entrego a el que lo apunta su unico hijo. Si el nodo a eliminar tiene dos hijos se procede en dos pasos: 
+Primero se lo reemplaza por un nodo lexicograficamente adyacente(su predecesor inorder, el mas grande de los nodos de su subarbol izquierdo, o bien su sucesor inorder o sea el mas chico de los nodos de su subarbol derecho), y finalmente se borra el nodo que lo reemplazo(sera facil de borrar porque no tendra dos hijos).
 
 **Nota**: El projecto de BST lo vamos a estructurar de manera MVC(Model View Controller).
+
+---
+
+Java no me deja parametrizar el iterador, pero podria pasar el parametro anteriormente, por ejemplo, con un metodo `setTraversal()` anterior a llamar a `iterator()`.
+
+---
+
+## Arboles balanceados
+
+El BST presenta problemas, el peor caso es cuando esta totalmente desbalaneado, haciendo que operaciones como busqueda tengan una complejidad O(N). Lo que queremos es que tenga la menor altura posible, entonces hay que tratar de controlar la altura. 
+
+### Algoritmo AVL
+
+BST balanceado por altura, crado por rusos en 1962, la primer version de BST que se balancea dinamicamente. 
+Un AVL es un BST donde en cada nodo la **diferencia**(Factor de balance) de alturas entre sus dos arboles es a los sumo 1. 
+
+Un AVL es un arbol con buena forma, las inserciones y borrados en un AVL estan definidas de tal manera que garantizan que se pueden realizar en O(log(N)) y garantizan ser **invariantes** ante su propiedad. Es un BST donde en cada nodo el factor de balance es a lo sumo 1.
+
+#### Operaciones
+
+- **Insersion**: Se inserta como BST, si esta desbalanceado de aplican rotaciones para que siga siendo AVL, se rota el arbol con pivote mas joven desbalanceado(mas cercano al nodo insertado), hay dos casos:
+    - **Caso 1**: Si se inserta a la izquierda de un nodo con factor balance 1, ese nodo va a tener factor balance 2 y deja de ser AVL. Hay que rotar.
+    - **Caso 2**: Si se inserta a la derecha de un nodo con factor de balance -1, ese nodo va a tener factor de balance -2 y deja de ser AVL. Hay que rotar.
+
+> **Nota**: Para determinar el factor de balance se hace altura de arbol izquierdo menos altura del arbol derecho.
+
+#### Consideraciones
+
+Como en inserciones/borrados tenemos que calcular la diferencia de altura entre los subarboles muy frecuentemente, conviene almacenar el valor en cada nodo.
+
+

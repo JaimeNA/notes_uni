@@ -18,12 +18,12 @@ public class NodeInner<T extends Comparable<? super T>> implements NodeTreeInter
     }
 
     @Override
-    public NodeTreeInterface<T> getLeft() {
+    public NodeInner<T> getLeft() {
         return left;
     }
 
     @Override
-    public NodeTreeInterface<T> getRight() {
+    public NodeInner<T> getRight() {
         return right;
     }
 
@@ -42,6 +42,21 @@ public class NodeInner<T extends Comparable<? super T>> implements NodeTreeInter
             else
                this.left.insert(data);
         }
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return left == null && right == null;
+    }
+
+    @Override
+    public boolean hasChild() {
+        return left != null || right != null;
+    }
+
+    @Override
+    public void setData(T data) {
+        this.data = data;
     }
 
 }
