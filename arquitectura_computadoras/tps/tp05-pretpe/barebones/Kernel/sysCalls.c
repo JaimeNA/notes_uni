@@ -16,7 +16,5 @@ int write(int fd, char * buff, int length) {
 }
 
 void sysCallDispatcher(uint64_t rax, ...) {
-
-    if (rax == 0)
-        write(1, "hola", 0);
+    write(1, "hola", 0);
 }

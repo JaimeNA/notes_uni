@@ -43,6 +43,10 @@ uint8_t pollKeyboard() {
 	return kbd_US[scancode];
 }
 
+uint8_t readKey() {
+	return kbd_US[keyboard_output()];
+}
+
 void keyPress(uint8_t scancode) {
 	ccPrintChar(kbd_US[scancode], 0x0F);
 }

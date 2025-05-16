@@ -132,16 +132,6 @@ _irq00Handler:
 
 ;Keyboard
 _irq01Handler:
-    ;call keyboard_output
-
-    ;mov rdi, rax
-    ;call keyPress
-
-	mov rax, 0h
-	mov rdi, 1
-	mov rsi, iq01_msg
-	syscall
-
 	irqHandlerMaster 1
 
 
