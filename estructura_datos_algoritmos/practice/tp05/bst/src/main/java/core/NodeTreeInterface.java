@@ -8,8 +8,6 @@ public interface NodeTreeInterface<T extends Comparable<? super T>> {
 
 	NodeTreeInterface<T> getRight();
 
-	void setData(T data);
-
 	boolean isLeaf();
 	boolean hasChild();
 

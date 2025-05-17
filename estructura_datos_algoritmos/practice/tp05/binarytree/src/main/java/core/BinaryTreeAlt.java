@@ -11,7 +11,6 @@ import java.util.Scanner;
 import java.util.function.Function;
 
 // 		---------------- BinaryTreeParametric is more complete ------------------
-// This one is not parametric and the equals implementation doesnt work
 public class BinaryTreeAlt implements BinaryTreeService {
 	
 	private Node root;
@@ -148,39 +147,36 @@ public class BinaryTreeAlt implements BinaryTreeService {
 	}
 
 	public String getTree() {
-
-		Queue<Node> prevLevel = new LinkedList<>();	// Can be done with just two queue
-		prevLevel.add(root);
-
-		// First one
-		Queue<Node> level = new LinkedList<>();
-
-		String toReturn = new String();
-
-		while (!isEmptyLevel(prevLevel)) {
-			
-			while (!prevLevel.isEmpty()) {
-				Node aux = prevLevel.remove();
-
-				if (aux != null) {
-					toReturn += aux.data;
-					level.add(aux.left);
-					level.add(aux.right);
-				} else {
-					toReturn += "?";
-					level.add(null);
-					level.add(null);
-				}
-
-				toReturn += " ";
-			}
-
-			//toReturn += "\n"; 	// For debugging
-			prevLevel = level;
-			level = new LinkedList<>();
+		if (root == null) {
+			return "";
 		}
 
-		return toReturn;
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(root);
+
+		StringBuilder toReturn = new StringBuilder();
+
+		Double count = Math.pow(2, getHeight() + 1) - 1;
+
+		while (count != 0) {
+
+			Node current = queue.remove();
+
+			if (current == null) {
+				toReturn.append("? ");
+				queue.add(null);
+				queue.add(null);
+			} else {
+				toReturn.append(current.data.toString()).append(" ");
+
+				queue.add(current.left);
+				queue.add(current.right);
+
+			}
+			count--;
+		}
+
+		return toReturn.toString();
 	}
 
 	private boolean isEmptyLevel(Queue<Node> level) {
@@ -314,13 +310,13 @@ public class BinaryTreeAlt implements BinaryTreeService {
 		System.out.println(rta.getHeight());
 
 		// try {
-		// 	rta.toFile("tp05/binarytree/src/main/resources/test");
+		// 	rta.toFile("tp05/binarytree/src/main/resources/test1");
 		// } catch (IOException e) {
 		// 	// TODO Auto-generated catch block
 		// 	e.printStackTrace();
 		// }
 
-		BinaryTreeService rtaReconstructed = new BinaryTreeAlt("test");
+		BinaryTreeService rtaReconstructed = new BinaryTreeAlt("test1");
 
 		rta.printHierarchy();
 		rtaReconstructed.printHierarchy();

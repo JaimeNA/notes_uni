@@ -8,7 +8,7 @@ import java.util.Stack;
 public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> {
 
     private NodeInner<T> root;
-    private Traversal traversal;
+    private Traversal traversal = Traversal.INORDER;
 
     class BSTInOrderIterator implements Iterator<T> {
         Stack<NodeTreeInterface<T>> stack;
@@ -51,7 +51,7 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
                     queue.add(root);
             }
 
-            return queue.isEmpty();
+            return !queue.isEmpty();
         }
 
         @Override
@@ -61,12 +61,13 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
 
             current = queue.remove();
 
-            queue.add(current.getLeft());
-            queue.add(current.getRight());
+            if (current.getLeft() != null)
+                queue.add(current.getLeft());
 
-            T toReturn = current.getData();
+            if (current.getRight() != null)
+                queue.add(current.getRight());
 
-            return toReturn;
+            return current.getData();
         }
     }
 
@@ -108,24 +109,37 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
     @Override
     public void insert(T myData) {
         if (root == null)
-            root = new NodeInner<>(myData);     // TODO: Check if this is the best way to do it
+            root = new NodeInner<>(myData);
         else
             root.insert(myData);
     }
 
     @Override
     public void preOrder() {
+        if (root == null)
+            throw new IllegalStateException();
+
         System.out.println(preorderRec(root));
     }
 
     @Override
     public void postOrder() {
+        if (root == null)
+            throw new IllegalStateException();
+
         System.out.println(postorderRec(root));
     }
 
     @Override
     public void inOrder() {
-        System.out.println(inorderRec(root));
+        setTraversal(Traversal.INORDER);
+
+        StringBuilder s = new StringBuilder();
+
+        for (T elem : this) {
+            s.append(elem.toString()).append(" ");
+        }
+        System.out.println(s);
     }
 
     private String preorderRec(NodeInner<T> current) {  // This one is no good, need to be delegated to NodeInner. Same with others
@@ -139,21 +153,6 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
 
         if (current.getRight() != null)
             toReturn += preorderRec(current.getRight()) + " ";
-
-        return toReturn;
-    }
-
-    private String inorderRec(NodeInner<T> current) {
-
-        String toReturn = new String();
-
-        if (current.getLeft() != null)
-            toReturn += inorderRec(current.getLeft());
-
-        toReturn += current.getData() + " ";
-        
-        if (current.getRight() != null)
-            toReturn += inorderRec(current.getRight());
 
         return toReturn;
     }
@@ -269,46 +268,50 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
 
         int cmp = current.getData().compareTo(myData);
 
-        NodeInner<T> next = current.getRight();
-
         if (cmp < 0)
-            next = current.getRight();
+            current.setRight(deleteRec(current.getRight(), myData));
         else if (cmp > 0)
-            next = current.getLeft();
+            current.setLeft(deleteRec(current.getLeft(), myData));
         else {
             if (current.isLeaf())
                 return null;
 
             if (current.getLeft() == null)
-                return current.getLeft();
+                return current.getRight();
 
             if (current.getRight() == null)
-                return current.getRight();
+                return current.getLeft();
                 
             // Has both childs
-            T toReplace = getAdyacentLexi(current).getData();
-
-            current = deleteRec(current, toReplace);
-
-            current.setData(toReplace);
-        }
-
-        return deleteRec(next, myData);
-    }
-
-    private NodeInner<T> getAdyacentLexi(NodeInner<T> toDelete) {
-
-        NodeInner<T> current = toDelete.getLeft();
-
-        while (current.getRight() != null) {
-            current = current.getRight();
+            current.setData(getPrecesorInOrder(current));
+            current.setLeft(deleteRec(current.getLeft(), current.getData()));
         }
 
         return current;
     }
 
+    private T getPrecesorInOrder(NodeInner<T> startNode) {
+
+        NodeInner<T> current = startNode.getLeft();
+
+        while (current.getRight() != null) {
+            current = current.getRight();
+        }
+
+        return current.getData();
+    }
     @Override
     public void printByLevels() {
+        setTraversal(Traversal.BYLEVELS);
+        StringBuilder s = new StringBuilder();
+
+        for (T elem : this) {
+            s.append(elem.toString()).append(" ");
+        }
+        System.out.println(s);
+    }
+
+    public void printByLevelsWithoutIt() {
         if (root == null)
             return;
         // create an empty queue and enqueue the root node
@@ -326,6 +329,69 @@ public class BST<T extends Comparable<? super T>> implements BSTreeInterface<T> 
                 queue.add(currentNode.getRight());
         }
         System.out.println();
+    }
+
+    @Override
+    public int getOcurrences(T element) {
+        
+        if (root == null)
+            return 0;
+
+        return getOcurrencesRec(root, element);
+
+    }
+
+    // O(log(N))
+    private int getOcurrencesRec(NodeInner<T> current, T data) {
+        if (current == null)
+            return 0;
+
+        int cmp = current.getData().compareTo(data);
+
+        if (cmp >= 0)
+            return getOcurrencesRec(current.getLeft(), data) + ((cmp == 0) ? 1 : 0);
+
+        return getOcurrencesRec(current.getRight(), data);
+    }
+
+    @Override
+    public T Kesimo(int k) {
+    
+        setTraversal(Traversal.INORDER);
+        
+        Iterator<T> it = this.iterator();
+    
+        T current = null;
+        for (int i = 0; i < k && it.hasNext(); i++) {
+            current = it.next();
+        }
+
+        return current;
+    }
+
+    @Override
+    public T getCommonNode(T element1, T element2) {
+        return getCommonNodeRec(root, element1, element2);
+    }
+
+    private T getCommonNodeRec(NodeInner<T> current, T element1, T element2) {
+        if (current == null) 
+            return null;
+
+        int cmp1 = current.getData().compareTo(element1);
+        int cmp2 = current.getData().compareTo(element2);
+
+        if (cmp1 > 0 && cmp2 > 0) 
+            return getCommonNodeRec(current.getLeft(), element1, element2);
+
+        if (cmp1 < 0 && cmp2 < 0) 
+            return getCommonNodeRec(current.getRight(), element1, element2);
+
+        if (containsRec(current, element1) && containsRec(current, element2) && cmp1 != cmp2) {
+            return current.getData();
+        }
+        
+        return null;
     }
 
 }
