@@ -39,6 +39,10 @@ Sin embargo, que impide que un programa modifique la tabla de descriptores? Hay 
 
 **Ejemplo**: Si corriendo el programa con `IP`=10xxh, descriptor dice que el programa en esas direcciones tiene entre 1001h y 1FFFh, si quiere acceder a 3222h al verificar con GDT saltara un error. 
 
+**Ejemplo de uso**: El code segment trabaja con el instruction pointer, el CS apunta al inicio del codigo y el IP al offset. Luego el CS no apunta exactamente a memoria sino que saca un descriptor del GDT(base apunta al inicio de segmento), y de ahi saca en inicio del segmento. Es decir, si CS es 20h, al leer la memoria va a la GDT y la GDT le devuelve la lectura de la direccion equivalente especificada en el descriptor, se conoce como **indireccion**. Entonces, puede ser que sea la direccion 20h de memoria real o ABBA000h de memoria real. 
+
+Esto se usa para organizar mejor y para controlar los permisos, agrega indireccion(o mapeo) y seguridad. Luego, si no hay espacio suficiente, se usa el `P`(persistencia), y de esa manera si no hay memoria, le da al programa espacio en disco. Las aplicaciones estadisticamente menos utilizadas las va bajando al disco.
+
 > **Nota**: El administrador o root, es el usuario con mas permisos del **User Space**, no del **Kernel Space**. Ademas, es el unico usuario que puede instalar cosas en el Kernel Space.
 
 ## Descriptores
@@ -53,3 +57,64 @@ Indica donde empieza. Cada segmento de memoria tiene que estar descripto por un 
 
 - **P**: Bit p, indica si esta presente o no esta presente en memoria. Esto se debe a que existe lo que se conoce como memoria virtual, es decir, memoria que esta en disco pues la memoria esta llena.
 - **DPL**: Indica el nivel de privilegios del segmento. Hay 4 niveles de privilegios, pero solo necesitamos dos, unos para kernel y otro para user space.
+
+## Stack State Segment(TSS)
+
+El procesador de Intel, nos da una herramiento para guardar el contexto de ejecucion, ya no se lo utiliza, pero por mucho tiempo esta estructura de datos de intel se fue utilizada por linux y windows.
+
+## Privilegios de E/S
+
+El procesador tiene dos mecanismos:
+
+1. Campo de 2 bits IOPL en los EFLAGS. Que especifica el minimo nivel de privilegios que de debe tener para poder usar instrucciones de E?S
+2. Mapa de bits de E/S en TSS.
+
+Instrucciones sensibles:
+
+- IN
+- OUT
+- INS
+- OUTS
+- Cli   (Clear interrupt)
+- Stu   (Set Interrupt)
+
+## Paginacion
+
+Objetivos de sistemas operativos:
+
+- Proveer recursos a las apps
+- Administrar recursos
+
+Problemas:
+
+- Memoria insuficiente
+- Fragmentacion de memoria
+- Seguridad
+
+Esto se logra con abstraccion e interposicion.
+
+Tiene los mismos objetivos que segmentacion, pero lo hace de una manera diferente. Divide al mapa de memoria(virtual y fisica) en **paginas**. Cada pagina tiene un tamano fijo, genera mapeo de pag-virtuales(paginas) a pag fisicas(marcos) y tiene esquema de permisos.
+
+![Ejemplo de paginacion con memoria virtual](graphics/paginacion.png)
+
+**Ejercicio**: Desarrolle un sistema de mapeo para un procesador Intel de 32 bits que puede manejar hasta 4GB de memoria fisica.
+
+1. Que tamano de pagina elige?
+
+Puedo hacer paginas de 4GB, pero tengo solo una, tambien puedo hacer paginas de 2B pero el indice de descriptores va a ser muy grande. Estas no me sirven, Intel en 1985 puso 4KB, para dia de hoy es muy bajo. Vamos por 4KB. 
+
+2. En cuantas paginas quedo dividida la memoria fisica? y la virtual?
+
+Hago la cuenta y queda $2^{20}$ paginas.
+
+3. Como reacciona su sistema para asignar y para liberar memoria?
+
+> **Nota**: Esto generalmente lo hacen mal, cuando dividis varias paginas de 4KB, cada pagina tiene un offset(del bit 0 al 11) y un numero de pagina(del bit 12 al 31). Pues casa pagina internamente tiene de la direccion 000h a la FFFh.
+
+Cuando hay tantas paginas, surge un problema de tener que indexar a todas. Hay maneras de agruparlos, de manera que si cambio 30 min paginas, solo basta con mencionar el grupo. Entonces partio a la mitad a los bits 12 a 31, donde la primer mitad tiene el indice de directorio y la segunda mitad tiene el indice de pagina(Esto para 32 bits). 
+Sumando los dos indices de obtienen las $2^{20}$ entradas. Entonces Tomando los 10 bits mas significaticos correspondientes al directorio, se agregan dos 0 al final para tener 3 valores hexa y de ahi se lee.
+Es virtual, no tengo manera de saber si es la misma memoria fisica, es indireccion. 
+
+Luego cada tabla, tiene su P, entonces puede haber un directorio entero en disco o solo una pagina. Si se encuentra un P=0 cuando se esta intentando de leer, el CPU lanzara una excepcion. Notas que las tablas tambien estan en memoria y por convension de arqui: primero va la tabla de directorio y despues va TP1, TP2, ..., TPN. El directorio y cada tabla de pafina tendran 4K cada uno(una pagina) pues tienen $2^{10}$ direcciones de 4B cada una.
+
+![Tabla de paginacion](graphics/table_paginacion.png)
