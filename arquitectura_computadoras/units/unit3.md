@@ -117,4 +117,6 @@ Es virtual, no tengo manera de saber si es la misma memoria fisica, es indirecci
 
 Luego cada tabla, tiene su P, entonces puede haber un directorio entero en disco o solo una pagina. Si se encuentra un P=0 cuando se esta intentando de leer, el CPU lanzara una excepcion. Notas que las tablas tambien estan en memoria y por convension de arqui: primero va la tabla de directorio y despues va TP1, TP2, ..., TPN. El directorio y cada tabla de pafina tendran 4K cada uno(una pagina) pues tienen $2^{10}$ direcciones de 4B cada una.
 
+cada aplicacion tiene su propia tabla de directorio con sus respectivos permisos. Por ejemplo, si corro el chrome, el chrome va a tener su propio directorio y tablas de páginas de paginas fisicas. y si intenta de acceder a otra direccion de pagina que no es suya, se genera una excepsion. se pueden bajar a disco paginas de una aplicacion que no se esten usando en vez de la aplicacion completa. 
+
 ![Tabla de paginacion](graphics/table_paginacion.png)
