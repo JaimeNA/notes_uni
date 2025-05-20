@@ -1,5 +1,7 @@
 #include <time.h>
 #include <stdint.h>
+#include <keyboard.h>
+#include <colorConsole.h>
 
 static void int_20();
 
@@ -8,10 +10,16 @@ void irqDispatcher(uint64_t irq) {
 		case 0:
 			int_20();
 			break;
+		case 1:
+			int_21();
 	}
 	return;
 }
 
 void int_20() {
 	timer_handler();
+}
+
+void int_21() {
+	ccPrintChar(readKey(), 0x0F);
 }

@@ -8,6 +8,7 @@
 #include <keyboard.h>
 #include <sysCalls.h>
 #include <colorConsole.h>
+#include <time.h>
 
 extern uint8_t rtc(uint8_t selection);
 
@@ -147,14 +148,20 @@ int main()
 
 	write(2, "ERROR", 2);
 
-	int prev = getSeconds();
+	int lastTime = ticks_elapsed();
+	int deltaTime = 0;
 	
 	while(1) {
-		if (getSeconds() != prev) {
-			ccClear();
-			printTime();
-			prev = getSeconds();
+
+		if (deltaTime >= 5) {
+			//ccClear();
+			//printTime();
+
+
+			lastTime = ticks_elapsed();
 		}
+
+		deltaTime = ticks_elapsed() - lastTime;
 	}
 	return 0;
 }

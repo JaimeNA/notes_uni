@@ -1,4 +1,5 @@
 import core.BST;
+import core.NodeInner;
 
 // bajar el paquete nativo  
 // https://gluonhq.com/products/javafx/ 
@@ -54,13 +55,11 @@ public class TestGUI extends Application {
 		myTree.insert(44);
 		myTree.insert(10);
 		myTree.insert(40);
-		myTree.inOrder();
-		System.out.println(myTree.getHeight());
-		System.out.println(myTree.getMax());
-		System.out.println(myTree.getMin());
-		myTree.printByLevels();
 		
-		//myTree.delete(10);
+		myTree.inOrder();
+		
+		System.out.println(myTree.getCommonNode(44, 44));
+		//myTree.delete(20);
 		//myTree.delete(40);
 
 		return myTree;
@@ -78,6 +77,5 @@ public class TestGUI extends Application {
 
 		return myTree;
 	}
-	
 
 }

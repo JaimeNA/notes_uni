@@ -54,9 +54,50 @@ public class NodeInner<T extends Comparable<? super T>> implements NodeTreeInter
         return left != null || right != null;
     }
 
-    @Override
     public void setData(T data) {
         this.data = data;
     }
 
+    public void setRight(NodeInner<T> right) {
+        this.right = right;
+    }
+
+    public void setLeft(NodeInner<T> left) {
+        this.left = left;
+    }
+
+    // ------ Version not mine ------ 
+    // Delete delegated to the node
+    public NodeInner<T> delete(T myData){
+        int c = myData.compareTo(this.data);
+        if(c < 0){
+            if(left != null)
+                left = left.delete(myData);
+            return this;
+        }
+        if(c > 0){
+            if(right != null)
+                right = right.delete(myData);
+            return this;
+        }
+        // Found it!
+
+        if(left == null)
+            return right;
+        if(right == null)
+            return left;
+
+        // Get inorder predecessor
+        this.data = (T) getPredec(left);
+        //Ahora borramos el Predec de donde estaba
+        left = left.delete(this.data);
+        return this;
+    }
+
+	private T getPredec(NodeInner<T> current){
+        NodeInner<T> aux = current;
+        while(aux.right != null)
+            aux = aux.right;
+        return aux.data;
+    }
 }
