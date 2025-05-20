@@ -16,12 +16,42 @@ void ccPrint(const char * string, uint8_t color)
 		ccPrintChar(string[i], color);
 }
 
+void ccScrollDown() {
+
+	int width_char = width*2;
+
+	for (int i = 0; i < height - 1; i++) {
+		for (int j = 0; j < width_char; j++) {
+			video[(i * width_char) + j] = video[((i+1) * width_char) + j];
+		}
+	}
+
+	for (int i = 0; i < width_char - 1; i++) {
+		video[width_char*height + i] = ' ';
+	}
+
+	currentVideo = video + (height-2) * width_char;
+}
+
 void ccPrintChar(char character, uint8_t color)
 {
+
+	if (currentVideo >= video + (height-1) * width*2)
+		ccScrollDown();
+
 	*currentVideo = character;
 	currentVideo++;
 	*currentVideo = color;
 	currentVideo++;
+}
+
+void ccPrintCharAt(char character, uint8_t color, int x, int y)
+{
+	if (currentVideo >= video + (height-1) * width*2)
+		ccScrollDown();
+
+	video[y*width*2 + x*2] = character;
+	video[y*width*2 + x*2 + 1] = color;
 }
 
 void ccNewline()
@@ -58,9 +88,8 @@ void ccClear()
 {
 	int i;
 
-	for (i = 0; i < height * width; i+=2) {
-		video[i] = ' ';
-		video[i+1] = 0x00;
+	for (i = 0; i < height * width*2; i++) {
+		video[i] = 0;
 	}
 
 	currentVideo = video;

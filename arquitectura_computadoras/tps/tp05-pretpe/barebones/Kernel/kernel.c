@@ -5,10 +5,12 @@
 #include <moduleLoader.h>
 #include <naiveConsole.h>
 #include <idtLoader.h>
+#include <gdt_utils.h>
 #include <keyboard.h>
 #include <sysCalls.h>
 #include <colorConsole.h>
 #include <time.h>
+#include <miniGame.h>
 
 extern uint8_t rtc(uint8_t selection);
 
@@ -117,6 +119,7 @@ void printTime(){
 
 int main()
 {	
+	//load_gdt();
 	load_idt();
 	ncPrint("[Kernel Main]");
 	ncNewline();
@@ -137,32 +140,45 @@ int main()
 
 	ncPrint("[Finished]");
 
-	ncClear();
+	// ncClear();
 
-	ccPrint("ARQUITECTURA DE COMPUTADORAS", 0xF2);
-	ccNewline();
-	ccNewline();
-	ccNewline();
+	// ccPrint("ARQUITECTURA DE COMPUTADORAS", 0xF2);
+	// ccNewline();
+	// ccNewline();
+	// ccNewline();
 
-	printTime();
+	// printTime();
 
-	write(2, "ERROR", 2);
+	// write(2, "ERROR", 2);
 
-	int lastTime = ticks_elapsed();
-	int deltaTime = 0;
+	// char buff[32];
+	// int length = 32;
+
+	// read(1, buff, length);
+
+	// int lastTime = ticks_elapsed();
+	// int deltaTime = 0;
+
+	// gameInit();
 	
-	while(1) {
+	// while(1) {
 
-		if (deltaTime >= 5) {
-			//ccClear();
-			//printTime();
+	// 	if (deltaTime >= 1) {
+	// 		ccClear();
+	// 		gameUpdate();
 
+	// 		ccPrintCharAt(' ', 0x22, gameGetX()+1, gameGetY());
+	// 		ccPrintCharAt(' ', 0x22, gameGetX()-1, gameGetY());
+	// 		ccPrintCharAt(' ', 0x22, gameGetX(), gameGetY()+1);
+	// 		ccPrintCharAt(' ', 0x22, gameGetX(), gameGetY()-1);
+	// 		//printTime();
+	// 		//write(1, buff, length);
 
-			lastTime = ticks_elapsed();
-		}
+	// 		lastTime = ticks_elapsed();
+	// 	}
 
-		deltaTime = ticks_elapsed() - lastTime;
-	}
+	// 	deltaTime = ticks_elapsed() - lastTime;
+	// }
 	return 0;
 }
 

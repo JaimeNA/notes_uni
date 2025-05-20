@@ -21,5 +21,5 @@ void int_20() {
 }
 
 void int_21() {
-	ccPrintChar(readKey(), 0x0F);
+	keyPress();
 }

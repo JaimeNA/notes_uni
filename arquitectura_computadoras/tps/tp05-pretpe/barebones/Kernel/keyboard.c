@@ -1,5 +1,6 @@
 
 #include <keyboard.h>
+#include <miniGame.h>
 
 char kbd_US [128] =
 {
@@ -28,7 +29,7 @@ char kbd_US [128] =
     0,  /* 79 - End key*/
     0,  /* Down Arrow */
     0,  /* Page Down */
-    0,  /* Insert Key */
+    0x1,  /* Insert Key */
     0,  /* Delete Key */
     0,   0,   0,
     0,  /* F11 Key */
@@ -40,13 +41,28 @@ uint8_t pollKeyboard() {
 	while(!(keyboard_status() & 0x01));
 
 	uint8_t scancode = keyboard_output();
+  	keyboard_output();  // Ignore key release
 	return kbd_US[scancode];
+  
 }
 
 uint8_t readKey() {
 	return kbd_US[keyboard_output()];
 }
 
-void keyPress(uint8_t scancode) {
-	ccPrintChar(kbd_US[scancode], 0x0F);
+void keyPress() {
+	switch(kbd_US[keyboard_output()]) {
+    case 'w':
+      gameSetVelY(-5);
+      break;
+    case 's':
+      gameSetVelY(5);
+      break;
+    case 'a':
+      gameSetVelX(-5);
+      break;
+    case 'd':
+      gameSetVelX(5);
+      break;
+  };
 }

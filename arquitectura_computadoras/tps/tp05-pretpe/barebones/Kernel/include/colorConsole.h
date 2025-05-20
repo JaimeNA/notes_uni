@@ -11,5 +11,7 @@ void ccPrintHex(uint64_t value, uint8_t color);
 void ccPrintBin(uint64_t value, uint8_t color);
 void ccPrintBase(uint64_t value, uint32_t base, uint8_t color);
 void ccClear();
+void ccScrollDown();
+void ccPrintCharAt(char character, uint8_t color, int x, int y);
 
 #endif
