@@ -1,5 +1,5 @@
 #include <sysCalls.h>
-    va_end(args);
+#include <stdarg.h>
 #include <keyboard.h>
 
 int write(int fd, char * buff, int length) {
@@ -51,5 +51,24 @@ int read(int fd, char * buff, int length) {
 
 
 void sysCallDispatcher(uint64_t rax, ...) {
-    write(1, "hola", 0);
+    va_list args;
+    va_start(args, rax);  
+
+    switch(rax) {
+        case 0:
+            int fd = va_arg(args, int);
+            const char* buff = va_arg(args, const char*);
+            int length = va_arg(args, int);
+
+            write(fd, buff, length);
+            break;
+        case 1:
+            read(va_arg(args, int), va_arg(args, char*), va_arg(args, int));
+            break;
+        default:
+            // Manejar  
+            break;
+    };
+
+    va_end(args);
 }

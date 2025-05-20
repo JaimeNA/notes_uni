@@ -160,9 +160,9 @@ _exception0Handler:
 sysCall:
    	pushState
 
+	mov rdx, rsi
+	mov rsi, rdi
 	mov rdi, rax
-	mov rsi, rbx
-	mov rdx, rcx
 	
 	call sysCallDispatcher
 

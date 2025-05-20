@@ -8,8 +8,8 @@ read:
 	push rbp
 	mov rbp, rsp
 
-    mov rax, 0
-    int 80h     ; Not properly setup, for testing only
+    mov rax, 1
+    int 80h     
 
 	mov rsp, rbp
 	pop rbp
@@ -21,8 +21,8 @@ write:
 	mov rbp, rsp
 
     mov rax, 0
-    int 80h     ; Not properly setup, for testing only
-
+    int 80h    
+	
 	mov rsp, rbp
 	pop rbp
 	ret
