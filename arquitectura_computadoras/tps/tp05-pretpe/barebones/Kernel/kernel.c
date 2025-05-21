@@ -11,6 +11,7 @@
 #include <colorConsole.h>
 #include <time.h>
 #include <miniGame.h>
+#include "videoDriver.h"
 
 extern uint8_t rtc(uint8_t selection);
 
@@ -117,6 +118,19 @@ void printTime(){
 	ccNewline();
 }
 
+void drawCircleAt(int x, int y) {
+
+	for (int i = x; i < x + 20; i++) {
+		for (int j = y; j < y + 20; j++) {
+
+			if (j >= y + 10)
+				putPixel(0x00000000 + x*y*1000, i, -0.1f*i*i + 10);
+			else
+				putPixel(0x00000000 + x*y*1000, i, 0.1f*i*i - 10);
+		}
+	}
+}
+
 int main()
 {	
 	load_idt();
@@ -156,29 +170,29 @@ int main()
 
 	// read(1, buff, length);
 
-	// int lastTime = ticks_elapsed();
-	// int deltaTime = 0;
+	int lastTime = ticks_elapsed();
+	int deltaTime = 0;
 
-	// gameInit();
-	
-	// while(1) {
+	gameInit();
+	int x = 0;
+	int y = 0;
+	int i = 0;
+	while(1) {
 
-	// 	if (deltaTime >= 1) {
-	// 		ccClear();
-	// 		gameUpdate();
+		if (deltaTime >= 1) {
+			gameUpdate();
+			//clearScreen();
 
-	// 		ccPrintCharAt(' ', 0x22, gameGetX()+1, gameGetY());
-	// 		ccPrintCharAt(' ', 0x22, gameGetX()-1, gameGetY());
-	// 		ccPrintCharAt(' ', 0x22, gameGetX(), gameGetY()+1);
-	// 		ccPrintCharAt(' ', 0x22, gameGetX(), gameGetY()-1);
-	// 		//printTime();
-	// 		//write(1, buff, length);
+			//drawCircleAt(gameGetX(), gameGetY());
+			//printTime();
+			//write(1, buff, length);
+			printText("hoLa ", 5, 5);
 
-	// 		lastTime = ticks_elapsed();
-	// 	}
+			lastTime = ticks_elapsed();
+		}
 
-	// 	deltaTime = ticks_elapsed() - lastTime;
-	// }
+		deltaTime = ticks_elapsed() - lastTime;
+	}
 	return 0;
 }
 

@@ -5,7 +5,7 @@ typedef struct{
     int y;
 } Vector;
 
-#define MAX_SPEED 15
+#define MAX_SPEED 300
 
 Vector position;
 Vector velocity;
@@ -14,10 +14,10 @@ Vector acceleration;
 void gameInit() {
 
     position.x = 100;
-    position.y = 100;
+    position.y = 0;
 
-    velocity.x = 0; // Caracteres por segundo
-    velocity.y = 0;
+    velocity.x = 130; // Caracteres por segundo
+    velocity.y = 50;
 
     acceleration.y = 1;
     acceleration.x = 1;
@@ -34,6 +34,12 @@ int abs(int value) {
 void gameUpdate() {
     position.x += velocity.x;
     position.y += velocity.y;
+
+    if (position.x < 0 || position.x > 6000)
+        velocity.x *= -1;
+
+    if (position.y < 0 || position.y > 6000)
+        velocity.y *= -1;
 }
 
 int gameGetX(){

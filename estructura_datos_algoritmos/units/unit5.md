@@ -115,13 +115,9 @@ Los usos de los arboles son multiples, uno es manejar una lista ordenada. El BST
 - **Borrado**: Si el nodo a eliminar es una hoja, actualizar a quien lo apunta a el. Si el nodo a eliminar tiene un solo hijo, le entrego a el que lo apunta su unico hijo. Si el nodo a eliminar tiene dos hijos se procede en dos pasos: 
 Primero se lo reemplaza por un nodo lexicograficamente adyacente(su predecesor inorder, el mas grande de los nodos de su subarbol izquierdo, o bien su sucesor inorder o sea el mas chico de los nodos de su subarbol derecho), y finalmente se borra el nodo que lo reemplazo(sera facil de borrar porque no tendra dos hijos).
 
-**Nota**: El projecto de BST lo vamos a estructurar de manera MVC(Model View Controller).
+> **Nota**: El projecto de BST lo vamos a estructurar de manera MVC(Model View Controller).
 
----
-
-Java no me deja parametrizar el iterador, pero podria pasar el parametro anteriormente, por ejemplo, con un metodo `setTraversal()` anterior a llamar a `iterator()`.
-
----
+> **Nota**: Java no me deja parametrizar el iterador, pero podria pasar el parametro anteriormente, por ejemplo, con un metodo `setTraversal()` anterior a llamar a `iterator()`.
 
 ## Arboles balanceados
 
@@ -144,6 +140,99 @@ Un AVL es un arbol con buena forma, las inserciones y borrados en un AVL estan d
 
 #### Consideraciones
 
-Como en inserciones/borrados tenemos que calcular la diferencia de altura entre los subarboles muy frecuentemente, conviene almacenar el valor en cada nodo.
+Como en inserciones/borrados tenemos que calcular la diferencia de altura entre los subarboles muy frecuentemente, conviene almacenar el valor en cada nodo. El peor caso de este tipo de arboles
+es el arbol de fibonacci, es el AVL que presenta el peor caso de balanceo. 
 
+#### Arbol de fibonacci
 
+Se define de la siguiente manera:
+
+- Orden 0 es el arbol nulo.
+- Orden 1 es un nodo
+- Orden $h \ge 2$ es un arbol que tiene:
+
+    - Como hijo izquierdo un fibonacci de orden $h-1$
+    - Como hijo derecho un fibonacci de orden $h-2$
+
+Un arbol fibo(6) tiene 20 nodos y una altura de 5, comparado con uno completo de igual cantidad de nodos como mucho hay una diferencia de altura(4 de altura). Por lo tanto:
+$$
+    AVL_h \text{ tendra 1 nodo } + \text{ cantidad nodos altura } h-1 + \text{ cant nodos altura } h-2
+$$
+
+![Relacion de la altura con cantidad de nodos](graphics/fibonacci_tree.png)
+
+Por lo tanto: $N(h) = \text{nrofibo}(h+3)-1$. Esta sera la minima cantidad de nodos para un AVL de dicha altura.
+
+Por otro lado, el numero de fibonacci puede aproximarce con en **golden number** $a = 1.618$, luefo la cantidad de nodos de un AVL de altura h sera(utilizando la formula anterior):
+
+$$
+    n \ge \frac{a^{h+3}}{\sqrt{5}} - 1
+$$
+
+Despejando h resulta ser logaritmica, entonces para un AVL con n nodos, la altura esta acotada por $O(\log{n})$. De manera que la busqueda y otras operaciones tienen complejidad logaritmica en el peor caso.
+
+### Red-Black Tree 
+
+... (Completar)
+
+### Algunas definiciones
+
+#### Arbol multicamino M-ario
+
+Los nodos guardan hasta M-1 claves de información, con un máximo de M hijos. 
+Cada clave $C_i$ de un cierto nodo será tal que las claves almacenadas en su subárbol izquierdo serán menores y las almacenadas es su subárbol derecho serán mayores que él.
+
+#### Arboles muticaminos balanceados
+
+El equilibrio perfecto resulta muy costoso de mantener y es poco práctico. 
+
+En 1970,  R. Bayer y E. M. Mc Creight postularon un criterio razonable que permite implementar algoritmos relativamente sencillos para búsquedas, inserciones y eliminaciones.  
+Para mantener éstos árboles multicaminos balanceados se utiliza una estructura subyacente de la familia de los árboles B, que veremos a continuación
+
+### Arbol B de orden N
+
+Un árbol B de orden N es un árbol de búsqueda (ordenado) que cumple con los siguientes axiomas:
+
+- Cada nodo contiene a lo sumo 2 * N claves.
+- Cada nodo, excepto la raíz, contiene por los menos N claves.
+- Cada nodo o es hoja o tiene M+1 descendientes donde M es el número de claves que posee realmente ese nodo
+- Todas las hojas están al mismo nivel
+- En cuanto al orden:  si un nodo tiene $c_1$ $c_2$ …$c_m$ elementos $c_1 < c_2 <  \text{ … }< c_m$, pero además para cada $c_i$ ($1 \le i \le m$) los elementos del subárbol  izquierdo de ci son menores que $c_1$ y los elementos del subárbol derecho de $c_i$ son mayores que $c_i$.
+
+![Representacion de un nodo](graphics/b_tree.png)
+
+#### Algoritmo de busqueda
+
+Buscamos la clave X en un nodo. Para ello lo recorremos secuencialmente
+desde C1 hasta Ck, siendo k el número de claves que realmente posee dicho
+nodo, hasta que se den alguno de estos casos:
+
+- Si $X < C_1$, como en el nodo las claves están ordenadas no tiene sentido seguir buscando en ese nodo, luego sigo buscando en el subárbol apuntado por $P_0$
+- Si $X=C_i$ para algún $i \le k$ entonces lo encontré
+- Si $C_i<X<C_i+1$ para algún i prosigo en la búsqueda en el subárbol apuntado por $P_i$
+- Si $C_k < X$ siendo k la cantidad de claves que posee, entonces sigo la búsqueda en el subárbol apuntado por $C_k$
+
+Si en algún caso el puntero por donde hay que seguir la búsqueda fuera null, entonces el elemento buscado no está.
+
+#### Algoritmo de insercion
+
+Si se quiere insertar una clave X en un árbol B de orden N, se
+procede de la siguiente manera:
+
+- La inserción siempre se hace en las hojas (para poder detectar si el nodo a insertar ya está presente o no)
+- Para insertar se coloca el elemento X en la hoja que corresponda (el nodo debe estar ordenado)
+- Si el elemento nuevo hace que la cantidad nueva k sea mayor que el $2 \cdot n$ permitido, el nodo se abre en dos, subiendo la clave del medio al nodo antecesor de dicho nodo. Este algoritmo es recursivo hasta la raíz, o sea si al ubicar la clave del medio en el nodo antecesor ocasiona que el nodo viole la condición de árbol B de orden n ($k > 2 \cdot n$) el procedimiento de repite.
+
+Se mantiene balanceado explotando o contrayendo los nodos, cuando se explota se explota todo hasta la raiz. Nunca se inserta si no es en una hoja. Siempre subo el del medio, notar que es local,
+solo sube hacia arriba.
+
+#### Algoritmo de borrado
+
+No es tan simple, es complidado pues tambien debe poder contraerse ademas de explotar.
+
+- Si no encuentra en un nodo hoja, se lo reemplaza por unaclave lexicográficamente adyacente, por ejemplo el sucesor in order y se lo elimina de dicha hoja. Si fuera hoja se lo elimina directamente.
+- Luego, para la hoja que colaboró el borrado se analiza si cumple las condiciones de árbol B de orden N. Si ha quedado en rojo (tiene menos elementos que los permitidos), 
+se une dicho nodo con su hermano y medio antecesor (el cual es eliminado del nodo al cual pertenece, porque acude en ayuda de su hijo) armando un sólo nodo. Se verifica si cumple las 
+condiciones de árbol B de orden N, y sino se lo particiona subiendo el elemento del medio. Después se analiza qué sucede con el nodo donde estaba su medio antecesor, y se sigue el proceso recurrentemente hasta llegar a la raíz.
+
+> **Nota**: El borrado no nos lo van a pedir(whatever that means). Cuando dice subir, se refiere a alejarse de la raiz.
