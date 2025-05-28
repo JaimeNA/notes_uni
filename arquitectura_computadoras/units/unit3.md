@@ -78,7 +78,9 @@ Instrucciones sensibles:
 - Cli   (Clear interrupt)
 - Stu   (Set Interrupt)
 
-## Paginacion
+## Memoria Virtual
+
+### Paginacion
 
 Objetivos de sistemas operativos:
 
@@ -120,3 +122,60 @@ Luego cada tabla, tiene su P, entonces puede haber un directorio entero en disco
 cada aplicacion tiene su propia tabla de directorio con sus respectivos permisos. Por ejemplo, si corro el chrome, el chrome va a tener su propio directorio y tablas de páginas de paginas fisicas. y si intenta de acceder a otra direccion de pagina que no es suya, se genera una excepsion. se pueden bajar a disco paginas de una aplicacion que no se esten usando en vez de la aplicacion completa. 
 
 ![Tabla de paginacion](graphics/table_paginacion.png)
+
+> **Nota**: Cuando na pagina vuelve del disco **no** necesariamente va a ir a la misma direccion de memoria en la que estaba antes.
+
+### Paging y Swapping
+
+Cuando se necesita una página en memoria y la memoria está completa, Linux elige un pagina que no ha sido accedida últimamente y realiza un “page out”, que consiste en guardar esa página en disco.
+Generalmente en una zona especial destinada para ello, puede ser una particióno un archivo en el filesystem Luego setea en la página “vieja” el bit de Presencia en 0, y guarda en su índice la dirección donde la debe encontrar en el disco rígido.
+
+A este concepto se lo denomina “pagging”. El concepto de swapping se refiere a guardar en disco TODAS las páginas de un proceso.
+
+En Linux existe un thread llamado “kswapd” que se encarga de hacer estevtrabajo. Es interesante estudiar los algoritmos que se aplican para decidir qué página debe ser “bajada”, ya que si se decide mal, dicha página puede llegar a tener la próxima instrucción a ejecutar, o un dato que debe ser accedido.
+
+## Memoria cache
+
+El cache del CPU es un area de memoria rapida ubicada en el procesador. El Cache Inteligente Intel se refiere a la arquitectura que permite a todos los nucleos compartir dinamicamente el acceso al cache de alto nivel. 
+Todo lo que hace el procesador primero pasa por cache, siempre. Entonces cada direccion que le pido a la RAM se va guardando en el ciclo, si siempre busco la siguiente instruccion no sirve mucho, pero si aparece un ciclo ya tengo las instrucciones anteriores en cache, entonces va mucho mas rapido. No es perfecto, pero tiene una eficiencia de 95%(puede pasarr que un programa termine no usar la memoria cache, pero casi siempre aparece un ciclo). 
+
+![Evolucion de la memoria cache](graphics/evolution_cache.png)
+
+Donde lo Li son distintos, L1 es mas chico, pero mas rapido(1ns), L2 es mas grande y un poco mas lento(4ns), etc. Se compone de:
+
+- Memoria de datos
+- Memoria de etiquetas
+- Controlador(selecciona cuantos y cuales bytes  se copian  a la memoria de datos. Utiliza diferentes algoritmos).
+
+### Mapeos
+
+Se utilizan bloques(similar a las paginas), indexados por etiquetas, las cuales son la direccion de memoria RAM que estan representando, como son de a bloques generalmente no son todos los bits(similar a painacion).
+
+- Mapeo Directo.
+    - Un bloque de memoria solo se puede mapear a una única ranura en el cache.
+    - Sencilla, poco utilizada
+- Mapeo Asociativo.
+    - Un bloque de memoria se puede mapear a cualquier ranura del cache.
+    - Compleja, más utilizada.
+
+### Politicas de sustitucion
+
+Se actualiza la cache al haber fallo o ausencia de palabra buscada.
+
+### Actualizacion de la RAM
+
+En caso de necesitar escribir un dato, en vez de copiar todo el bloque de cache, se actualiza la cache y se deja la RAM desactualizada, hay varias maneras de marcar cuales partes de la RAM estan actualizadas, pero no nos interesa.
+
+- Escritura inmediata (write through)
+    - Se actualizan ambas memorias juntas
+    - Más lento
+    - Más económico
+- Escritura obligada (write back)
+    - Solo se actualiza lo estrictamente necesario
+    - Más rápido
+    - Menos económica
+    - Problemas con dispositivos DMA
+    - Problemas con Multi-cores
+
+
+
