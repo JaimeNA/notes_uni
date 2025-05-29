@@ -1,4 +1,0 @@
-1. No se debe devolver un arreglo local a una funcion como valor de retorno pues este arreglo desaparece al desarmarse el stack frame.
-2. Por convencion, permite que el stack quede alineado y queda espacio para mas variables locales si se requiere.
-3. Porque eso es lo que hace el codigo de C, al ser de una pasada va a simplemente realizar lo que se pide sin tener en cuenta que son pasos extra.
-

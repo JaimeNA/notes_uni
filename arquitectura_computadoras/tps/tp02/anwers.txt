@@ -1,4 +1,0 @@
-1. Se le agrega 10, pues ese es el valor ascii de \n.
-2. Listo
-3.
-

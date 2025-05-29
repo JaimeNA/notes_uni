@@ -1,2 +1,0 @@
-Se podria implementar facilmente con un puntero al nodo anterior para cada nodo. Un caso de uso seria a la hora de analizar la calidad de un producto, 
-necesitanto comparar los tres primeros con los 3 ultimos.
