@@ -51,4 +51,15 @@ Ambas clases tienen mucho en común. Sin embargo, difieren en algo:
 
 Como podriamos hacer los testeos de unidad? Por ahi el grafo es el mismo, pero su representacion en memoria es diferente pues internamente usamos un hashing y no podemos saber como quedo realmente. 
 
+## Recorridos
 
+Los recorridos de nodos se usan para ver los nodos alcanzables a partir de un nodo de interes.
+
+### Breadth-First Search (BFS)
+
+Lo vamos a implementar con queue, hay algunos que le agregan un boolean a cada vertice para chequear si fue recorrido, pero es preferible tener una estructura paralella a los vertices booleana.
+3
+
+### Depth-First Search(DFS)
+
+Similar BFS, pero en vez de queue se usa un stack pues se van visitando desde el proximo, sin chequear si se visitaron todos los del anterior(se agregan al stack).
