@@ -2,9 +2,14 @@
 #define VIDEO_DRIVER_H
 
 #include <stdint.h>
+#include <lib.h>
 
+void videoInitialize();
 void putPixel(uint32_t hexColor, uint64_t x, uint64_t y);
-void clearScreen();
-void printCharAt(char c, int x, int y, int font_size);
+void drawSquare(uint64_t x, uint64_t y, uint64_t size, uint32_t hexColor);
+void clearBuffer();
+void drawScreen();
+void videoSetFontsize(uint8_t size);
+void drawChar(char c, uint64_t x, uint64_t y, uint32_t hexColor);
 
 #endif

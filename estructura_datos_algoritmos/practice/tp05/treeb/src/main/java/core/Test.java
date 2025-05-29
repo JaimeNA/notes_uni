@@ -6,7 +6,7 @@ public class Test {
         
         st.add(0);
         st.add(8);
-        st.add(190);
+        st.add(109);
         st.add(220);
         st.add(222);
         st.add(241);
@@ -25,7 +25,12 @@ public class Test {
         st.add(80);
         st.add(242);
 
-        //st.remove(17);
+        st.remove(66);
+        st.remove(21);
+        st.remove(109);
+        st.remove(241);
+        st.remove(149);
+        st.remove(140);
         System.out.println( st.toString() );
     }
 }

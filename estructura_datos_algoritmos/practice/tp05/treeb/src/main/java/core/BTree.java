@@ -181,7 +181,7 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
      */
 
     // Por menor
-    private T removeAlt(T value, Node<T> node) {
+    private T remove(T value, Node<T> node) {
         if (node == null) return null;
 
         T removed = null;
@@ -215,7 +215,7 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
     }
 
     // Por mayor
-    private T remove(T value, Node<T> node) {
+    private T removevj(T value, Node<T> node) {
         if (node == null) return null;
 
         T removed = null;

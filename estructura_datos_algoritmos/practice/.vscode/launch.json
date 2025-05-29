@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Test",
             "request": "launch",
+            "mainClass": "testing.Test",
+            "projectName": "graphs"
+        },
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
             "mainClass": "core.Test",
             "projectName": "B-Tree"
         },

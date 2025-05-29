@@ -42,14 +42,7 @@ typedef struct vbe_mode_info_structure * VBEInfoPtr;
 
 VBEInfoPtr VBE_mode_info = (VBEInfoPtr) 0x0000000000005C00;
 
-void putPixel(uint32_t hexColor, uint64_t x, uint64_t y) {
-    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
-    uint64_t offset = (x * ((VBE_mode_info->bpp)/8)) + (y * VBE_mode_info->pitch);
-    framebuffer[offset]     =  (hexColor) & 0xFF;
-    framebuffer[offset+1]   =  (hexColor >> 8) & 0xFF; 
-    framebuffer[offset+2]   =  (hexColor >> 16) & 0xFF;
-}
-
+// Each index represents the ascii code of the letter
 unsigned char font_bitmap[][16] = {
         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  },       //0x00, 
         { 0x00, 0x00, 0x7E, 0x81, 0xA5, 0x81, 0x81, 0xBD, 0x99, 0x81, 0x81, 0x7E, 0x00, 0x00, 0x00, 0x00,  },       //0x01, 
@@ -181,53 +174,122 @@ unsigned char font_bitmap[][16] = {
         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  },       //0x7F, delete
     };
 
-static int currentCharPosX = 0;
-static int currentCharPosY = 0;
+static const int DEFAULT_FONT_SIZE = 8; // 8 pixels wide
+static const int CHAR_BITMAP_WIDTH = 8;
+static const int CHAR_BITMAP_HEIGHT = 16;
 
-void drawSquareAt(int x, int y, int size) {
+static int font_size = DEFAULT_FONT_SIZE;
+static int charsPerWidth;
+static int charsPerHeight;
 
+// #define MAX_WIDTH 1000
+// #define MAX_HEIGHT 1000
+
+uint32_t buffer[1500][1500];
+
+void videoInitialize() {
+    charsPerWidth = VBE_mode_info->width / font_size;
+    charsPerHeight = VBE_mode_info->height / (font_size * 2);  // Characters are double the width in height
+}
+
+// Represents the char grid positions when working with printing strings
+static int currentCharX = 0;    // Top-left corner
+static int currentCharY = 0;
+
+void putPixel(uint32_t hexColor, uint64_t x, uint64_t y) {
+
+    if (x >= VBE_mode_info->width || y >= VBE_mode_info->height)
+        return;
+
+    uint8_t * framebuffer = (uint8_t *) VBE_mode_info->framebuffer;
+    uint64_t offset = (x * ((VBE_mode_info->bpp)/8)) + (y * VBE_mode_info->pitch);
+    
+    framebuffer[offset]     =  (hexColor) & 0xFF;
+    framebuffer[offset+1]   =  (hexColor >> 8) & 0xFF; 
+    framebuffer[offset+2]   =  (hexColor >> 16) & 0xFF;
+}
+
+/* Draws a square, the top-left corner has the position specified */
+void drawSquare(uint64_t x, uint64_t y, uint64_t size, uint32_t hexColor) { // TODO: Check if there is a faster approach
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			putPixel(0xFFFFFFFF, x+i, y+j);
+            //putPixel(hexColor, x+j, y+i);
+            buffer[y+i][x+j] = hexColor;
 		}
 	}
 }
 
-void printCharAt(char c, int x, int y, int font_size) {
+void videoSetFontsize(uint8_t size) {
+    font_size = size;
 
-	int index = font_bitmap + c;
-	char pixel = 0;
+    charsPerWidth = VBE_mode_info->width / font_size;
+    charsPerHeight = VBE_mode_info->height / (font_size * 2);
+}
 
-	for (int i = 0; i < 16; i++) {
-		for (int j = 0; j < 8; j++) {
-			pixel = *(char*)(index + i);
+void drawChar(char c, uint64_t x, uint64_t y, uint32_t hexColor) {
 
-			if (pixel >> (8-j) & 0x01)
-				drawSquareAt(x + j*font_size, y + i*font_size, font_size);
+	char* index = font_bitmap[c];    // get letter bitmap starting index
+	char pixel = 0; // Current pixel
+
+    int bitmapPixelSize = font_size / CHAR_BITMAP_WIDTH;    // This allows the font size to be the pixel width of a char
+ 
+    // Each byte represents a row; each bit in the byte represents a pixel in that row
+	for (int i = 0; i < CHAR_BITMAP_HEIGHT; i++) {
+		for (int j = 0; j < CHAR_BITMAP_WIDTH; j++) {
+			pixel = index[i];
+
+			if (pixel >> (CHAR_BITMAP_WIDTH-j) & 0x01)  // If there should be a "pixel" from bitmap drawn
+				drawSquare(x + j*bitmapPixelSize, y + i*bitmapPixelSize, bitmapPixelSize, hexColor);
 		}
 	}
 
 }
 
-void clearScreen()	// TODO: Clean up
+void clearBuffer()	// TODO: Clean up
 {
-	for (int i = 0; i < 800; i++) {
-		for (int j = 0; j < 600; j++) {
-			putPixel(0x00000000, i, j);
+    for (int i = 0; i < VBE_mode_info->height; i++) {
+		for (int j = 0; j < VBE_mode_info->width; j++) {
+            //putPixel(0, j, i);
+            //putPixel(buffer[i][j], j, i);
+			buffer[i][j] = 0;
 		}
 	}
+
+    currentCharX = currentCharY = 0;
 }
 
-void printText(char * str, int length, int font_size) {// TODO: Clean up
+void drawScreen()	// TODO: Clean up
+{
+    for (int i = 0; i < VBE_mode_info->height; i++) {
+		for (int j = 0; j < VBE_mode_info->width; j++) {
+			//putPixel(hexColor, x+i, y+j);
+            putPixel(buffer[i][j], j, i);
+
+		}
+	}
+
+}
+
+// ------ TEXT MODE UTILS ------
+
+/* Prints a string continiously on screen using a grid */
+void printText(char * str, int length, uint32_t hexColor) {
 
 	for (int i = 0; i < length; i++) {
-		printCharAt(str[i], currentCharPosX, currentCharPosY, font_size);
+        if (str[i] == '\n') {
+            currentCharX = 0;
+            currentCharY++;
+        } else {
+            // New line if reached end
+            if (currentCharX >= charsPerWidth) {
+                currentCharX = 0;
+                currentCharY++;
+            }
 
-		if (currentCharPosX >= 800) {
-			currentCharPosX = 0;
-			currentCharPosY += font_size * 16;
-		}
-		currentCharPosX += font_size*8;
+            drawChar(str[i], currentCharX * font_size, currentCharY * font_size * 2, hexColor);
+
+            currentCharX++;
+        }
 	}
 
 }

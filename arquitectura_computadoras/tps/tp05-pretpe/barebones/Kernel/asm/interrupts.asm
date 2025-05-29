@@ -158,15 +158,22 @@ _exception0Handler:
 
 ; int 80h, syscalls. Recieves sysCall code in rax, and args in rdi, rsi, etc
 sysCall:
-   	pushState
+	push rbx
+	push rcx
+	push rdx
+	push rbp
 
+	mov rcx, rdx
 	mov rdx, rsi
 	mov rsi, rdi
 	mov rdi, rax
 	
 	call sysCallDispatcher
 
-	popState
+	pop rbp
+	pop rdx
+	pop rcx
+	pop rbx
 	iretq
 
 

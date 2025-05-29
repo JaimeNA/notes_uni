@@ -2,6 +2,7 @@ GLOBAL cpuVendor
 GLOBAL rtc
 GLOBAL keyboard_status
 GLOBAL keyboard_output
+GLOBAL buffer
 
 section .text
 	

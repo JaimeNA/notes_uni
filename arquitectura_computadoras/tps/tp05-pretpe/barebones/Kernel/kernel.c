@@ -11,7 +11,7 @@
 #include <colorConsole.h>
 #include <time.h>
 #include <miniGame.h>
-#include "videoDriver.h"
+#include <videoDriver.h>
 
 extern uint8_t rtc(uint8_t selection);
 
@@ -24,8 +24,8 @@ extern uint8_t endOfKernel;
 
 static const uint64_t PageSize = 0x1000;
 
-static void * const sampleCodeModuleAddress = (void*)0x400000;
-static void * const sampleDataModuleAddress = (void*)0x500000;
+static void * const sampleCodeModuleAddress = (void*)0xA00000;
+static void * const sampleDataModuleAddress = (void*)0xB00000;
 
 typedef int (*EntryPoint)();
 
@@ -82,7 +82,10 @@ void * initializeKernelBinary()
 	ncPrintHex((uint64_t)&data);
 	ncNewline();
 	ncPrint("  bss: 0x");
-	ncPrintHex((uint64_t)&bss);
+	ncPrintDec((uint64_t)&bss);
+	ncPrint(" (end of kernel: 0x");
+	ncPrintHex((uint64_t)&endOfKernel);
+	ncPrint(" bytes)");
 	ncNewline();
 
 	ncPrint("[Done]");
@@ -137,22 +140,20 @@ int main()
 	ncPrint("[Kernel Main]");
 	ncNewline();
 	ncPrint("  Sample code module at 0x");
-	ncPrintHex((uint64_t)sampleCodeModuleAddress);
+	ncPrintDec((uint64_t)sampleCodeModuleAddress);
 	ncNewline();
 
-	ncPrint("  Calling the sample code module returned: ");
-	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
-	ncNewline();
-	ncNewline();
-
-	ncPrint("  Sample data module at 0x");
-	ncPrintHex((uint64_t)sampleDataModuleAddress);
-	ncNewline();
-	ncPrint("  Sample data module contents: ");
-	ncPrint((char*)sampleDataModuleAddress);
-	ncNewline();
+	// Initialize video driver
+	videoInitialize();
+	videoSetFontsize(16);
 
 	ncPrint("[Finished]");
+
+	ncPrintHex(((EntryPoint)sampleCodeModuleAddress)());
+	while(1) {
+		drawSquare(50, 50, 500, 0xFF00FF00);
+		drawScreen();
+	}
 
 	// ncClear();
 
@@ -170,29 +171,15 @@ int main()
 
 	// read(1, buff, length);
 
-	int lastTime = ticks_elapsed();
-	int deltaTime = 0;
+	// int lastTime = ticks_elapsed();
+	// int deltaTime = 0;
 
-	gameInit();
-	int x = 0;
-	int y = 0;
-	int i = 0;
-	while(1) {
+	// gameInit();
+	// int x = 0;
+	// int y = 0;
+	// int i = 0;
+	
 
-		if (deltaTime >= 1) {
-			gameUpdate();
-			//clearScreen();
-
-			//drawCircleAt(gameGetX(), gameGetY());
-			//printTime();
-			//write(1, buff, length);
-			printText("hoLa ", 5, 5);
-
-			lastTime = ticks_elapsed();
-		}
-
-		deltaTime = ticks_elapsed() - lastTime;
-	}
 	return 0;
 }
 
