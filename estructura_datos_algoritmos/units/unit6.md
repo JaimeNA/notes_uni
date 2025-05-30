@@ -63,3 +63,21 @@ Lo vamos a implementar con queue, hay algunos que le agregan un boolean a cada v
 ### Depth-First Search(DFS)
 
 Similar BFS, pero en vez de queue se usa un stack pues se van visitando desde el proximo, sin chequear si se visitaron todos los del anterior(se agregan al stack).
+
+## Dijkstra
+
+Hay varias maneras de implementarlo, pero hay una estructra que java que permite implementarlo con mayor facilidad.
+
+Solo va a funcionar con grafos `WEIGHTED`, idem al que vimos en matematica discreta, se crea una tabla con la distancia de cada nodo al nodo inicial. 
+Con cada ciclo de agregan los adyacentes a la estructura previamente descripta y asi hasta que no quedan mas nodos por visitar.
+
+En la complejidad algoritmica, se puede hacer mas eficiente con un arbol AVL o un RedBlackTree, pero hay una que ya viene implmentada en Java que se conoce como **BinaryQueue** que usa **Binary Heap**.
+
+Un binary heap es un BT completo tal que cada nodo es menor o igual que todos los elementos de sus subarboles(no es un BST). De manera que el minimo esta en la raiz, entonces buscar el minimo es orden 1! Pero al quitarlo hay que buscar alguien que lo reemplaze, Java lo implementa con un arreglo.
+
+Esto hace que sea muy eficiente, ya que si se coloca por niveles en el arreglo, cada elemento del arreglo cumple una propiedad matematica que permite encontrar su antecesor con un simple calculo:
+$$
+    \text{Indice antecesor} = \lfloor \frac{i-1}{2} \rfloor 
+$$
+
+Si al insertar, queda mal, solo hay que suapear con el antecesor hasta que quede bien. Peor caso seria O(log(n)), asi que es muy eficiente.
