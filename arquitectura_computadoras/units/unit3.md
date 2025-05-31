@@ -129,7 +129,7 @@ Si el procesador no es Intel, no esta garantizado que tenga una tabla de directo
 
 ### Fallo de pagina
 
-En un sistema de memoria virtual paginada, un fallo de página (del inglés page fault) es una excepción arrojada cuando un programa informático requiere una dirección que no se encuentra en la memoria principal actualmente. Aunque el término sugiere un mal funcionamiento, se trata de un procedimiento normal dentro de la marcha del programa. 
+En un sistema de memoria virtual paginada, un fallo de página (del inglés page fault) es una excepción arrojada cuando un programa informático requiere una dirección que no se encuentra en la memoria principal actualmente. Aunque el término sugiere un mal funcionamiento, se trata de un procedimiento normal dentro de la marcha del programa. El MMU(Memory Managment Unit) se encarga de generar el fallo y lo trata el SO mediante una rutina de atencion.
 
 Lo que ocurre ante un fallo de página es:
 
