@@ -127,6 +127,25 @@ cada aplicacion tiene su propia tabla de directorio con sus respectivos permisos
 
 Si el procesador no es Intel, no esta garantizado que tenga una tabla de directorios.
 
+### Fallo de pagina
+
+En un sistema de memoria virtual paginada, un fallo de página (del inglés page fault) es una excepción arrojada cuando un programa informático requiere una dirección que no se encuentra en la memoria principal actualmente. Aunque el término sugiere un mal funcionamiento, se trata de un procedimiento normal dentro de la marcha del programa. 
+
+Lo que ocurre ante un fallo de página es:
+
+1. Se emite el fallo de página (excepción) que es atrapado por el sistema operativo.
+2. Se guarda el contador de programa y eventualmente otros registros en la pila.
+3. El kernel determina que la excepción es de tipo fallo de página, y llama a la rutina específica.
+4. Hay que averiguar qué dirección virtual se estaba buscando. Usualmente queda en algún registro.
+5. Se chequea que sea una dirección válida y que el proceso que la pide tenga permisos para accederla. Si no es así, se mata al proceso (en Unix se envía una señal de segmentation violation, lo que lo hace terminar).
+6. Se selecciona un page frame libre si lo hubiese y si no se libera mediante el algoritmo de reemplazo de páginas.
+7. Si la página tenía el bit dirty prendido, hay que bajarla a disco. Es decir, el "proceso" del kernel que maneja E/S debe ser suspendido, generándose un cambio de contexto y permitiendo que otros ejecuten. La página se marca como busy para evitar que se use.
+8. Cuando el SO es notificado de que se terminó de bajar la página a disco, comienza otra operación de E/S, esta vez para cargar la página que hay que subir. De nuevo se deja ejecutar a otros procesos.
+9. Cuando llega la interrupción que indica que la E/S para subir la página terminó, hay que actualizar la tabla de páginas para indicar que está cargada.
+10. La instrucción que causó el fallo de página se recomienza, tomando el contador de programa que había quedado en el pila y los valores anteriores de los registros.
+
+> **Nota**: https://es.wikipedia.org/wiki/Fallo_de_pagina
+
 ### Paging y Swapping
 
 Cuando se necesita una página en memoria y la memoria está completa, Linux elige un pagina que no ha sido accedida últimamente y realiza un “page out”, que consiste en guardar esa página en disco.
