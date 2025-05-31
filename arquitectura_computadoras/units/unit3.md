@@ -123,7 +123,9 @@ cada aplicacion tiene su propia tabla de directorio con sus respectivos permisos
 
 ![Tabla de paginacion](graphics/table_paginacion.png)
 
-> **Nota**: Cuando na pagina vuelve del disco **no** necesariamente va a ir a la misma direccion de memoria en la que estaba antes.
+> **Nota**: Cuando una pagina vuelve del disco **no** necesariamente va a ir a la misma direccion de memoria en la que estaba antes.
+
+Si el procesador no es Intel, no esta garantizado que tenga una tabla de directorios.
 
 ### Paging y Swapping
 
