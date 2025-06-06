@@ -173,7 +173,54 @@ Despejando h resulta ser logaritmica, entonces para un AVL con n nodos, la altur
 
 ### Red-Black Tree 
 
-... (Completar)
+Es un arbol balanceado donde cada nodo tiene un color asignado, solo puede ser negro o rojo. Sigue las siguientes reglas:
+
+- La raiz siempre es de color negro
+- Los nodos rojos no pueden tener hijos del mismo color
+- Los caminos de un nodo negro a cada una de sus hojas tienen la misma cantidad de nodos negros
+- Todos los nodos nulos son negros
+
+La compejidad de la insercion, borrado y busqueda es O(log(n)). 
+
+#### Altura negra
+
+La altura negra de un red-black tree es el numero de nodos negros en un camino de la raiz a una hoja, todas las hojas se cuentan como nodos negros. Entonces la altura del arbol sera: 
+$$
+    \text{black height} \ge \frac{h}{2}
+$$
+
+Similarmente, la **black depth** de un nodo se define como la cantidad de nodos negros desde la raiz a dicho nodo.
+
+#### Insercion
+
+Primero, se inserta como un BST. Luego, se arregla cualquier violacion a las reglas de un red-black tree:
+
+- Si el nodo padre es negro, dejo todo como esta
+- Si el nodo padre es rojo, podria estar violando alguna regla
+
+Para arreglar alguna violacion, depende del caso:
+
+1. **Uncle is red**: Recolorear el padre y el tio de color negro, al abuelo de rojo. Luego, subir recursivamente chequeando por violaciones.
+2. **Uncle is black**: Presenta dos subcasos:
+
+    - **Es hijo derecho**: Rotar a la izquierda con pivot en el padre
+    - **Es hijo izquierdo**: Rotar a la derecho con pivot en el abuelo y recolorear
+
+#### Busqueda
+
+Idem a BST
+
+#### Eliminar
+
+Analogamente a la insercion, primero se borra de igual manera a un BST y luego se arregla cualquier violacion de las reglas. Cuando un nodo negro es eliminado, pordria ocurrir que aparesca un **double black**, hay dos casos:
+
+1. **Hermano es rojo**: Rota al padre y recolorea al padre y al hermano.
+2. **Hermano es negro**: Se presentan dos subcasos
+
+    - **Los hijos del hermano son negros**: Recolorear al hermano y propagar el double black para arriba.
+    - **Por lo menos un hijo del hermano es rojo**: Si el hermano mas lejano es rojo se realiza una rotacion con pivot en el padria y se recolorea. Si el hermano mas lejano es rojo se rota con pivot en el hermano y se recolorea.
+
+> **Nota**: Las rotaciones son las mismas que para el AVL.
 
 ### Algunas definiciones
 
