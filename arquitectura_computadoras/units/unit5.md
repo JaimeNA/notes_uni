@@ -146,4 +146,60 @@ poner a la CPU en espera hasta que esto ocurra. Esto lo hacemos mediante la func
 cudaDeviceSynchronize, que congela el código de la CPU hasta que todos los hilos de la
 GPU hayan concluido su procesamiento.
 
+## Ejecucion en simultaneo
+
+un hilo dado está ubicado dentro de un bloque,
+que a su vez está dispuesto dentro de la grilla. Si la ilustración (de tres bloques y 4 hilos por
+bloque) correspondiese a nuestra GPU, y nosotros quisiésemos sumar los elementos de
+dos vectores de 8 elementos (necesitándose entonces 8 hilos), se nos serían asignados los
+bloques completos 0 y 1.
+
+Queda otra pregunta por responder, y es, dado que en todos los hilos corre la misma
+función, ¿cómo sabe cada uno cuál de las posiciones de los vectores le corresponde para
+sumar? La respuesta yace en la disposición en grilla de los hilos: un hilo dado puede saber
+a qué bloque corresponde, qué número de hilo es dentro del bloque, y las dimensiones de la
+grilla en general. Empieza entonces a cobrar sentido esta geometría extraña: puedo
+determinar el elemento mediante la fórmula:
+
+Elem = (blockIdx * blockDim) + threadIdx
+
+En nuestro ejemplo, si existen 8 elementos, y por lo tanto 8 hilos, y sé que soy el hilo 1
+del bloque 1, y que la dimensión de cada bloque es 4, entonces el elemento que me toca
+procesar es el de posición (1 * 4) + 1, el quinto elemento.
+
+Estas variables, blockIdx, blockDim y threadIdx están ya definidas para toda función que
+corra en la GPU y pueden consultarse en cualquier momento. Cada una de ellas tiene un
+atributo por cada eje cartesiano (x, y, z) debido a que, como ya establecimos, la grilla puede
+ser 2D o 3D de requerirse, aunque en este ejemplo estemos recurriendo a utilizar una sola
+dimensión. Por eso, notarán que, en el código, el número de elemento a procesar se
+obtiene utilizando solo la componente x de las variables:
+
+Elem = (blockIdx.x * blockDim.x) + threadIdx.x
+
+Aclarada la cuestión teórica, queda ver cómo indicarle a la GPU la cantidad de hilos a
+lanzar. En el ejemplo anterior, vimos que, para correr una función en la GPU, debía
+etiquetarse con la expresión global, y su invocación debía incluir el operador pico. Ese
+operador pico contiene dos parámetros: la cantidad de bloques que queremos reservar, y el
+número de hilos que queremos lanzar en cada bloque.
+
+```
+NomFuncion<<<NUM_BLOCKS, NUM_THREADS>>>(Argumento1, …, ArgumentoN);
+```
+
+El número máximo de hilos por bloque depende de la GPU y puede consultarse de
+forma similar a como consultaron, en el ejercicio anterior, el nombre del dispositivo o su
+memoria. Es conveniente elegir un múltiplo de 32 por cuestiones de optimización en las que
+no ahondaremos (para los interesados, consultar el siguiente enlace y el concepto de warp);
+a los efectos de nuestro problema, elegiremos NUM_THREADS = 256 hilos por bloque.
+Entonces, ¿cuántos bloques necesitaremos? Si queremos un hilo por elemento del
+vector, y tenemos 256 hilos por bloque, la cantidad puede calcularse de la siguiente
+manera:
+
+```
+NUM_BLOCKS = Techo(ARR_SIZE / THREADS)
+```
+
+Por supuesto, con esta fórmula, es posible que terminemos con más hilos que
+elementos en los vectores, por lo que debe considerarse este escenario para evitar
+procesar un elemento que no existe.
 
