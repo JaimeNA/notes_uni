@@ -15,10 +15,10 @@ La longitud del string es $k$ y si $k=0$ entonces se lo denota $\lambda$.
 
 ## Por que se lo denota $\lambda$?
 
-Oara evitar los problemas que tienen los compiladores, un meta-simbolo no deberia ser al mimso tiempo parte del alfabeta. Los lenguages de programacion violan estas relgas y ahi surgen los problemas.
+Oara evitar los problemas que tienen los compiladores, un meta-simbolo no deberia ser al mimso tiempo parte del alfabeta. Los lenguages de programacion violan estas reglas y ahi surgen los problemas.
 
 Para evitar ambiguedades obliga a escapar al simbolo comillas dobles cuando participa del string, es decir, `"hola"que"` para el compilador es simplemente 'hola', pero `"hola\"que"` es 'hola"que'. Sin embargo, esto no soluciona la ambiguedad pues '\\' es parte del alfabeto. 
-Si no nos presenta confucion, podemos hablar de `""` como el string vacio.
+Si no nos presenta confusion, podemos hablar de `""` como el string vacio.
 
 ## Definicion: Conjunto de todos los string posibles
 
@@ -49,9 +49,9 @@ Dado un alfabeto $\Sigma$ y los string $x, y, z \in \Sigma^@$. Si $p = wz = zw$ 
 
 Busqueda aproximada, los buscadores pueden usar varias tecnicas para esto y suelen ser muy variadas. Algunas de ellas(las estrategias pueden ser combinaciones de uno o mas de estas), de menos a mas avanzadas:
 
-- Busca palabras y si las palabras no estan en el corpus de los documentos indizados, encontrar las que mayor similitud posean y sugerirlas.
+- Busca palabras y si las palabras no estan en el corpus de los documentos indexados, encontrar las que mayor similitud posean y sugerirlas.
 - Tomar el idioma que tiene configurado el browser para saber en que corpus buscar las palabras usadas. Hay reglas conocidas por el idioma en cuestion, lo cual permite su deteccion.
-- Sabiendo que los usuarios buscan palabras y cuando fue un error de tipeo, no clickean nada del resultado e intentan realizar inmediatamente la busqueda arreglada, almacenan estas buscasdas erroneas para su uso posterior en caso de que otro usualrio haga algo similar.
+- Sabiendo que los usuarios buscan palabras y cuando fue un error de tipeo, no clickean nada del resultado e intentan realizar inmediatamente la busqueda arreglada, almacenan estas buscadas erroneas para su uso posterior en caso de que otro usuario haga algo similar.
 
 ### Minimas reglas que deberian aplicarse:
 
@@ -112,7 +112,7 @@ Comparo caracter a caracter y cuento cuantas veces coicidieron. Si ninguno conci
 ### Metaphone
 
 Aparece en 1990 y presenta mejoras en relacion a Soundex, no hace la clasificacion, sino que la salida son letras que representan los sonidos.
-Genera un encoding de longitud arbitraria. En wikipedia esta bien documentado el algoritmo, pero recomiendad usar la version en ingles pues es la que esta mejor explicada.
+Genera un encoding de longitud arbitraria. En wikipedia esta bien documentado el algoritmo, pero se recomienda usar la version en ingles pues es la que esta mejor explicada.
 
 > Se recomienda ver la implementacion en `apache/commons-codec` una vez implementaste tu version, ahi hay muchos algoritmos conocidos.
 
@@ -185,7 +185,7 @@ El algoritmo cumple con las siguientes propiedades.
 
 #### Programacion dinamica
 
-Es una tecnica que consiste en rausar valores previamente calculados para no tener que recalcularlos repetidamente. Sirve, si para cierto calcula, pueden reusarce valores previos y tiene la desventaja de que estoy cambiando tiempo por espacio(`cache`). 
+Es una tecnica que consiste en reusar valores previamente calculados para no tener que recalcularlos repetidamente. Sirve, si para cierto calculo, pueden reciclarse valores previos y tiene la desventaja de que estoy cambiando tiempo por espacio(`cache`). 
 
 Para buscar estos valores necesitamos una estructura de datos que permita buscar valores lo mas rapido posible -> matriz, vector, etc.
 
@@ -222,7 +222,7 @@ Si Q es 1 se generan componentes de longitud 1. Si Q es 2 se generan **bi-gramas
 
 #### String matching
 
-Para comparar dos strings, se compararn los arreglos de dos palabras y se cuenta cuantos elementos tienen en comun. Luego, la distancia sera la cantidad de elementos en comun. La implementacion que es mas usada, es tri-grama y esa es la que vamos a usar nosottros. Si al comparar aparece el mismo patron dos veces en uno y una vez en el otro, solo se cuenta una vez, es decir, la comparacion es 1 en 1.
+Para comparar dos strings, se compararn los arreglos de dos palabras y se cuenta cuantos elementos tienen en comun. Luego, la distancia sera la cantidad de elementos en comun. La implementacion que es mas usada, es tri-grama y esa es la que vamos a usar nosotros. Si al comparar aparece el mismo patron dos veces en uno y una vez en el otro, solo se cuenta una vez, es decir, la comparacion es 1 en 1.
 
 #### Normalizacion
 
@@ -230,7 +230,7 @@ $$
   Q-grams(str1, str2) = \frac{\#TG(str1) + \#TG(str2) - \#TGNoShared(str1, str2)}{\#TG(st1) + \#TG(str2)}  
 $$
 
-> **Nota**: En general, nuca se usa un algoritmo individual, sino que se usa una combinacion de varios. Utilizando una formula que los combine.
+> **Nota**: En general, nunca se usa un algoritmo individual, sino que se usa una combinacion de varios. Utilizando una formula que los combine.
 
 ## Algoritmos para busqueda exacta
 
@@ -269,7 +269,7 @@ Este algoritmo no es el mejor ya que no aprovecha lo que aprendio en el recorrri
 
 ### Knuth-Morris-Pratt
 
-Examina el **target** de izquierda a derehca, pero usa conocimiento sobre los caracteres comparados antes de determinar la proxima posicion del patron a usar. Preprocesa el query antes de la busqueda una vez, con el objetivo de analizar la estructura(las caracteristicas del patrton query). Para ello contruye una tabla **Next** del mismo `length` que el query.
+Examina el **target** de izquierda a derecha, pero usa conocimiento sobre los caracteres comparados antes de determinar la proxima posicion del patron a usar. Preprocesa el query antes de la busqueda una vez, con el objetivo de analizar la estructura(las caracteristicas del patron query). Para ello contruye una tabla **Next** del mismo `length` que el query.
 No vuelve para atras, eso es muy importante ya que reduce la complejidad temporal. La tabla tiene en cada posicion `i` la longitud del **borde propio** mas grande para el substring desde 0 hasta `i`.
 
 Implementacion de la computacion de Next:
@@ -316,7 +316,7 @@ Basicamente, esta biblioteca nos permmite armar nuestro propio "search engine", 
 
 ### Indices
 
-Un indice es una estrucutra que permite llegar rapidamente al dato buscado, pero si se modifica un documento en la coleccion debe actualizarse. Es decir, su ventaja esta en la busqueda y tiene la desventaja de nececsitar actualizar la estructura cada vez que se modifique un documento.
+Un indice es una estructura que permite llegar rapidamente al dato buscado, pero si se modifica un documento en la coleccion debe actualizarse. Es decir, su ventaja esta en la busqueda y tiene la desventaja de necesitar actualizar la estructura cada vez que se modifique un documento.
 
 Lucene usa un **archivo invertido** (conjnuto de terminos que dicen a que documentos pertenecen). Es un mapping:
 
@@ -370,8 +370,8 @@ Un termino Lucene es una secuencia de bytes(Podrian interpretarse como Strings, 
 Lucene es peculiar ya que tiene una zona donde guarda informacion que no es el archivo invertido. 
 Al crear un campo(nombre y terminos) y asociarlo a cirto documento puedo optar por:
 
-- Almacenarlo en Lucene pero fuera del archivo invertido. Eso significa que se lo almacena literal(sin procesamiento, no se lo separa en tokans, no se pasa a minuscula, etc.). Es decir, esta en Lucene pero no esta indexado, entonces no participa de las busquedas.
-- Indexarlo en el archivo invertido Lucene. Eso significa que esta tokenizado o no(segun lo configure) forma parte del archivo invertido y sus terminos(to kens), entonces participan de las busquedas.
+- Almacenarlo en Lucene pero fuera del archivo invertido. Eso significa que se lo almacena literal(sin procesamiento, no se lo separa en tokens, no se pasa a minuscula, etc.). Es decir, esta en Lucene pero no esta indexado, entonces no participa de las busquedas.
+- Indexarlo en el archivo invertido Lucene. Eso significa que esta tokenizado o no(segun lo configure) forma parte del archivo invertido y sus terminos(tokens), entonces participan de las busquedas.
 
 > **Nota**: Uno busca palabras especificas, no busca signos de punctuacion, preposiciones, etc. Solo nos interesan las palabras clave.
 
@@ -381,7 +381,7 @@ Un field puede ser solo almacenable, solo indexable o ambas cosas. Es obligatori
 | ---------- | ------------ | --------------------------------- |
 | ...        | ...          | ...                               |
 
-![Ejemplo almacenamiento Lacene](graphics/lacene.png)
+![Ejemplo almacenamiento Lucene](graphics/lacene.png)
 
 Como se le asigna el id al doc? Si quiero el nombre y no el id? Para eso sirve el almacenamiento fuera del index, el nombre del path lo puedo almacenar en el almacenamiento aparte. Es un exelente uso para el almacenamiento fuera del indice en Lucene. 
 
@@ -411,6 +411,7 @@ $$
 
 Si es con `AND` es solo los documentos con los dos cumplidos, pero se siguen sumando los scores.:3
 
+Ademas, si se busca con FuzzySearch, prefix, range y wildcard, entonces se devuelve score 1 a los doc que matchean.
 
 ### Queries
 
@@ -476,5 +477,5 @@ El `SpanishAnalyzer` busca la raiz de la palabra ya que podria ser similar al de
 ### Solr y Elasticsearch
 
 Lucene no ofrece escabilidad, para ello se utiliza Solr o Elasticsearch.
-Para realizar bsuquedas de gran escala, se ditribuye la busqueda en varias computadoras. Una compuradora dirije y pide la busqueda y el resto realiza la busqueda en diferentes documentos.
+Para realizar busquedas de gran escala, se ditribuye la busqueda en varias computadoras. Una compuradora dirije y pide la busqueda y el resto realiza la busqueda en diferentes documentos.
 

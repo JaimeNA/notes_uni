@@ -16,11 +16,11 @@ Ahora bien, el indice no solo se utiliza para buscar, sino que tambien hay opera
 - Insercion
 - Borrado 
 
-La complejidad temporal de cada una depende del tipo de estructura, por ejemplo, si se trata de un arregla con espacio prealocado, si quiero insertar es simplemente cuestion de insertar al final, pero todo cambia si tiene que ser ordenado o tengo que aumentar el espacio.
+La complejidad temporal de cada una depende del tipo de estructura, por ejemplo, si se trata de un arreglo con espacio prealocado, si quiero insertar es simplemente cuestion de insertar al final, pero todo cambia si tiene que ser ordenado o tengo que aumentar el espacio.
 
 No hay estruturas de datos perfectas, dependen del caso. Nosotros vamos a utilizar un arreglo ordenado,
 
-Para el caso de la **insercion** es muy constoso tener que alocar memoria en caso de requerir expandir el arreglo, por lo tanto, es muy malo ir alocando de a uno. Es una practica comun hacer crecer el arreglo de a chunks. 
+Para el caso de la **insercion** es muy costoso tener que alocar memoria en caso de requerir expandir el arreglo, por lo tanto, es muy malo ir alocando de a uno. Es una practica comun hacer crecer el arreglo de a chunks. 
 Para insertar en el medio del arreglo, hay que ir swapeando del final hacia adelante.
 
 Por otro lado, en caso del **borrado** tambien deberia ser de a chunks ya que no es ideal tener mucho espacio vacio, pero comunmente no se hace. Si queremos hacerlo podemos, pero no va a estar mal no hacerlo.
@@ -82,7 +82,7 @@ $$
 $$
 Por lo tanto, sera $O(N^2)$.
 
-Para el resto de los casos, se divide a la mitad cada vex, entonces:
+Para el resto de los casos, se divide a la mitad cada vez, entonces:
 $$
     Times(N) = Times(\frac{N}{2}) + \frac{N}{2}
 $$
@@ -103,7 +103,7 @@ Hay dos versiones, una facil que genera un arreglo paralelo y otra dificil que e
 2. Recursivamente ordenar cada mitad
 3. Unir las dos mitades
 
-##### Coplejidad temporal 
+##### Complejidad temporal 
 
 Primero planteo el numero de ecuaciones:
 
@@ -170,7 +170,7 @@ En esta estructura nos enfocamos en el orden de llegada de los elementos. Por ej
 ### Implementacion
 
 Con una simple lista encadenada o un arreglo se puede implemeentar. En caso de arreglo la contiguedad esta garanttizada y nunca hara falta mover elementos, pero si se acaba el espacio se debe buscar espacio conttiguo en otro lugar. Por otro lado, si se uttiliza una lista lineal simplementte ecadenada, el elemento mas a la "izquierda" sera el tope. 
-Java ya cuenta con una implementacion para el Stack, pero no es muy buena ya que al ectender otra clase, tiene un monton de metodos innecesarios. Es decir, desde el punto de vista OOP, es una mal practica.
+Java ya cuenta con una implementacion para el Stack, pero no es muy buena ya que al extender otra clase, tiene un monton de metodos innecesarios. Es decir, desde el punto de vista OOP, es una mal practica.
 
 Se nos permite usar la implementacion de Java, pero es recomendable que hagamos nuestra propia version. Podemos usar la de Java, pero solo con los metodos mencionados anteriormente, por ejemplo, no podemos usar el `add`.
 
@@ -183,13 +183,13 @@ Hay varios algoritmos para evaluar expresiones, el siguiente algoritmo toma expr
 1. Cada operador es una expresion posfija se refiere a los operandos previos a la misma.
 2. Cuando aparece un operando hay que postergarlo porque no se puede hacer nada con el hasta que no llegue el operador, se pushea al stack.
 3. Cuando aparezca un operador en la expresion implica que llego el momento de aplicarselo a los operandos, se procede a popearlos del stack.
-4. Cuando se termine de analizar la expresion de entrado el resulltado de su evaluacion es el unico valor que debe quedar en la pila.
+4. Cuando se termine de analizar la expresion de entrado el resultado de su evaluacion es el unico valor que debe quedar en la pila.
 
 > **Nota**: La clase `Scanner` de Java es muy util para este tipo de aplicaciones pues permite recibir un input por archivo, recivir un input por entrada estandar, separalo en toquens. Hay que tener cuidados con los metalenguaje, como con el +, hay que escparlos con `\\`.
 
 ### Infija a posfija
 
-Existe un algorimo muy famoso para realizar esta operacion. La idea es que ada vez que aparezcan varios operadores se consultara una tabla que indique cual se evalua primero. Si dos operadores tienen la misma precedencia, se utiliza la regla de asociatividad para saber cual se evalua primero.  
+Existe un algorimo muy famoso para realizar esta operacion. La idea es que cada vez que aparezcan varios operadores se consultara una tabla que indique cual se evalua primero. Si dos operadores tienen la misma precedencia, se utiliza la regla de asociatividad para saber cual se evalua primero.  
 Para comparar, vamos a usar una tabla donde en la primer columna va el operador previo y en la primera fila el operador actual. Entonces, si en fila hay un * y en columna un +, entonces se devuelve un `false` pues el que estaba en tope de la fila tiene menos precedencia sobre el elemento actual.
 
 Pasos del algoritmo:
@@ -197,11 +197,11 @@ Pasos del algoritmo:
 1. Si la pila esta vacia, se pushea el operador **current** ya que no se lo puede comparar.
 2. Si la pila no esta vacia:
     - Si el tope de la pila tiene mayor precedencia que el current, entonces se realiza un pop.
-    - Si el tope tiene menor precedencia, el current no se puede ir todavia.
+    - Si el tope tiene menor precedencia, el current no se puede ir todavia(lo pushea).
 3. Al finalizar, se popea lo que haya quedado en el stack.
 
 Esto funciona para los operadores asociativos a izquierda, pero ahora si queremos implementar el operador exponencial necesitamos considerar el asociativo a izquierda, pero no hace falta cambiar el algoritmo, simplemente basta con modificar la tabla.
-Es un buen disano debido a su flexibilidad.
+Es un buen diseno debido a su flexibilidad.
 
 |       | +     | -     | *     | /     | ^     |
 | ----  | ----  | ----  | ----  | ----  | ----  | 
@@ -241,7 +241,7 @@ Coleccion de datos ordenada por orden de llegada. La unica forma de acceso es po
 - `isEmpty()`
 - `size()`, esta es opcional, pero puede ser util.
 
-Si se implementa como lista, conviene que el `first` sea el primer elemento y `last` el utlimo. Esto permite O(1) para obtener `first`. 
+Si se implementa como lista, conviene que el `first` sea el primer elemento y `last` el ultimo. Esto permite O(1) para obtener `first`. 
 
 En el caso de implementarlo com arreglo, ambas maneras tienen un problema, tengo que mover todo si `last` es el primero y si `first` es el primero va a haber espacios en blanco cada vez que haga un `deque()`. Si se acaba el espacio, hay que realocar(conocido como **unbounded queue**), pero existe una forma de arreglar esto: Utilizando un arreglo circular. Si no el arreglo no va a crecer, entonces se conoce como **bounded queue**, este seria el caso del queue circular.
 
