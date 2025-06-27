@@ -193,7 +193,7 @@ Similarmente, la **black depth** de un nodo se define como la cantidad de nodos 
 
 #### Insercion
 
-Primero, se inserta como un BST. Luego, se arregla cualquier violacion a las reglas de un red-black tree:
+Primero, se inserta como un BST, como nodo rojo. Luego, se arregla cualquier violacion a las reglas de un red-black tree:
 
 - Si el nodo padre es negro, dejo todo como esta
 - Si el nodo padre es rojo, podria estar violando alguna regla
@@ -205,6 +205,8 @@ Para arreglar alguna violacion, depende del caso:
 
     - **Es hijo derecho**: Rotar a la izquierda con pivot en el padre
     - **Es hijo izquierdo**: Rotar a la derecho con pivot en el abuelo y recolorear
+
+Luego, se verifica si se esta violando alguna regla y se aplican los casos 1 o 2 al nodo primer nodo(desde el nodo insertado) que este violando la regla.
 
 #### Busqueda
 
