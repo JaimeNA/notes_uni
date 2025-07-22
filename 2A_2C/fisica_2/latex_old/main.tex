@@ -1,0 +1,43 @@
+\documentclass{article}
+\newpage
+ 
+\input{../note_style} % Config file
+
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Cover Page and ToC
+% ------------------------------------------------------------------------------
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{1.5pt} \\
+		\LARGE \textbf{\uppercase{Fisica 2}
+		\HRule{2.0pt} \\ [0.6cm] \LARGE{Semester 1 - 2025} \vspace*{10\baselineskip}}
+		}
+\date{}
+\author{\textbf{Jaime Nazar Anchorena} \\ 
+		Ingenieria Informatica}
+
+\AddToShipoutPicture*{\put(-500,-200){\includegraphics[scale=1.0]{graphics/cover.png}}}
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------------------
+% Notes
+% ------------------------------------------------------------------------------
+
+\input{units/unit1}
+
+% ------------------------------------------------------------------------------
+% Reference and Cited Works
+% ------------------------------------------------------------------------------
+
+\bibliographystyle{IEEEtran}
+\bibliography{References.bib}
+
+\end{document}
