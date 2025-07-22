@@ -1,1 +1,0 @@
-pandoc cover.md --toc units/*.md -f markdown -t pdf -o test.pdf
