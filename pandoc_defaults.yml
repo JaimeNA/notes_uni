@@ -10,7 +10,7 @@ standalone: true
 input-files:
   - cover.md
   - units/unit1.md
-#  - units/unit2.md
+  - units/unit2.md
 #  - units/unit3.md
 #  - units/unit4.md
 #  - units/unit5.md
