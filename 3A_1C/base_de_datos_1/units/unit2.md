@@ -50,7 +50,8 @@ Los que no son claves, se denominan **descriptores**.
 
 Una **relacion** es una asociacion entre entidades particulares. Mientras que un **conjunto de relaciones** es la coleccion de todas las relaciones del mismo tipo.
 
-Formalmente, Un conjunto de relaciones $R$ es un subconjunto del producto cartesiano de conjuntos de entidades $E_1 \dot E_2 \dot$ ... $\dot E_n$ con $n \ge 2$
+Formalmente, un conjunto de relaciones $R$ es un subconjunto del producto
+cartesiano de conjuntos de entidades $E_1 \times E_2 \times$ ... $\times E_n$ con $n \ge 2$
 
 #### Caracteristicas
 
