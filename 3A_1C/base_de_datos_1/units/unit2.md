@@ -13,10 +13,10 @@ Este es el primer nivel que vamos a ver(mencionados en la unidad 1). Con extenci
 ### pasos de un buen disenador
 
 1. Reunir los requisitos del sistema
-2. ....
+2. Crear esquema conceptual
 3. Implementar la base de datos con algun DBMS(comercial o no)
 4. Diseno fisico de la base de datos(indices)
-5. ....
+5. Carga de datos y examinacion de funcionamiento
 
 ---
 
@@ -86,7 +86,7 @@ Es un conjunto de relaciones con cardinalidad 1:N o 1:1 los atributos pueden mig
 - Univaluado(unico valor) - Multivaluado(por ejemplo, un auto, tiene mas de un color al mismo tiempo).
 - Almacenado - Derivado(antiguedad puede derivarse de fecha_ingreso)
 
----
+#### Claves
 
 Una entidad es **fuerte** si arma su clave a partir de sus atributos.
 Una entidad es **debil** si es parte del conjunto de entidades que tiene su clave formada por atributos propios mas atributos de otros conjuntos. Parte la tiene una entidad con la que se relacionea.
@@ -94,5 +94,23 @@ Una entidad es **debil** si es parte del conjunto de entidades que tiene su clav
 Si es debil, **automaticamente** tiene participacion total.
 
 ## Modelo ER extendido agrega jerarquias
+
+El modelo basico puede extenderse permitiendo representar mejor el mini-universo en cuestion. La extension permite expresar que un conjunto de entidades es subclase de otro co njunto de estidades debido a que posee mayor especializacion. Por ejemplo, *empleado* es superclase de los conjuntos *efectivo*, *contratado*, *free_lacne*.
+
+Importante, cuando se verifica especializacion encontramos que el conjunto de entidades subclase hereda todos los atributos y participa de todas las relaciones de la superclase(yo que es un caso especial).
+
+### Tipos de jerarquias
+
+#### Generalizacion
+
+Si se tiene un conjunto de entidades y se lo divide en subclases disjuntas. 
+
+El diagrama que representa esto se lo hace representando a cada una de las subclases y uniendolas a la superclases por una doble flecha, via un hexagono que posea el atributo que produjo la separacion.
+
+#### Es-un
+
+Si sólo se especifica especialización, pero falla que al unir todas las subclases se obtenga la superclase, 
+o se tiene que las subclases no son necesariamente disjuntas. El diagrama que representa esto es similar al anterior pero sin el hexágono del medio.
+
 
 
