@@ -113,5 +113,21 @@ El diagrama que representa esto se lo hace representando a cada una de las subcl
 Si sólo se especifica especialización, pero falla que al unir todas las subclases se obtenga la superclase, 
 o se tiene que las subclases no son necesariamente disjuntas. El diagrama que representa esto es similar al anterior pero sin el hexágono del medio.
 
+### Semantica de relaciones
 
+#### Redundantes o derivadas
+
+Se dice que una relación es redundante o derivada si al eliminarse no se pierde información. La información puede seguir obteniéndose.
+
+A simple vista, podría pensarse que si un EER que se representa por medio de un grafo posee un ciclo hay relaciones redundantes. 
+Sin embargo, que exista un grafo con ciclo no significa que haya necesariamente relaciones redundantes.
+
+*Las relaciones redindantes DEBEN eliminarse.*
+
+#### Binarias o ternarias
+
+Puede siempre reemplazarse una relación ternaria por varias binarias y mantener la semántica?
+No siempre. El reemplazo puede ocasionar pérdida de información.
+
+> **Nota**: Ver representacion grafica de Chen en apuntes de campus.
 
