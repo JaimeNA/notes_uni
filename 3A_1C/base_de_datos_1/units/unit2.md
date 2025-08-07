@@ -122,12 +122,13 @@ Se dice que una relación es redundante o derivada si al eliminarse no se pierde
 A simple vista, podría pensarse que si un EER que se representa por medio de un grafo posee un ciclo hay relaciones redundantes. 
 Sin embargo, que exista un grafo con ciclo no significa que haya necesariamente relaciones redundantes.
 
-*Las relaciones redindantes DEBEN eliminarse.*
+*Las relaciones redundantes DEBEN eliminarse.*
 
 #### Binarias o ternarias
 
 Puede siempre reemplazarse una relación ternaria por varias binarias y mantener la semántica?
 No siempre. El reemplazo puede ocasionar pérdida de información.
 
-> **Nota**: Ver representacion grafica de Chen en apuntes de campus.
+> **Nota**: Ver representacion grafica de Teorey en apuntes de campus.
+
 
