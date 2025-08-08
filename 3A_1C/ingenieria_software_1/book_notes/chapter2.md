@@ -204,6 +204,29 @@ los mejores equipos de software son los autodirigidos, los miembros son los resp
 
 El equipo debe adaptar uno o mas de los modelos de proceso mencionados, para ello existen **herramientas de tecnologia del proceso**. 
 Una vez creado un proceso aceptable, se emplean otras herramientas de tecnologia para asignar, vigilas e incluso controlas todas las actividades. 
-Tambien puede ser usada para coordinar el empleo de otras herramientas que sean apropiadas para una tarea en particular.
+Tambien puede ser usada para coordinar el empleo de otras herramientas que sean apropiadas para una tarea en particular. Margaret Davis hace comentarios sobre la dualidad del producto y del proceso:
 
+> En tanto que la tendencia natural de un péndulo es alcanzar el estado de reposo en el punto medio
+entre dos extremos, la atención de la comunidad del software cambia constantemente porque se aplica
+una nueva fuerza al fallar la última oscilación. Estos vaivenes son dañinos en sí mismos porque
+confunden al profesional promedio del software al cambiar en forma radical lo que significa hacer 
+el trabajo bien. Los cambios periódicos no resuelven “el problema” porque están predestinados a 
+fallar toda vez que el producto y el proceso son tratados como si fueran una dicotomía en lugar 
+de una dualidad.
 
+> Obtenemos sentimientos de satisfacción por la reutilización de nuestros productos, 
+ya sea que lo hagamos nosotros u otras personas.
+
+Como profesional creativo, hay que ser capaz de obtener tanta satisfaccion del proceso como del 
+producto final. La dualidad planteada es un elemento importante para hacer que personas creativas 
+se involucren.
+
+## TL;DR
+
+Un modelo general del proceso incluye un conjunto de actividades, cada uno de los modelos puede
+describirse por un flujo distinto. Los patrones del proceso pueden utilizarse para resolver problemas
+comunes que surgen durante el proceso. Se dividen en 3 grandes grupos:
+
+- Modelos de proceso prescriptivo
+- Modelos de proceso secuencial
+- Modelos de proceso icnremental
