@@ -106,3 +106,191 @@ Los usuarios esperan que los sistemas se comporten de manera similar.
 - Hacer que el sistema se ajuste a los modelos mentales de los usuarios.
 - Cuando no se pueda cambiar la interfaz de usuario, se le puede ensenar a los usuarios un modelo mental mas preciso.
 
+Es importante porque todo el conocimiento previo del usuario, lo va a traer al tratar de utilizar nuestra aplicacion. Si alineamos el diseno con el modelo mental general,
+sera intuitivo y sencillo para el usuario utilizar nuestra aplicacion.
+
+## UCD: Diseno Centrado en el Usuario
+
+El usuario tiene un rol muy importante dentro de la definicion de usuabilidad, el UCD es una filosofia de diseno cual tiene como objetivo la creación de productos que resuelvan las necesidades 
+concretas de sus usuarios, consiguiendo la mayor satisfacción y experiencia de uso posible. 
+
+UCD se enfoca en entender a los **usuarios**, sus **tareas** y el **contexto**. Si el usuario no tiene lo que quiere, dejara de usar nuestra aplicacion. 
+
+Henry Dreyfuss fue el primero en implemantar UCD, sin que existiera, rediseno los telefonos de una empresa. Los novedoso fue que observo como la gente usaba los telefonos y 
+a partir de ahi comenzo a implementar mejoras. Por ejemplo, cable enrulado(para soportar distintas distancias), longitud ergonomica del telefono(para que el usuario pueda hablar y escuchar al mismo tiempo), etc.
+
+Sin embargo, no es la unica filosofia, existen otras(no necesariamente malas):
+
+- Centrado en disenador(vision personal del disenador)
+- Centrado en la empresa(estructura y necesidades de la empresa)
+- Centrado en el contenido(la informacion es la base, y su estructura de navegacion)
+- Centrado en la tecnologia(tecnologia elejida para implementar solucion)
+
+> **Nota**: La ultima palabra la tiene el usuario.
+
+### Beneficios
+
+- Incluir al usuario en el proceso, genera productos que **satisacen sus expectativas y necesidades**.
+- Generar un producto(y/o servicio, va para todos los puntos) para los usuarios que realizan tareas particulares, **reduce posibilidad de errores**.
+- Trabajar en contacto con los usuarios **permite generar empatia** con ellos.
+
+### No solo es cumplir objetivos
+
+No es necesariamente un item a cumplir, sino que es una filosofia que se debe aplicar desde el inicio del desarrollo.
+
+### El error mas comun 
+
+No involucrar al usuario a tiempo, en la realidad es sumamente importante no quedarse con la explicacion que da el usuario(generalmente no sabe lo que quiere),
+hay que saber preguntarle y guiarlo a que explique con mas detalle su idea.
+
+En un equipo con muchos roles, es importante que todos los integrante esten comunicados y que entiendan bien la idea, esto involucra la documentacion(para nosotros y los que se sumen mas adelante).
+
+### Metodologia
+
+Segun ISO 13407, consta de 4 etapas.
+
+![Metodologia UCD](graphics/meto_ucd.png)
+
+> **Nota**: Las normas ISO te dicen que tenes que hacer, pero nunca como lo tenes que hacer.
+
+La catedra, en este caso, si nos dice como hacerlo.
+
+#### Especificar contexto de uso
+
+- **Objetivo**: Identificar a las personas a las que se dirige el producto, para que y en que condiciones la van a utilizar.
+
+- **Consideraciones**: Descubrir el modelo mental de los usuarios finales. Analizar sus destrezas. Pensar alternativas de una solucion mejor a la que ya tienen.
+
+- **Metodos y tecnicas**: Observacion(mirar como trabaja el usuario), eye tracking, entrevistas, encuestas y analitica Web/Aplicacion(Obtener info de uso de otras aplicaciones, de los usuarios).
+
+Para analizar el contexto de uso hay varias tecnicas, pero una es buscar aplicaciones similares y observar como los usuarios interactuan con ellas. Sin embargo, si es algo muy novedoso 
+habra que realizar entrevistas u otros.
+
+**Ejemplo**: Microsoft uso la estrategia analitica para mejorar el office, observo los items mas usados(recolecto informacion de uso de los usuarios)
+y los coloco en la barra superior que conocemos hoy en dia. Al comienzo no tubo una buena recepcion, pero rapidamente se volvio la interfaz preferida.
+
+#### Especificar requisito
+
+Ahora deberiamos ya poder responder quien, cuando y donde se utilizara nuestra aplicacion. Entonces, es momento de analizar los datos.
+
+- **Objetivo**: Identificar y detallar los objetivos de los usuarios.
+
+- **Consideraciones**: Satisfacer claramente los objetivos y el alcance definido.
+
+- **Metodos y tecnicas**: Modelos de personas.
+
+Para implementar **modelos de persona** se tiene el concepto de persona(user persona, diferente a una persona como ser humano), representa a un grupo o subconjunto de los usuarios 
+de un sistema que presentan similitudes en su:
+
+- Comportamiento
+- Metas
+- Motivaciones
+- Necesidades
+- Etc.
+
+Permiten:
+
+- Consolidar y lograr un entendimiento de nuestros usuarios.
+- Ayudar a recodar y aplicar lo que sabemos de los usuarios durante el desarrollo.
+
+#### Producir soluciones de diseno
+
+No trata de crear la aplicacion.
+
+- **Objetivo**: Construir una simple representacion de nuestra aplicacion(en papel, computadora, etc.).
+
+- **Consideraciones**: Dentro de lo posible contemplar diferentes alternativas y combinarlas para generar una superadora.
+
+- **Metodos y tecnicas**: Prototipos y card sorting.
+
+Google tiene una metodologia que dice que en una semana se puede disenar una aplicacion.
+
+Todas las industrias hacen prototipos, especialmente ahora, con la impresion 3d. Los prototipos permiten mostrarle al usuario lo que estoy haciendo y poder recibir feedback, y 
+en caso de ser necesario, corregir errores.
+
+#### Evaluacion
+
+- **Objetivo**: Comprobar si las soluciones de diseno cumplen con el contexto de uso y satisface las necesidades del usuario.
+
+- **Consideraciones**: Listado de los aspectos positivos y negativos encontrados en el prototipo "respecto" a los "requisitos". Decidir si se sigue o no con una iteracio mas.
+
+- **Metodos y tecnicas**: Evaluacion de usabilidad.
+
+> **Nota**: Todo debe ser secuencial, no se pueden llevar a cabo varias etapas en paralelo. 
+
+---
+
+Luego, si todo va bien, se puede comenzar a implementar la implementacion. Ciertas incidencias menores se pueden solucionar en la etapa de desarrollo, 
+pero las graves requieren que se vuelva a realizar el proceso.
+
+### Usuarios representativos
+
+Si vamos antrevistar necesitamos entrevistar a alguien, si vamos a observar necesitamos observar a alguien. Entonces, primero debemos partir con que personas vamos a tratar.
+Estos usuarios se conocen como **usuarios representativos**, los potenciales usuarios de nuestro sistema. Podria ser que existan(intereses similares, usan aplicaciones similares, etc.), pero podria 
+pasar que no, en ese caso va a haber que pensarlos.
+
+En la etapa de definir este tipo de usuario, hay que pensar en sus atributos(genero, edad, ocupacion, nacionalidad, lugar de recidencia, nivel de educacion, etc.).
+Al definir los usuarios hay que poner un marco de refencia, no basta simplemente con decir, por ejemplo, "nivel socio-economico medio"(es muy amplio).
+
+A continuacion veremos como implementar estas tecnicas:
+
+#### Observacion participativa
+
+Precede a la computacion, se trata de ponerse en "los zapatos de otros" de los usuarios para descubrir sus valores, objetivos y necesidades.
+Entender como el otro percive la realidad, el que comenzo con este concepto fue un antropologo que quedo varado con una tribu durante la primera guerra mundial.
+
+Hay que tener empatia, hacer el trabajo de otros, vivir sus vidas. Permite ir mas alla de lo superficial y desarrollar la empatia.
+Algunos aspectos claves a tener en cuenta son:
+
+- Que es lo que hacen los usuarios.
+- Que valores y metas tienen, porque lo usa, que motivos tienen.
+- Separar lo que el usuario dice con lo que hace.
+- Como se integran todas las tareas que hace el usuario.
+- Cuales son las similitudes y diferencias que presentan las persona.
+
+Generalmente, nunca es culpa del usuario sino que es resultado de un mal diseno.(ver ejemplo xerox)
+Por otro lado, hay varias recomendaciones:
+
+- Establecer una relacion con los observados.
+- Aprender todos los pasos del proceso(Todo lo que usa el usuario, cuadernos, lapices, etc.).
+- Validar lo que se observa con los observados a medida que se avanza.
+- Diferenciar lo que los observados dicen respecto de lo que hacen.
+
+**Ejemplo**: De 30 o 20 personas que responde en un call center, cual es el empleado que responde con mas precision o sabe resolver el problema?
+
+La primera es la que mas antiguedad tenia, la segunda era la que se sentaba al lado del primero. Esto se basa en un estudio real.
+
+> **Nota**: Al profesor no le gusta *divide y conquistaras* para estos casos.
+
+#### Entrevistas
+
+Es valioso preguntar al usuario para conocer sus experiencias, pero hay que ser conciente de que preguntas hacer. Es importante hacer algunas preguntas sencillas para conocer a que tipo 
+de persona estamos entrevistando(edad, sexo, ocupacion, etc.) para luego deducir sus posibles respuestas.
+
+Por ejemplo, la mayoria de las personas cuando se le pregunta si algo es importante, constestan que si. Esto es un ejemplo de una **pregunta guiada**, condicionan al usuario a responder algo.
+En este caso la observacion participativa seguramente sea mas efectiva.
+
+Tampoco es conveniente preguntar cosas como "Que te gustaria que este en la aplicacion", el usuario no disena el sistema. 
+Nos conviene mas preguntar que cosas disfruta o que es lo que hace generalmente(no apuntar directamente a la funcionalidad, como el color de la aplicacion).
+
+Finalmente, no hay que preguntar hacerca de situaciones hipoteticas, situaciones que el usuario nunca se haya planteado(no son del dia a dia). 
+Por otro lado, evitar preguntar por una escala(del 1 al 10, que significa 7?), evitar preguntas binarias(al menos no de forma aislada, deberian se seguidas por una pregunta secundaria)
+y evitar preguntar con que frecuencia hacen ciertas cosas(cuantas horas de ejercicio realizan por semana, por ejemplo).
+
+Recomiendan:
+
+- Considerar a los diferentes tipos de usuarios.
+- Puede ser dificil conseguir personas a entrevistar, una aproximacion es mejor de nada.
+- Hacer preguntas abiertas pues cuanto mas abiertas sean, mas interesantes seran las respuestas.
+- Dar tiempo para responder, puede ser usado para dar una mejor respuestas(un poco de silencia puede ser interesante).
+
+#### Encuestas
+
+Se recomienda lo siguiente:
+
+- Realizar **recoridos cognitivos**, consiste en realizar una prueba piloto donde se determina si el usuario entiende las preguntas o la dinamica de la encuesta.
+- 
+
+> **Nota**: Este tema lo agrego este cuatri(recorridos cognitivos, etc.), importante.
+
+
