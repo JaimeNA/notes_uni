@@ -229,4 +229,4 @@ comunes que surgen durante el proceso. Se dividen en 3 grandes grupos:
 
 - Modelos de proceso prescriptivo
 - Modelos de proceso secuencial
-- Modelos de proceso icnremental
+- Modelos de proceso incremental
