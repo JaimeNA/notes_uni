@@ -1,4 +1,4 @@
-# Unidad 1: Presentacion
+# Unidad 1: POSIX
 
 ## Entorno de desarrollo
 
@@ -48,6 +48,60 @@ Entonces, linux permite que ambos procesos utilicen la misma memoria fisica y so
 Linux implementa esta dandole la misma **page table** a cada programa, pero marcadas como **read only**. Entonces, cuando alguno intenta escribir ocurre una **page fault**.
 
 ![Representacion de copy on write](graphics/cow.png)
+
+## File management
+
+Todo lo que es I/O es universal en Unix, se maneja como si fuera un archivo.  Es muy eficiente el read write, lo unico que cambia entre tipos como lo accedo.
+Para trabajar con archivos como humanos les asignamos nombres, pero las computadoras prefieren tratar con numeros. Por lo tanto, cuando trabajamos con bajo nivel utilizamos 
+**file descriptors** los cuales indican la referencia a un archivo **abierto**. 
+
+Una vez con el fd se puede leer y escribir, el fd 0 es la salida estandar. Comandos utiles:
+
+- `head`, primeras lineas de un archivo
+- `tail`, ultimas lineas de un archivo
+- `stat`, muestra metadata del archivo
+- `lseek`, corre el puntero a otra posicion
+
+Una vez termino de trabajar con un fd, se libera y el numero queda disponible para cuando abra algun otro archivo. Cuando abro un archivo, usa el fd mas chico disponible. 
+Cuando se lee de disco es muy importante que lo que uno lea o escriba este alineado con el **tamano del bloque** para evitar fragmentacion, no es obligatorio, pero es una buena practica.
+
+Un archivo tiene un formato predefinido? No, para el sistema operativo no importa, hay metadata guardada en disco para saber su ubicacion o permisos, pero el archivo en si son bytes para el SO.
+Es problema de la aplicacion saber que formato tiene, si tubieran formatos para el SO seria demasiado complejo e innecesario.
+
+> **Nota**: Cada proceso tiene su tabla con el mapeo de fd a nombre, es un error muy comun tener una tabla global para todos los procesos(esta mal eso). Todo lo que comentan es **local** al proceso. Si dos procesos tienen abierto el mismo archivo el fd no tienen porque coicidir.
+
+## `pipe`
+
+Es un canal donde se envia todo lo que saca un proceso se lo manda a otro, es unidireccional y es un metodo de comunicacion. Es el mas sencillo que hay. 
+Es un buffer compartido, donde un proceso escribe y otro lee, una cola. No hay posibilidad de reabrir un pipe, pues es un objeto anonimo(no tiene nombre).
+
+En caso de que el programa que lee termine y el otro siga escribiendo se lanzara una senal de error nivel sistema operativo. No es comportamiento normal, por lo tanto se lanza un error.
+Detecta que el otro programa dejo de leer pues desaparece el fd. Pero que pasa si deja de escribir el programa, que pasara con el que lee? 
+Se vacia el pipe y cuando en ultimo read devuelva 0, entonces se cierra el pipe.
+
+Otro caso, el proceso que lee, lee despacio, entonces, se llena el buffer. Cuando la otra parte quiera escribir y el SO ve que el buffer esta lleno, 
+bloquea la parte que escribe hasta que se pueda ejecutar write. No da error, pues esto es una situacion normal.
+
+### dup
+
+El manejo del pipe se realiza de la siguiente manera:
+
+1. Corro pipe en shell. Se llama syscall `pipe`
+2. `pipe` devuelve a la shell fd escritura y fd lectura
+3. Se hace un fork, de manera que los hijos(las dos shell) tienen los mismo fd que el padre(pues se hacen copias identicas).
+4. La shell cierra los dos fd, pero siguen abiertos para los hijos. Se separa del pipe.
+5. Se elimina el fd de lectura de un hijo y el de escritura para el otro. Quedando el diagrama de pipe convencional.
+6. Luego para el proceso 1 se configura el stdout como el pipe y para el proceso 2 es el stdin. Duplicando los fd, cerrando stdout y stdin para los proceso.
+7. Una vez duplicados a std y stdin, se cierran los originales.
+8. Se hace el exec en las shell.
+
+Aca child 1 y child 2 son una shell, al final del todo se hace el exec y se ejecutan los programas. Esta es una de las razones por la cual stderr esta separado de stdout.
+
+> **Nota**: Para ver la representacion grafica ver apuntes. Puede haber dos fd, uno duplicado, abiertos, pero es mala practica.
+
+---
+
+# TEORICA
 
 ## Sistemas operativos
 
