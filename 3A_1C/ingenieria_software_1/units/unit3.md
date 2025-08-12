@@ -334,6 +334,176 @@ Con este postulado se puede trabajar con metodologias agiles mediante user stori
 La idea es poder visualizar el **customer journey**. Todas las user stories juntas visualmente sera muy confuso y de ahi surge el concepto de
 user stories mapping para facilitar la organizacion y visualizacion de los stories.
 
-# Scrum arifacts
+# Stack tecnologico
+
+Servicios y herramientas, son importantes pues:
+
+- Permite tener enfoque claro y coherente
+- Disminuye complejidad
+- Ayuda a garantizar calidad y estabilidad del software
+
+Los factores a tener en cuenta son:
+
+- Objetivos, para determinar que herramientas usar
+- Experiencia, que ya es conocido por el equipo
+- Presupuesto
+
+Busca un balance entre la comodidad y beneficios que nos ofrecen los distintos software y herramientas.
+El stack esta conformado por:
+
+- Frontend
+- Backend
+- Project management
+
+## Frontend
+
+Define la forma en la cual los usuarios interactual con nuestro sistema. Establece parte de la identidad de nuestro producto,
+buscando brindarle al usuario una experiencia memorable. Se comienza con prototipos.
+
+### Prototipos
+
+Permiten una validacion temprana de la idea, brindan retroalimentacion de los usuarios, y ahorran tiempo y recursos. 
+No tenfra logica, es simplemente para que el cliente determine si le gusta o no, ahorrando tiempo y recursos.
+
+Herrramientas para prototipado:
+
+- Adobe XD
+- Figma
+
+### Tecnologias web
+
+Hacen que los productos que las utilizan puedan ser utilizados desde distiintos dispositivos(a diferencia del mobile). 
+Brindan mejor experiencia en pantallas de mayor tamano y facilitan la creacion de PWA's que tambien mejoran la eperiencia mobile.
+Involucra:
+
+- HTML 5
+- CSS
+- Javascript
+- Typescript, por encima de Javascript, con tipado estatico(detecta errores)
+
+Se genera una interfaz web en base a ellos.
+
+#### Frameworks de Javascript
+
+Proporcionan un conjunto de herramientas y funcionalidades preconstruidas, ayudan a construir soluciones de forma mas rapida. 
+Facilitan la reutilizacion de codigo, funcionan con Typescript. Algunos:
+
+- React, no realmente un framework, no te limita maneras de hacer la UI
+- Vue
+- Angular
+- Svelte
+
+Podemos elegir el que queramos, incluso uno que no mencionaron.
+
+#### Meta-frameworks
+
+Se integran con frameworks y librerias existentes, ofrecen soluciones estandarizadas para problemas recurrentes.
+Proporcionan funcionalidades **Out of the Box**.
+
+Algunos:
+
+- Astro, puede usar React y otros
+- Nuxt, de Vue
+- Remix, orientado a React
+- Next, mas conocido(empieza a mezclar el front y el back)
+
+#### Frameworks de CSS
+
+Ayudan a construir interfaces visuales de una forma mucho mas rapida, se encarga de las incompatibilidades **Cross-Browser**. 
+Crean una abstraccion, permiten reutilizar estilos entre componentes.
+
+Hay varios tipos:
+
+- **Utility libraries**: Permiten escribir CSS mas rapido.
+- **Style systems**: Provee estilos predefinidos.
+- **Component libraries**: Ademas de estilos predefinidos, incluyen funcionalidades predefinidas(la logica).
+
+Algunos:
+
+- TailwindCSS
+- StyleX, utility library
+- Bootstrap, style system
+- NextUI, component library
+- Mantine, component library
+- Radix, headless component library(recomiendan si te dedicas al front)
+- shadcn, headless component library
+
+La diferencia entre ellos es el nivel de abstraccion y libertad que se le da al programador.
+
+### Tecnologias mobile
+
+Crean una experiencia mas cercana y personal al usuario, potencian la interaccion del usuario con las distintas funcionalidades de los dispositivos.
+
+Se usaa mucho cuando se quiere tener una interaccion constante con el usuario, siempre cerca. Sin embargo, ahora nos veremos limitados por la plataforma,
+idealmennte tendria que ser multiplataforma. Similarmente a web, hay:
+
+- Desarrollo nativo, generalmente mas rapido y eficiente
+- Desarrollo multiplataforma
+
+Algunas: 
+
+- Xcode, ios
+- Flutter, ambas
+- React Native, ambas
+- Ionic, no esta buena, para browser, pero se instalan en el dispocitivo
+
+## Backend
+
+Encargado de gestionar y procesar la logica de negocios, junto a los datos del sistema. Define el alcance de proyecto , su estabilidad y el sustento de su correcta operacion.
+
+Algunas funcionalidades:
+
+- Autenticacion
+- Cloud computing
+- Web screping
+- Base de datos
+- AI y machine learning
+
+### Propiedades de servidor
+
+Puede ser self-hosted o third party. Cuando es **third party** hay diversos grados de compromiso por tu parte(de menos a mas costoso):
+
+- Bare metal
+- Infractruture as a service, VM
+- Platform as a service, centra en desarrollo de aplicaciones
+- Backend as a service, servicios preconfigurados
+
+### Maquinas virtuales
+
+- Amazon EC2
+- Railway
+- render
+- Koyeb
+
+### Backend as a service
+
+- Azure
+- Amazon Web Services(AWS)
+- Firebase, mobile
+- AWS Amplify, mobile
+- supabase, soporta SQL(hace poco firebase tambien)
+
+### Autenticacion
+
+- Auth0
+- clerk, orientado a starup, tiene componentes armados de frontend
+
+### Busqueda indexada
+
+- Algolia, pago, mas rapido
+- Meilishearch, lo podes hostear
+
+
+### Mensajeria y notificaciones
+
+- Novu
+
+### Hosting y cloud functions
+
+- Vercel
+
+### Serverless
+
+- upstash
 
 
