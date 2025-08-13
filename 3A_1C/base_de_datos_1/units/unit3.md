@@ -109,9 +109,10 @@ Ningun atributo que forme la clave puede ser `NULL`. Pues `NULL` es ambiguo, ent
 
 ### Restriccion de integridad referencial
 
-Dependencia de inclusion, se especifica entre dos esquema de relaciones y se usa para garantizar consistencia entre ambas: **Clave Foranea(Foreign key)**. Cumple con:
+Dependencia de inclusion, se especifica entre dos esquema de relaciones y se usa para garantizar consistencia entre ambas: **Clave Foranea(Foreign key)**. 
+Un conjunto de atributos X de un esquema de relación R es una clave foránea de R si satisface las siguientes dos condiciones:
 
-- Atributos de X tienen el mismo dominio que la clave candidate.
+- Los atributos de X tienen el mismo dominio que alguna clave Y(candidate) de algún otro esquema de relación S
 - Se verifica que siendo r una relacion de R y s una relacion de S, entonces para toda tupla t de r existe una tupla u de s tal que t\[X\] = u\[Y\] o bien t\[X\] es `NULL`.
 
 (completar)
@@ -122,9 +123,9 @@ Dependencia de inclusion, se especifica entre dos esquema de relaciones y se usa
 
 ### Restriccion de dependencias funcionales
 
-###...
+### ...
 
-###...
+### ...
 
 ## Lenguajes del DBMS
 
@@ -248,6 +249,6 @@ Ahora, la clave sera la combinacion de las claves de dos entidad con 1, se puede
 
 ### Mapeo de Jerarquia generalizacion
 
-
+Ver ejemplos graficos en apuntes.
 
 

@@ -10,7 +10,7 @@ La informacion puede usarse en la medida en que se encuentre **pre-procesada**.
 
 Este es el primer nivel que vamos a ver(mencionados en la unidad 1). Con extencion se refiere a dos cosas del mundo de los objetos. 
 
-### pasos de un buen disenador
+### Pasos de un buen disenador
 
 1. Reunir los requisitos del sistema
 2. Crear esquema conceptual
