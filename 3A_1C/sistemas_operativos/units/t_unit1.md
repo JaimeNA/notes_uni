@@ -1,4 +1,4 @@
-# Unidad 1: Repaso
+# Teorica 1: Introduccion
 
 ## Sistemas operativos
 
@@ -116,4 +116,106 @@ Como vimos en arqui, las syscall buscan:
 - Se puede ver como una simple llamada a función que además cambia a modo kernel
 - El mecanismo para realizar una system call depende de la arquitectura y debe expresarse en assembler.
 
+POSIX es basicamente la API de linux, en windows se llama **win32**, nosotros vamos a ver el grupo principal de syscalls definidos por POSIX.
+
 > **Nota**: Malloc puede derivar de una syscall, pero en realidad solo es necesario realizar una syscall cuando se acaba la memoria disponible para pedirle mas memoria al kernel.
+
+### Read
+
+ Para verificar que la primera vez que se ejecuto `read` levanto todos los datos posibles, se corre una segunda vez, si devuelve 0 significa que no hay mas nada para leer
+ (si le pedis 1024 y te da 1000 y despues 0, entonces el archivo es de 1000 bytes) y la lectura fue exitosa.
+ Sin embargo, si la segunda vez devuelve mas que 0(en el caso de leer un archivo) entonces no se leyo todo y hay que volver a hacerlo. 
+
+### Waitpid
+
+Hace que el proceso espere a que termine el proceso con el pid especificado. Durante la espera el programa se queda bloqueado y no ocupa ciclos del procesador, pero si memoria. Se entera el parent porque
+el SO termina la syscall.
+
+Por otro lado, el SO se entera de que termino por la llamada a `exit()`(la cual es una syscall) del child. Se fija quien es el parent y si el mismo esta esperando lo notifica.
+
+> **Nota**: Hay mas syscall en la T1.
+
+### Kill
+
+Manda una aenal que alerta a otro proceso, simplemente le avisa, pero no necesariamiente lo mata. Ahora, si envio la senal -9 ahi si termina. Cada programa tiene un handler para las senales, 
+entonces los handlers se general en runtime y se setean con syscalls. Esto permite que un programa en vez de terminar muestre una ventana que pregunte al usuario si esta seguro de que 
+quiere terminar el proceso. 
+
+El SO hara que el IP cambie a apuntar la funcion del handler, lo hara sin importar si la funcion no esta en su lugar y la va a ir a buscar. Implementa **zero trust**, 
+se va a asegurar que el programa termine si se envia la senal de terminacion.
+
+### Fork
+
+Mis palabras:
+
+> Se crea un proceso identico que sigue la ejecucion en el momento que retorna.
+
+Asi es, **KISS**. Es un ejemplo de las varias funciones no siguen lo usual(exec(no retorna), exit(no retorna), etc.): llamo una vez y retornan una vez.
+
+## A donde va la salida estandar
+
+Ejecutan write en fd 1, no les importa a donde apunta el fd, eso depende del SO. Algunos ejemplos:
+
+- `ls` -> terminal,
+- `ls | grep` -> pipe
+- `ls > foo.txt` -> archivo
+- `ls > /dev/null` -> dispositivo
+
+## Estructura de un sistema operativo
+
+### Monolithic systems
+
+Toda la funcionalidad del SO esta en un solo binario, toda funcion tiene visibilidad del resto de las funciones. Esto es eficiente, pero complejo.
+Un error en cualquier funcion hace fallar el sistema operativo completo. Ademas, soporta **shared libraries** o **DDLs**. 
+
+Presenta una filosofia de estructura, ver figura. El TP arqui es monolitico(como el TPE de SO), el user space esta separado, pero no es parte del SO. 
+
+![SO monolitico](graphics/monolitico.png)
+
+> **Nota**: Es muy usado, por ejemplo, Windoes, FreeBSD, Linux, etc.
+
+### Microkernels
+
+La idea es dejar los componentes esenciales en el kernel(lo minimo), mientras que el resto se va a correr como clientes del kernel(en user-mode). Los drivers corren como un proceso mas, 
+por lo que un error fuera del kernel no hace fallar al SO. Tiene alta confiabilidad(Real time), implementado por Integrity, PikeOS, MINIX, etc.
+
+![SO microkernels](graphics/microkernel.png)
+
+Un ejemplo, MINIX, presenta un **reincarnation server** el cual es el padre de todos los drivers y servers, chequea constantemente de controles que esten todos vivos. 
+Limpia los drivers y servers muertos, y chequea una tabla para ver que hacer(generalmente los reinicia).
+
+#### Mecanismo vs politica
+
+La separacion entre mecanismo y politica es una buena estrategia de programacion pues permite reducir el tamano del kernel y separar areas diferentes. 
+Colocar el mecanismo en el kernel y la política por fuera, por ejemplo, asignar prioridades a los procesos(por fuera del kernel) y ejecutarlos según estas prioridades: 
+
+- Elegir al proceso de mayor prioridad (mecanismo) puede estar en el kernel
+- Asignar las prioridades (política) puede estar por fuera del kernel.
+
+---
+
+![Monolitico vs Microkernels](graphics/mono_vs_micro.png)
+
+> **Nota**: Hay implementaciones hibridas que combinan ambas.
+
+### Virtual machines 
+
+Tradicionalmente Mail server, FTP server, Web server, etc corren en computadoras separadas, lo cual lo hace popular para Web hosting: servidor dedicado vs. compartido - costo y flexibilidad
+Tambien presentan utilidad para uso personal. Para que funcione, el CPU debe ser virtualizable: SO corriendo en user mode ejecuta instrucción privilegiada, 
+es necesario que haga un TRAP al virtualizador para emularla en software. Pentium ignoraba estas instrucciones aunque existían intérpretes como Bochs (bajo rendimiento).
+
+No es exactamente lo mismo que un emulador de hardware, pero si hace creer a los SO dentro de los VM que son su propia maquina con su propio CPU, RAM, etc. Son maquinas separadas, 
+lo cual lo hace conveniente por cuestiones de costo y seguridad.
+
+Hay diferentes tipos de maquinas virtuales, tambien conocidos como **hypervisors**:
+
+- **Virtual machine monitor o type 1 hypervisor**: Se ocupa de proveer los servicios necesarios.
+- **Type 2 hypervisor**: Tiene un SO por debajo que se encarga de abstraer los procesos, file system, etc. QEMU y BOCHS.
+- Sistemas híbridos.
+
+Es mas eficiente y rapido el tipo 1 debido a que tiene menos capas e interactua directamente con el SO. El tipo 2 tiene ya una capa extra.
+
+![Tipos de VMs](graphics/vm.png)
+
+
+

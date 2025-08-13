@@ -1,4 +1,4 @@
-# Unidad 1: POSIX
+# Practica 1: POSIX
 
 ## Entorno de desarrollo
 
