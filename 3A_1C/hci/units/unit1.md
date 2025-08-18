@@ -230,7 +230,10 @@ Estos usuarios se conocen como **usuarios representativos**, los potenciales usu
 pasar que no, en ese caso va a haber que pensarlos.
 
 En la etapa de definir este tipo de usuario, hay que pensar en sus atributos(genero, edad, ocupacion, nacionalidad, lugar de recidencia, nivel de educacion, etc.).
-Al definir los usuarios hay que poner un marco de refencia, no basta simplemente con decir, por ejemplo, "nivel socio-economico medio"(es muy amplio).
+Al definir los usuarios hay que poner un marco de refencia, no basta simplemente con decir, por ejemplo, "nivel socio-economico medio"(es muy amplio). No son grupos de personas, 
+sino que atributos, todo lo que considere oportuno para describir a mis futuros usuarios.
+
+Te permite contener el impacto, dando tiempo para correjir los errores para la version final. Se conoce como **contencion de danos**.
 
 A continuacion veremos como implementar estas tecnicas:
 
@@ -262,6 +265,9 @@ La primera es la que mas antiguedad tenia, la segunda era la que se sentaba al l
 
 > **Nota**: Al profesor no le gusta *divide y conquistaras* para estos casos.
 
+Es importante no simplemente hacerle al usuario usar la aplicacion, es muy generico. Para que sea efectivo tengo que darlo un objetivo al usuaro(no crear una lista a secas), 
+por ejemplo, hace una lista, agrega unas leches, ponele nombre a la lista, etc.
+
 #### Entrevistas
 
 Es valioso preguntar al usuario para conocer sus experiencias, pero hay que ser conciente de que preguntas hacer. Es importante hacer algunas preguntas sencillas para conocer a que tipo 
@@ -286,11 +292,71 @@ Recomiendan:
 
 #### Encuestas
 
-Se recomienda lo siguiente:
+Son complementarias, podria hacer entrevistas y encuestas, no hace falta elegir solo una. La encuestra es mas masiva, mientras que la entrevista es mas individual.
 
-- Realizar **recoridos cognitivos**, consiste en realizar una prueba piloto donde se determina si el usuario entiende las preguntas o la dinamica de la encuesta. 
+Para evitar tener que reenviar la encuesta debido a que la anterior no me dio la informacion que necesitaba o habia un error de logica que escondia parte de la encuestra, 
+se recomienda lo siguiente:
+
+- Realizar **recorridos cognitivos**, consiste en realizar una prueba piloto donde se determina si el usuario entiende las preguntas o la dinamica de la encuesta. 
+- Realizar **pruebas de funcionamiento**, una vez validado el punto anterior, validar que el comportamiento de la encuesta sea adecuado. Por ejemplo, para probar una bifurcacion en las preguntas.
+- Realizar **puebas de usabilidad**, en vez de mandarlo a una red social para que todos contesten, mandar a algunas personas de la potencial audiencia.
+Permite validar como la audiencia va a interactuar con la encuestra(prueba piloto).
+
+Primero aprovechar las dos o tres primeras preguntas para entender al usuario: edad, educacion, etc.
 
 > **Nota**: Este tema lo agrego este cuatri(recorridos cognitivos, etc.), importante.
+> **Nota**: Hubo un grupo que reenvio 3 veces la encuestra debido a tener los problemas mencionados.
+
+#### Otras tecnicas
+
+Estas no las vamos a utilizar para el TP. En ciertas ocasiones, es posible que el comportamiento de los usuarios ocuura durante de un largo periodo de tiempo, sea esporaico(usa la app cada tanto) 
+o sea una combinacion de ambos, Entonces, para estas situaciones las tecnicas de observacion perticipativa y entrevista pueden no ser del todo efectivas. Una solucion, 
+es que los mismos participantes sean quienes registren los datos(habra menos usuarios dispuestos a hacer esto), proporcionandoles:
+
+- Diario de estudio(papel, diario, camara de foto o video, audios o lo apropiado).
+- Muestro de experiencia(variante o complementaria del anterior), contactar la experiencia cada tanto para obtener informacion de ese momento, evitando que los usuarios tengan que recordarlo.
+- Usuarios lideres, usuarios que hayan tenido que resolver mayor cantidad de problemas, su experiencia es muy valiosa. Tienen el conocimiento.
+
+> **Nota**: El principal problema es que dependen del usuario, algunos ponen trabas(como bloquear la app) hasta que el usuario complete la actividad.
+
+### Modelo de persona
+
+En la etapa anterior conseguimos un monton de informacion sin procesar, usaremos esta informacion para aprender lo que necesitan los usuarios. 
+Los **modelos de personas** permiten sintetizar la informacion obtenida a partir de las observaciones participativas, entrevistas, 
+o cualquier otra tecnica que utilicemos para especificar el **contexto de uso**.
+
+Esta area tiene como objetivo evitar errores comunes se TPs de cuatrimietres anteriores. Ataca dos problemas:
+
+- Logran un entendimiento comun, busca nivelar y que todos los integrantes del grupo vean a los usuarios de la misma manera.
+- Ayudan a recordar y aplicar lo que sabemos sobre los usuarios, es decir, humanizar a los usuarios, utilizando el modelo de persona como referencia a la hora de tomar una decision.
+
+Buscamos los factores comunes que existen entre todas las personas analizadas para luego poder realizar agrupamientos(cosas comunes, motivaciones). Estos grupos van a terminar
+dando al modelo de persona. El proceso de modelado de persona consiste en buscar cuestiones comunes de toda la informacion.
+
+#### Contenido
+
+Un modelo de persona debe tener:
+
+- Nombre(real o no, podria ser el rol)
+- Atributos(edad, genero, educacion)
+- Dibujo o fotografia representativa(tengo que humanizarla)
+- Descripcion(contar su historia, inventada)
+
+Ademas, los cuatro mas importantes:
+
+- Motivaciones(porque utilizaria nuestra aplicacion)
+- Escenarios(evidencian el uso del sistema)
+- Caracteristicas deseadas(expectativas de que le gustaria que le ofreciara el sistema)
+- Comportamientos esperados(Comportamiento que como desarrolladores esperamos que tenga el usuario). Por ejemplo, esperaria que Maria utilice la aplicacion mobil que la de escritorio 
+porque \[motivos basados en la descripcion previa\].
+
+Estos tienen que estar si o si en el modelo de persona. Si se define algo como *alto* o *bajo* hay que explicar primero que criterios utilizamos. 
+En la descripcion poner cosas que no pusiste en los atributos, sino colocar mas informacion. 
+Es muy importante que estas cosas esten alineadas entre si, se tienen que desprender de las observacion e informacion recompilada.
+
+> **Nota**: El dibujo o la fotografia tiene que ser representativo, no ponerle nombres de los personajes de alguna serie y las fotografias de los personajes
+(hay grupos que lo hicieron con corredores de formula 1). Esto esta fuera de lugar para el alcance del trabajo practico. Desaprueba el TP si ve que el TP tiene esto.
+> **Nota**: Para la descripcion va lo mismo, por ejemplo, un grupo describio un modelo como si fuera una telenovela. El profesor lo desaprueba.
 
 ## Ciencia cognitiva
 
@@ -515,3 +581,65 @@ Eventualmente, se llego a la formula final(Fitts ya habia muerto), la cual utili
 En el desarrollo, la podemos utilizar para cualquier tipo de interaccion que tengamos.
 
 Es una forma de simplificar una escena, composicion, fotografia, etc. Ahorra tiempo y reduce carga cognitiva.
+
+### Razonamiento: Ley de Hick
+
+Establece que cuantas mas opciones se le presenta a una persona, mas tiempo tardara en tomar una decision. Pasada una cierta cantidad de opciones, 
+se termina elegiendo al azar. Esta ley se utiliza mucho en diseno de UX para evitar abrumas a los usuarios con demasiadas opciones y, asi, mantener si interes.
+
+Establece que el tiempo necesario para tomar una decision aumenta logaritmicamente con el numero de opciones. Por lo tanto, se vuelve menos significatico a medida
+que aumenta la cantidad de opciones. Esta ley es crucial al disenar listas cortas, evitando el riesgo de saturacion de informacion. 
+De manera que, con mas opciones aumentara la rapidez con la que abandonan la experiencia de usuario(tasa de rebote).
+
+Para mitigar esto, por ejemplo, en netflix se suele ofrecer una lista preacotada con recomendaciones de otros usuarios o a partir de genero, etc.
+
+### Lenguaje: Claro y sencillo
+
+Un mito comun es que el uso de lenguaje claro y sencillo ocasiona perdida de calidad del contenido, el uso de frases largas y palabras vistosas para aparentar ser 
+mas inteligente o profesional no es correcto. En su lugar reduce la legibilidad de la interfaz de usuario, debemos recordar que el principal objetivo de la comunicacion es
+transmitir informacion.
+
+Por lo tanto, si se aporta mucha informacion, terminamos perdiendo la atencion del usuario. Esto se debe simplemente a que el que usara nuestra aplicacion sera un **usuario comun**.
+Manejar un lenguaje claro y sencillo tendra varios beneficios:
+
+- Toma menos esfuerzo descifrar el contenido, es preferible que el usuario use la energia en aprender el contenido.
+- Beneficia a todos, desde lectores avanzados a audiencias internacionales.
+- Se obtienen mejores resultados en los motores de busqueda, se muestra como mejor resultado por usar el vocabulario de usuario.
+
+### Emociones
+
+Proporcionan informacion importante para ayudarnos a priorizar la atencion y ser mas eficientes a la hora de tomar decisiones. Hay que evitar principalmente, 
+que el usuario sienta emociones negativas, como el estres.
+
+Don Norman definio como el diseno puede influenciar las emociones de las personas e identifico tres niveles diferentes de procesamiento emocional, 
+cada uno muestra un nivel mayor de complejidad en desarrollo cognitivo e inteligencia.
+
+1. Viceral
+2. Conductual
+3. Reflexivo
+
+#### Nivel visceral
+
+El primer y mas basico, consiste en una respuesta inconsciente, instintiva y efectiva a un estimulo externo no relacionada con la racionalidad o el razonamiento.
+Por ejemplo, el simple hecho de oler comida rica.
+
+#### Nivel conductual
+
+Analisis de una experiencia transformada en una accion o respuesta en el uso de un producto o servicio. Tiene que ver con el confort, 
+la facilidad del uso o sus consecuencias negativas. Por ejemplo, si la caja de cobro automatico funciona bien y es rapido seguramente que la vuelva a usar la proxima vez.
+Pero si no funciona, hara que nos replanteemos nuestra conducta y cambiarla acorde.
+
+Si tenemos un error o una falla, especialmente si se pierde el trabajo realizado, seguramente surgira una emocion de furia, abatimiento, etc. al necesitar rehacerlo.
+La intensidad de la emocion puede ser alta, pero sucede a nivel conductual porque se esta analizando las consecuencias de la experiencia.
+
+#### Nivel reflexivo
+
+El mas alto, consiste en pensamientos consientes, interpretacion y razonamiento. Se trata de nuestro autoconocimiento y nuestro entorno y
+lo que queremos que las otras personas piensen de nosotros entra en juego.
+
+Por ejemplo, si te promueven a primera clase de un avion, surgira una emocion de importacia y de haber ganado debido a como se cree que los demas los juzgaran.
+
+Sin embargo, tambien puede tener emociones negativas, por ejemplo, que alguien se enoje con vos. 
+El procesamiento reflexivo se refiere a la habilidad de reflexionar sobre las experiencias y como las mismas se relacionan con uno y nuestra autopercepcion.
+
+Esto es importante pues las ultimas dos son controlables, de manera que debemos tratar de que prosperen las emociones positivas en ese ambito. 
