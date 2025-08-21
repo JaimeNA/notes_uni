@@ -642,4 +642,134 @@ Por ejemplo, si te promueven a primera clase de un avion, surgira una emocion de
 Sin embargo, tambien puede tener emociones negativas, por ejemplo, que alguien se enoje con vos. 
 El procesamiento reflexivo se refiere a la habilidad de reflexionar sobre las experiencias y como las mismas se relacionan con uno y nuestra autopercepcion.
 
-Esto es importante pues las ultimas dos son controlables, de manera que debemos tratar de que prosperen las emociones positivas en ese ambito. 
+Esto es importante pues las ultimas dos son controlables, de manera que debemos tratar de que prosperen las emociones positivas en ese ambito.
+
+## Prototipado
+
+La etapa de UCD que estamos es en la de producir soluciones de diseno. Esta fase es fundamental ya que ayuda a recibir feedback de los potenciales usuarios lo mas rapido posible.
+
+**Pregunta de final**: Que es un prototipo?
+
+Version temprana de un producto destinada a ser presentada a los posibles usuarios de este y/o para efectuarle algun tipo de pruebas, es decir, tiene dos objetivos. 
+Ademas, brinda una representacion visual de como sera el producto final a pesar de no funcionar completa. Lo hacen todas las industrias.
+
+Existen varios tipos de prototipos, en la materia se los seleccione de acuerdo con su fidelidad(que tan detallados son):
+
+- **Baja**: Papel, tienen dibujos o impresiones, no permiten interaccion realista. Util para detectar defectos de diseno en una etapa temprana y eficientes.
+- **Media**: Digital, constituyen una serie de pantallas que contienen un mayor nivel de detalle visual y permiten cierto tipo de interaccion limitada. Se hacen con herramientas de diseno.
+- **Alta**: Nativo, es decir, implementado en algun lenguaje de programacion, constitue una aplicacion con un nivel de detalle visual e interacciones completamente realistas. 
+En un prototipo de alta fidelidad se puede recolectar datos de rendimientos, que tanto se tarda en realizar un tarea. Tambien muestran al usuario como sera la interfaz real, 
+pero pueden crear falsas espectativas(hay que aclararle al usuario que no esta terminado) y necesitan mayor tiempo para su construccion.
+
+> **Nota**: Baja es el tipo mas efectivo.
+
+**Pregunta de final**: Tengo que elejir entre alta y baja finalidad?
+
+No es excluyente, siento utiles en diferentes momentos del ciclo de vida del desarrollo del producto, generalmente cuando no se sabe muy bien en que direccion ir se comienza por papel(baja).
+
+### Video prototiping
+
+Tecnica utilizada para poder mostrar la manera en la cual los usuarios podran interactuar con la aplicacion. Extiende la idea de prototipado, 
+logrando que el mismo sea dinamico y permite transmitir mejor las decisiones de diseno al contemplar las mismas tareas que realizara el usuario.
+
+### Cuando el papel es util
+
+Para evaluar si los usuarios comprenden:
+
+- Conceptos y terminologia.
+- Navegacion y el flujo de trabajo(linea de tiempo con todas las cosas que debe hacer el usuario para completar una tarea, se recomienda hacerlo como historieta).
+- Contenido y si este permite tomar las decisiones adecuadas.
+- La disposicion de los elementos en la pantalla y si los mismos facilitan la obtencion de la informacion buscada.
+- La funcionalidad que estos necesitan(no evitar incluir funcionalidad que no es requerida en los mismos).
+
+> **Nota**: Es muy importante chequear si el usuario va a usar una funcionalidad que quiero agregar, sino sera un gasto de recursos. Esto se lo suelen olvidar. 
+
+### Cuando el papel no es util
+
+Aspectos dificiles de representar en papel:
+
+- Tiempos de descargo y/o respuestas(simulado por una persona).
+- Desplazamientos verticales y/o horizontales(no necesariamente se presentan en prototipos, pero si en la vida real).
+- Colores, imagenes y tipografia pueden diferir de como se verian en la realidad(se puede minimizar al incluir al disenador grafico en este proceso).
+- Factibilidad tecnica(se puede construir un prototipo que no pueda ser implementado tecnicamente).
+
+> **Nota**: No acoplar linealmente la API a la UI, es decir, que no sea una representacion de la API.
+
+### Herramientas
+
+Algunas herramientas recomendadas para el prototipado:
+
+- Figma
+- Sketch(solo MAC)
+- Lunacy
+- Penpot
+
+Salen nuevas todo el tiempo, asi que podemos elegir la que querramos siempre y cuando verificando los planes(prueba gratis, marca de agua, etc.) y limite de usuarios.
+
+> **Nota**: Entregar todos los prototipos construidos, es preferible.
+
+### User story maps
+
+Enfoque basado en la aplicacion. Son una version ligera de lo que nosotros tenemos que contruir, es decir, son mas visuales. Un mapa tiene tres tipos de acciones, con diferentes niveles de detalle(de menos a mas):
+
+1. Actividades
+2. Pasos(subtareas de cada actividad)
+3. Detalles(por ejemplo, introducir nombre de usuario o correo electronico)
+
+![Ejemplo de user story map(la raya indica lo que se dejo afuera para priorizar recursos)](graphics/story_map.png)
+
+#### Usos y beneficios
+
+- Se pueden utilizar en cualquier momento, produce el producto minimo viable(aplica UCD directamente).
+- Una vez creados, se pueden consultar constantemente y se puede modificar facilmente.
+- Permite descomponer tareas y saber bien que hacer.
+- Mejorar la planificacion de las entregas.
+- Promueve un lenguaje comun entre negocio y tecnologia.
+
+### User journey maps
+
+Otro enfoque, solo que este esta basado en el usuario, son el resultado de una investigacion exploratorio. Permite ver el recorrido que va realizar el usuario al usar el programa y como mejorarlo.
+
+#### Componentes
+
+- Persona o perfil
+- Etapas del recorrido
+- Objetivos
+- Puntos de contacto 
+- Pensamientos, emociones y acciones
+- Puntos de dolor
+- Oportunidades de mejora
+
+#### Beneficios
+
+- Comprender la experiencia del usuario
+- Identificar puntos debiles
+- Mejorar la experiencia del usuario
+- Optimizar procesos
+- Generar empatia
+- Tomar decisiones basadas en datos
+
+### Diferencias entre los dos
+
+Uno tiene un enfoque mas basado en el producto mientras que otro en el usuario. Sin embargo, puedo ir de uno a otro teniendo en cuenta las caracteristicas de cada uno.
+
+## Lineamientos de usabilidad para el diseno de sitios web
+
+La primer norma de la usabilidad es no hacer pensar al usuario, segun Krug. Esto es, sacar cualquier cosa que desvie o haga perder tiempo al usuario.
+
+> **Nota**: Si pregunta en examen definicion de usabilidad, poner la de la ISO y no la de Steve Krug.
+
+Algunas cosas que hacen pensar al usuario:
+
+- Terminologia poco familiar.
+- Elementos de una pagina sobre los cuales se puede hacer *click*.
+- Criterios que deben de utilizarse en las busquedas.
+
+
+
+
+
+
+
+
+
