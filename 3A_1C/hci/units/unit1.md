@@ -765,11 +765,231 @@ Algunas cosas que hacen pensar al usuario:
 - Elementos de una pagina sobre los cuales se puede hacer *click*.
 - Criterios que deben de utilizarse en las busquedas.
 
+### Hechos del mundo real
 
+- Los usuarios no leen paginas, las escanean.
+- Los usuarios no eligen siempre la mejor opcion. 
+- Los usuarios no se dan cuenta como funcionan las cosas.
 
+### Disenando las paginas
 
+Existen varios aspectos que deben considerarse:
 
+- Crear una jerarquia visual.
+- Hacer uso de las convenciones existentes.
+- Separar las paginas en zonas claramente definidoas.
+- Hacer obvios aquellos elementos sobre los cuales se pueda hacer *click*.
+- Minimizar el ruido visual.
+- Permitir la toma de decisiones de manera ciega y mecanica.
+- Evitar las palabras innecesarias.
 
+#### Jerarquia visual
 
+- Los elementos mas imoprtantes deben ser mas prominentes(no mas grandes, sino que se destaquen mas).
+- Los elementos que se encuentran relacionados logicamente tambien deben estarlo visualmente.
+- Los elementos que son parte de otro elemento deben anidarse visualmente para mostrar dicha relacion.
 
+Cuando una pagina carece de jerarquia visual clara, el proceso de escaneo y comprension es mas dificultoso. Mucho de esto 
+viene de los medios impresos, ya que fueron lo primero en ser portado a formato digital, de manera que tubieron una gran influencia.
 
+#### Uso de convenciones existentes
+
+Los importante es que:
+
+- Son muy utiles porque esta probado que funcionan.
+- Los disenadores con frecuencia son reacios a utilizarlas. Siempre existe la tentacio de reinventar la rueda.
+
+De manera que hay que ser selectivo a la hora de irse de la norma, el usuario debe poder adaptarse en cuestion de minutos
+(si es que se decide irse del camino seguro). Muchas de las convenciones existentes tienen su origen en las convenciones de periodicos y revistas, 
+aunque se siguen desarrollando otras nuevas.
+
+#### Separar las paginas en zonas claramente definidas
+
+Esto es fundamental para permitirle a los usuarios rapidamente decidir en que areas de la pagina concentrarse y cuales pueden dejar de lado. 
+Esto esta relacionado con la vision de tunel discutida anteriormente.
+
+Estudios realizados con *eye tracking* demostraron que los usuarios deciden muy rapidamente que zonas probablemente tengan informacion de interes.
+
+#### Hacer obvio donde se puede hacer *click*
+
+Si obligamos a los usuarios a pensar en algo que deberia de ser clickleable 
+estamos desaprovechando la limitada reserva de paciencia del usuario, deberia ser mecanico.
+
+#### Minimizar el ruido visual
+
+El ruido visual es considerado el mayor enemico de la facilidad de aprendizaje. 
+
+Existen dos tipos:
+
+- **Abarrotamiento**: Todo en la pagina llama la atencion, puede ser abrumador.
+- **Ruido de fondo**: Al principio no molesta, pero luego de usar la pagina por un tiempo empieza a molestar.
+
+### Permitir la toma de decisiones de manera ciega y mecanica
+#
+> Las personas estan entre los 5 y 7 clicks antes de empezar a sentir frustracion a la hora de realizar una tarea en una UI. 
+
+Los usuarios no se preocupan por la contidad de *clicks* siempre y cuando cada *click* sea sencillo y 
+conserven la confienza de que se encuentran en el camino correcto.
+
+Debido a que los usuarios se enfrentan con opciones todo el tiempo en la Web esta es una exelente manera de garantizar que un sitio sea facil de usar.
+
+Hace un tiempo hubo una tendencia de disenar las UI para que todo se haga en 5 *clicks* y esto provoco muchos problemas, principalmente porque
+se intentaba de poner la mayor cantidad de contenido en una sola pagina. Eventualmente, no se siguio con esta practica.
+
+#### Evitar palabras innecesarias
+
+Gran parte de las palabras estan solo para ocupar espacio. El resultado final es que nunca nadie las va a leer.
+Sacando las palabras que el usuario no va a leer tiene varios beneficios.
+
+### Disenando la navegacion
+
+Cuando un usuario entra aun sitio generalmente esta tratando de buscar algo y para ello puede preguntar(hacer uso del cuadro de busqueda) o navegar.
+
+La decision que tome dependera de la representacion mental que tenga del sitio, cuan apurado este y si el sitio cuenta con un mecanismo de
+navegacion decente.
+
+Si un usuario no encuentra lo que busque o no se da cuenta de que forma esta organizada la informacion, 
+no permanecera por mucho tiempo y posiblemente no vuelva a ingresar al mismo.
+
+La experiencia Web no contempla muchas de las cosas que damos por sentado cuando nos desplazamos en la vida real, es decir, hay un arriba y un abajo.
+Mientras que en la Web:
+
+- No hay sentido de tamano
+- No hay sentido de direccion
+- No hay sentido de la ubicacion
+
+> El proposito primerio de la navegacion es que el usuario pueda encontrar lo que esta buscando e indicarle donde se encuentra.
+
+La navegacion tiene otros propositos que generalmente se pasan por elto:
+
+- Promocionan un sentido de la orientacion para que el usuario no se pierda.
+- etc.
+
+#### Persistent navigation
+
+Tambien conocida como **global navigation**, existe en todas las paginas, sirve para describir el conjunto de elementos de navegacion que 
+siempre aparecen en cada pagina del sitio.
+
+Hacer que la misma seccion de navegacion aparezca en cada pagina en el mismo lugar de forma consistente:
+
+- Proporciona al usuario la confirmacion instantanea de que se encuentra en el mismo sitio.
+- Facilita que el usuario solo tenga que descubrir como funciona una sola vez.
+
+La seccion de navegacion debe contener al menos los siguientes elementos:
+
+- Site ID o logo
+- Secciones
+- Herramientas(ayuda, mapa de sitio, login. No son parte de la jerarquia de contenido)
+- Un mecanismo para volver a la pagina principal
+- Un mecanismo de busqueda
+
+Los menu de secciones no deben tener mas de dos niveles, pues dificultan la navegacion.
+
+> **Nota**: Esto casi siempre se lo olvidan en el informe, sirve para justificar decisiones.
+
+#### Breadcrumbs
+
+Estos muestran el acmino en la jerarquia del sitio desde la pagina principal hasta la pagina actual.
+
+Le proporcionan al usuario un modo de saber en que lugar se encuentran, ubicados generalmente en la parte superior, la ultima opcion no es clickleable.
+
+#### Nombres de paginas
+
+Cada pagina necesita un nombre, no el nombre de la marca, pero el nombre de cada area de la pagina. 
+Debe ser representativo, consistente y estar en la parte superior. Debe ser consistente la opcion en la que hago click con el 
+nombre de la pagina en la que termino.
+
+#### Disenando la pagina principal
+
+Esta contiene:
+
+- Identidad y mision del sitio
+- Jerarquia del sitio
+- Adelantos
+- Contenido actualizado
+- Buscador
+- Registracion
+- Atajos
+- Mostrar al usuario lo que esta buscando
+- Mostrar lo que el usuario puedo no estar buscando
+- Mostrar al usuario por donde comenzar
+- Establecer credibilidad y confianza
+
+Dada la caracteristicas y responsabilidades unicas de la pagina principal, tiene sentido no utilizar la navegacion persistente en la misma.
+Algunas diferencias mas comunes:
+
+- Descripcion de secciones.
+- Diferente orientacion.
+- Mas espacio para la identidad(por ejemplo, Google).
+
+## Lineamientos de usabilidad para el diseno de dispositivos moviles
+
+Es importante que un dispositivo movil no sea considerado como una pequena computadora de escritorio o laptop.
+
+Bueno, en que afecta el contexto de uso(que hago en movil y que hago en computadora de escritorio)?
+
+Rta: Antes se consideraba que las cosas importantes o que requieran de mas tiempo y atencion se hacian principalmente en las computadoras de escritorio, mientras que en los telefonos se realizaban tareas mas inmediatas. 
+
+Pero luego del Covid-19, la gente se acostumbro a usar los telefonos para cosas como trasnferencias bancarias o compras online, 
+ya que la pandemia forzo a realizar tareas mas complejas en dispositivoc moviles.
+
+### Desafios
+
+- Pequenas pantallas
+- Tactil (escribir es mas dificil)
+- Bateria limitada
+- Acceso a internet inconsistente
+
+### Lineamientos
+
+- Evitar todos los pasos que pudieran ser innecesarios. Por ejemplo, autenticaciones, captchas, etc.
+- Ser simples, eliminando todos aquellos elementos que no sean esenciales.
+- Tener una interfaz de usuario intuitiva.
+- Que los usuarios puedan utilizala intuitivamente.
+- Disenar para una interaccion tactil, priorizando los controles mas "tactiles" a lo menos.
+- Asumir que los usuarios se desplazaran verticalmente(debido al tamano de la pantalla)
+- Usar un esquema de colores adecuado.
+- Utilizar estrategias adecuadas para la disposicion de los controles facilitando el acceso a las acciones mas frecuentes. 
+Se nota especialmente cuando agarramos el telefono con una mano.
+- Tener en cuenta que en el caso de una tablet, se suele agarrar de modo horizontal con ambas manos y es complicado llegar al centro.
+- Evitar el ingreso de texto, con autocompletado, sugerencias, evitando ingresos innecesarios, etc.
+
+### Aplicacion nativa o aplicacion web para moviles?
+
+#### Aplicacion
+
+- El Acceso es simple
+- La integracion con funciones provistas por el telefono es estrecha
+- Tener un historial de usuario es posible
+- Funcionamiento offline simple
+- Compatibilidad baja
+- Mantenimiento alto
+
+#### Sitio web
+
+- El Acceso es complejo
+- La integracion con funciones provistas por el telefono es limitada
+- Tener un historial de usuario es posible
+- Funcionamiento offline compleja
+- Compatibilidad alta
+- Mantenimiento bajo
+
+## Google material design
+
+Dependiendo del sistema, las apps se van a ver diferente. **Google design** es un sistema de diseno inspirado en el mundo real(sobras, por ejemplo),
+desarrollado por Google. 
+
+Basado en un modelo responsivo, se adapta facilmente a distintos tamanos de pantalla. Permite crear una especie de estandar, pero no totalmente porque
+lo cambian constantemente. Recomiendo usar imagenes mas que palabras, generando mayor armonia a la vista del usuario.
+
+### Color
+
+La paleta no es trivial, comunica jerarquia, estado y marca.
+La idea es que los colores esten alineados con el diseno final que podamos tener. Hay 4 grupos(de mas a menos importantes):
+
+1. Error
+2. Primario
+3. Secundario
+4. Terciario
+
+Los colores **fixed** no cambian entre modo claro y modo oscuro.  

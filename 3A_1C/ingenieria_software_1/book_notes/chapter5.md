@@ -123,5 +123,102 @@ los requerimientos esperados y percibir los emocionantes.
 
 Entender como emplearan los uusuarios finales dichas funciones y caracteristicas. Estos escenarios de llaman **casos de uso**.
 
-### Indagacion de los productos de trabajo
+### Indagacion(Analisis) de los productos de trabajo
+
+Los productos de trabajo son generados a partir de la indagacion de los requerimienots, estos varian en funcion al tamano de proyecto.
+Generalmente, los productos de trabajo incluyen los siguientes:
+
+- Enunciado de la necesidad y su factibilidad.
+- Enunciado acotado del alcance del sistema o producto.
+- Lista de clientes, usuarios y otros participantes que intervienen en la indagacion de los requerimientos.
+- Una descripcion del ambiente tecnico del sistema.
+- Una lista de requerimientos(de preferencia organizados por funcion) y las restricciones del dominio que aplican a cada uno.
+- Un conjunto de escenarios de uso que dan perspectiva al uso del sitema o producto en diferentes condiciones de operacion.
+- Cualesquiera prototipos desarrollados para definir requerimientos.
+
+Cada uno de estos es revisado por todas las personas que participan en la indagacion de los requerimientos. Esto es una actividad evolutiva.
+
+## Desarrollo casos de uso
+
+Un caso de uso narra una historia estilizada sobre como interactua un usuario final con el sistema en un contexto especifico.
+Ilustra el software desde el punto de vista del usuario final. Tiene los siguientes pasos:
+
+Primero, definir un conjunto de **actores**(distintas personas o dispositivos). Hay actores principales(trabajan con el software de forma directa)
+y secundarios(dan apoyo al sistema).
+
+Luego, desarrollar casos de uso, se sigiere que un caso de uso responda las siguientes preguntas:
+
+- ¿Quién es el actor principal y quién(es) el(los) secundario(s)?
+- ¿Cuáles son los objetivos de los actores?
+- ¿Qué precondiciones deben existir antes de comenzar la historia?
+- ¿Qué tareas o funciones principales son realizadas por el actor?
+- ¿Qué excepciones deben considerarse al describir la historia?
+- ¿Cuáles variaciones son posibles en la interacción del actor?
+- ¿Qué información del sistema adquiere, produce o cambia el actor?
+- ¿Tendrá que informar el actor al sistema acerca de cambios en el ambiente externo?
+- ¿Qué información desea obtener el actor del sistema?
+- ¿Quiere el actor ser informado sobre cambios inesperados?
+
+> **Nota**: Actor y usuario final no necesariamente son lo mismo.
+
+## Elaboracion del modelo de los requerimientos
+
+El objetivo del modelo de analisis es describir dominios de informacion, funcion y comportamiento que se requieren. 
+A medida que el modelo evoluciona, hay elementos que dan un fundamento solido(no cambian) y otros son volatiles, es decir, 
+lo que indica que todavia no se entienden bien los requerimientos del sistema.  Para construirlo se requieren:
+
+- Elementos del modelo de requerimiento, algunos elementos comunes son:
+    - Basados en el escenario.
+    - Basados en clases.
+    - De comportamiento.
+    - Orientados al flujo 
+- Patrones de analisis
+
+![Diagrama UNL para indagar requerimientos](graphics/indagar_req.png)
+
+## Requerimientos de las negociaciones
+
+Generalmente, para llegar a un acuerdo con respecto a los requerimientos, se tiene que entrar en negociaciones con uno o varios
+participantes. Las negociaciones tienen como objetivo desarrollar un plan del proyecto que satisfalga a todos. Buscan un resiltado *win-win*.
+Se definen un conjunto de actividades de negociacion al principio de cada proceso de software: 
+
+- Identificación de los participantes clave del sistema o subsistema.
+- Determinación de las “condiciones para ganar” de los participantes.
+- Negociación de las condiciones para ganar de los participantes a fin de reconciliarlas en
+un conjunto de condiciones ganar-ganar para todos los que intervienen (incluso el
+equipo de software).
+
+## Validacion de los requerimientos
+
+
+La revision del modelo de requerimientos para detectar inconsistencias o errores aborda las preguntas siguientes:
+
+- ¿Es coherente cada requerimiento con los objetivos generales del sistema o producto?
+- ¿Se han especificado todos los requerimientos en el nivel apropiado de abstracción? Es
+decir, ¿algunos de ellos tienen un nivel de detalle técnico que resulta inapropiado en
+esta etapa?
+- El requerimiento, ¿es realmente necesario o representa una característica agregada que
+tal vez no sea esencial para el objetivo del sistema?
+- ¿Cada requerimiento está acotado y no es ambiguo?
+- ¿Tiene atribución cada requerimiento? Es decir, ¿hay una fuente (por lo general una individual y específica) clara para cada requerimiento?
+- ¿Hay requerimientos en conflicto con otros?
+¿Cada requerimiento es asequible en el ambiente técnico que albergará el sistema o
+producto?
+- Una vez implementado cada requerimiento, ¿puede someterse a prueba?
+- El modelo de requerimientos, ¿refleja de manera apropiada la información, la función y
+el comportamiento del sistema que se va a construir?
+- ¿Se ha “particionado” el modelo de requerimientos en forma que exponga información
+cada vez más detallada sobre el sistema?
+- ¿Se ha usado el patrón de requerimientos para simplificar el modelo de éstos? ¿Se han
+validado todos los patrones de manera apropiada? ¿Son consistentes todos los patrones
+con los requerimientos del cliente?
+
+Estas deben plantearse y responderse para garantizar que el modelo refleja las necesidades del participante y provee un fundamento solido.
+
+## TL;DR
+
+Las tareas de ingenieria de requerimientos se realizan para establecer un fundamento solido, los miembros del equipo llevan a cabo
+siete funciones de ingenieria de requerimientos y al final se negocia la prioridad de cada requerimientos, 
+verificandoce que se haya entendido bien al cliente.
+
 
