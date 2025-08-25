@@ -104,7 +104,7 @@ número de características clave, mismas que debe compartir el equipo ágil com
 - Colaboracion
 - Habilidad para tomar decisiones
 - Capacidad para resolver problemas difusos
-- COnfianza y respeto mutuos
+- Confianza y respeto mutuos
 - Organizacion propia
 
 ## Programacion extrema(XP)

@@ -6,11 +6,12 @@
 
 El software es:
 
-1. Instrucciones (programas de cómputo) que cuando se ejecutan proporcionan lascaracterísticas, función y desempeño buscados.
+1. Instrucciones (programas de cómputo) que cuando se ejecutan proporcionan las características, función y desempeño buscados.
+
 2. Estructuras de datos que permiten que los programas manipulen en forma adecuada la información.
 3. Información descriptiva tanto en papel comoen formas virtuales que describen la operación y uso de los programas.
 
-### Caracteristicas que difieren del herdware
+### Caracteristicas que difieren del hardware
 
 - El software se desarrolla o modifica con intelecto; no se manufactura en el sentido clásico.
 - El software no se “desgasta”.
@@ -28,17 +29,17 @@ Hoy en dia hay siete grandes categorias:
 - Aplicaciones web
 - Software de inteligencia artificial
 
-En ciertos casos se elabora software nuevo, pero muchas veces simplemente se corrige, adapta y mejora aplicaciones ya exitentes.
+En ciertos casos se elabora software nuevo, pero muchas veces simplemente se corrige, adapta y mejora aplicaciones ya existentes.
 En base a eso, aparecieron nuevos desafios:
 
 - Computacion en un mundo abierto(computacion distribuida)
 - Construccion de redes(poder crear arquitecturas sensillas para algo tan complejo)
-- Fuente abierta(el codigo debe ser autodescriptivo para que sea mas sensillo colaborar)
+- Fuente abierta(el codigo debe ser autodescriptivo para que sea mas sencillo colaborar)
 
 ### Software heredado
 
 Se denomina **software heredado** a los programas mas antiguos que siguen siendo utilizados, 
-son costosos de mantener y muy dificiles de hacerlo evolucionar.
+son costosos de mantener y muy dificiles de hacerlos evolucionar.
 
 Este tipo presenta caracteristicas como las mencionadas anteriormente y tambien se le agrega que en general es de mala calidad.
 
@@ -72,14 +73,14 @@ La mayoria presentan los siguientes atributos:
 
 ## Ingenieria de software
 
-- El software esta en todos los aspectos de nuestras vidas, muchos clientes. Se concluye que debehacerse un esfuerzo concertado para entender el problema antes de desarrollar una aplicación de software.
+- El software esta en todos los aspectos de nuestras vidas, muchos clientes. Se concluye que debe hacerse un esfuerzo concertado para entender el problema antes de desarrollar una aplicación de software.
 - Las demandas son cada vez mas complejas. Se concluye que el diseño se ha vuelto una actividad crucial.
 - Se depende cada vez mas del software para tomar decisiones. Se concluye que el software debe tener alta calidad.
 - Al aumentar su valor percibido, aumenta la cantidad de usuarios.  Se concluye que el software debe tener facilidad para recibir mantenimiento.
 
 ### Definicion
 
-a ingeniería de software es una tecnología con varias capas. Cualquier enfoque de ingeniería (incluso la de software) debe basarse en un compromiso
+La ingeniería de software es una tecnología con varias capas. Cualquier enfoque de ingeniería (incluso la de software) debe basarse en un compromiso
 organizacional con la calidad. La administración total de la calidad, Six Sigma y otras filosofías similares 10 alimentan 
 la cultura de mejora continua, y es esta cultura la que lleva en última instancia al desarrollo de enfoques cada vez más 
 eficaces de la ingeniería de software. 
@@ -150,5 +151,5 @@ Estos ayudan a establecer herramientas mentales para una practica solido. Hooker
 6. Plantee por anticipado la reutilizacion, no reinventar la rueda
 7. Piense! Pensar en todo con claridad antes de emprender la acción casi siempre produce mejores resultados.
 
-> **Nota**: Si todo ingeniero y equipo de software tan sólo siguiera los siete principios de Hooker, se elimi narían muchas de las dificultades que se experimentan al construir sistemas complejos basados en computadora.
+> **Nota**: Si todo ingeniero y equipo de software tan sólo siguiera los siete principios de Hooker, se eliminarían muchas de las dificultades que se experimentan al construir sistemas complejos basados en computadora.
 

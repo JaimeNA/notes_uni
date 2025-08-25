@@ -87,11 +87,11 @@ El reto principal es establecer un balance apropiado entre estos parametros crit
 
 ## Modelo de procesos especializado
 
-Comparten algunaas caracteristicas con los modelos tradicionales, pero tienden a aplicarse cuando se tiene un enfoque muy especifico.
+Comparten algunas caracteristicas con los modelos tradicionales, pero tienden a aplicarse cuando se tiene un enfoque muy especifico.
 
 ### Desarrollo basado en componentes
 
-Incarpora muchas de las caracteristicas del modelo espiral, es de naturaleza evolutiva y demanda enfoque iterativo. 
+Incorpora muchas de las caracteristicas del modelo espiral, es de naturaleza evolutiva y demanda enfoque iterativo. 
 Su principal caracteristica es que **contruye aplicaciones a partir de fragmentos de software prefabricados**. 
 
 Incorpora las siguientes etapas:
