@@ -53,5 +53,88 @@ con ningun proyecto en particular.
 
 ### Enfoques del modelado de requerimientos
 
+- **Analisis estructurado**: Los datos y los procesos que los transforman son entidades separadas.
+- **Analisis orientado a objetos**: Se centra en la definicion de las clases y en la manera en la que colaboran uno con el otro para cumplir los 
+requerimientos. Usa UML.
+
+Solo deben usarse elementos de modelado que agreguen valor al modelo.
+
+## Modelado basado en escenarios
+
+La experiencia del usuario es la principal prioridad, el modelado con UML comenza con la creacion de escenarios en forma de casos de uso.
+
+### Creacion de un caso preliminar de uso
+
+Se trata de un contrato para el comportamiento.
+
+Para saber sobre que escribir hay que usar los dos primeras tareas de ingeniaria de requerimientos: **concepcion** e **idagacion**. 
+Para:
+
+- Identificar participantes
+- Definir alcance
+- Especificar objetivos
+- Especificar prioridades
+- Delinear requerimientos
+- Describir objetos que seran manipulados por el sistema
+
+Se utiliza:
+
+- Reuniones para recabar requerimientos
+- DEC
+- Otros mecanismos
+
+> **Nota**: Se denominan escenarios primerios aquellos que fluyen de manera lineal, sin caminos alternativos.
+
+### Mejora de un caso de uso preliminar
+
+Se evalua cada paso del **escenario primario**, planteando:
+
+- El actor puede emprender otra accion en este punto?
+- Es posible que el actor encuentre alguna condicion de error en este punto?
+- Es posible que el actor encuentre otro comportamiento?(por ejemplo, provocado por algo fuera del control del actor)
+
+Se recomienda el uso de una sesion de "lluvia de ideas" para obtener un conjunto complejo de excepciones, luego deben plantearse:
+
+- Existen casos en los que ocurra alguna funcion de validacion durante este caso de uso?
+- Hay casos en los que una funcion(o actor) de soporte falle en responder de manera apropiada?
+- El mal desempeno del sistema da como resultado acciones inesperadas o impropias?
+
+Luego, se debe razonar una excepcion usando los siguientes criterios:
+
+- Una excepcion debe describirse dentro del caso de uso si el software la detecta
+- El software debe manejarla una vez sea detectada.
+
+## Modelos UML que proporcionan el caso de uso
+
+Muchas veces un modelo basado en texto es muy poco util, entonces, se utilizan modelos UML graficos.
+Hay varios tipos de diagramas:
+
+- Diagrama de actividades
+- Diagramas canal
+
+## Concepto de modelado de datos
+
+Si el software debe trabajar con datos, el equipo de software muy probablemente haga un **modelo de datos** como parte del modelado de requerimientos.
+Para eso, se utilizan los diagramas **entidad-relacion**. 
+
+(Interseccion con Base de Datos 1, ver apuntes esa materia)
+
+## Modelado basado en clases
+
+Representa: 
+
+- Los objetos que manipularan el sistema
+- Las operaciones que se aplicaran a los objetos
+- Las relaciones entre objetos 
+- Colaboraciones que ttienen lugar entre clases
+
+Los elementos de este tipo de modelo son:
+
+- Clases
+- Objetos
+- Atributos
+- Paquetes
+
+### Identificacion de las clases de analisis
 
 
