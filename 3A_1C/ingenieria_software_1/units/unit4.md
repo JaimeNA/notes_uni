@@ -97,4 +97,92 @@ Basicamente un top-down:
 - Priorizar con criterio de negocio + valor al usuario.
 - Revisar y ajustar el mapa en cada iteracion.
 
+# Presentaciones eficientes
+
+Es preferible terminar antes que terminar tarde, es decir, es mucho peor terminar tarde.
+ 
+## Errores
+
+- No mirar al frente
+- Leer desde el celular
+- Hablar entre los integrantes
+- No acentuar al hablar
+- Manos en el bolsillo
+- Apoyarse en la pared
+- Mucho texto
+- Contexto
+
+# Containers
+
+Los contenedores son procesos, aislados del resto de los procesos. La imagen es **build time** y el contenedor es **run time**.
+
+## Como funcionan
+
+Tiene dos procesos principales:
+
+- Namespaces
+- Cgroups
+
+### Namespaces
+
+El entorno aislado. El contenedor no ve hacia afuera, pero desde afuera se puede observar el contenedor.
+
+El **filesystem** se puede manerjar con chroot o pivot_root, conviene pivot_root porque no puede volver para atras y tomar la referencia del resto del filesystem.
+
+Por otro lado, la **network** de cada contenedor es una red virtual dentro de la computadora, es decir, a cada contenedor se le asigna una interfaz de refl
+
+### Cgroups
+
+Restricciones del sistema operativo, limite de CPU, memoria, etc. Limitaciones que se imponen a los procesos. 
+
+## VMs vs. Containers
+
+Vntajas de contenedores:
+
+- Estandarizacion
+- Aislacion
+- Velocidad
+- Flexibilidad
+
+Basicamente, los VM emulan todo el sistema operativo, mientras que los contenedores no. Sin embargo, hay contenedores que son sistemas operativos y son practicamente VMs,.
+
+# Microservicios
+
+Cada servicio se separa en su propio servicio, que a su vez son contenedores(pueden estar corriendo en computadoras distintas). De manera que es mucho mas rebusto que usar monolito. 
+
+Ventajas:
+
+- Autonomia de equipos
+- Escalabilidad independiente
+- Despliegue independientes
+- Resiliencia
+- Poliglotismo tecnologico
+
+Desventajas:
+
+- Mayyor complejidad operativa
+- Coordinacion y versiones
+- Pruebas mas dificiles
+- Dificultad para debuggear
+- Consistencia de datos
+- Consto inicial e infraestructura
+
+## Cuando elegirlos
+
+No sirvern para todo, se deben elegir si:
+
+- Debe aportar valor al negocio.
+- Los equipos deben estar preparados, la infraestructura es mas dificil, el monitoreo, logging y debuggin es mas complicado, y se debe tener necesidad de automatizacion y diciplina tecnica.
+
+> Las microservicios son un medio, no un fin.
+
+## K8S
+
+Kubernetes:
+
+- Despliega contenedores en los servidores que tenga disponibles.
+- Escala automaticamente dependiendo de la demanda.
+- Mantiene la salud de los contenedores.
+- Balancea la carga entre instancias.
+- Tiene una gestion declarativa, trata de cumplir tus pedidos.
 
