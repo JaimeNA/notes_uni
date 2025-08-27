@@ -8,6 +8,8 @@ Hay dos tipos de lenguaje de consulta:
 La mayoria de los lenguajes comerciales ofrecen una mezcla de ambos. El lenguaje de algebra relacional fue propuesto por el mismo Codd.
 Sirve para extraer la info de la BD.
 
+## Algebra 
+
 Hay dos categorias de operador:
 
 - **Unario**: De una relacion R obtengo una relacion S.
@@ -23,7 +25,7 @@ Los operadores se pueden clasificar como:
 - Fundamentales, muy pocos.
 - Derivados, a partir de varios fundamentales(no potencial el lenguaje) se obtiene uno derivado, simplificando las expresiones.
 
-## Fundamentales
+### Fundamentales
 
 - **Seleccion**: Seleccioa subconjunto de tuplas de una relacion. $\sigma_{\text{condicion}}$ (nombre de relacion)
 - **Proyeccion**: Selecciona cirtas columnas de la relacion original, seran menos tuplas si no se usa una clave(repetidos). $\pi_{\text{lista de atributos}}$ (nombre de relacion)
@@ -37,7 +39,7 @@ Vamos a considerar que las relaciones no contienen el valor `NULL`, salvo que se
 > **Nota**: Para union y diferencia deben ser **compatibles**.
 > **Nota**: Un truco muy utilizado es usar > o < en vez de != para evitar que se repita la informacion(pero en distinto orden) al hacer producto cartesiano.
 
-### Renombramiento
+#### Renombramiento
 
 Se denota con $\rho$ y se utiliza de la siguiente manera(X es el nuevo nombre):
 
@@ -54,7 +56,7 @@ $$
 Sin embargo, en ocaciones especiales, se puede evitar el renombramiento simplemente agregandole un prefijo a la segunda aparicion del atributo repetido(al primero no se cambia). 
 De manera que se agrega el nombre de la relacion '.' y el atributo.
 
-## Derivados
+### Derivados
 
 Recordar que no agregan nada, si no existieran solo llevaria mas trabajo realizar las **queries**, pero no agregan funcionalidad.
 
@@ -66,7 +68,7 @@ Recordar que no agregan nada, si no existieran solo llevaria mas trabajo realiza
 
 > **Nota**: Lo evalua en todos los examenes, muy potente.
 
-### Asignacion
+#### Asignacion
 
 Permite asignar una expresion del algebra relacional en una variable temporal, se usa una flecha para denotarla.
 Permite definir operaciones que no son solo de consulta(insercion, borrado y actualizacoin), pero en esta materia no los vamos a usar. Por un lado, sin asignacion(ejemplo anidado):
@@ -79,7 +81,7 @@ auxi <- $\sigma_{\text{alumno.legajo=examen.legajo}}$ (alumno $\times$ examen)
 
 $\pi_{\text{nombre, nota}}$ (auxi) 
 
-### Junta
+#### Junta
 
 - **Theta join**: Selecciona de todas las tuplas de un producto cartesiano aquiellas tuplas que verifican cierta condicion. r $\theta_{\text{condicion de junta}}$ s
 - **Equijoin**: Parecido al theta, pero donde solo se aplica implicitamente =. En vez de $\theta_{\text{alumno.legajo=examen.legajo}}$ se usa simplemente $\theta_{\text{legajo}}$. Sin embargo, no se usa mucho pues el resultado no saca columnas.
@@ -95,7 +97,7 @@ si no hay atributos en comun es equivalente al producto cartesiano. r |x| s.
 
 > **Nota**: La asignacion esta en un limbo, depende del autor se considerara derivado o fundamental. Incluso se debate si es un operador.
 
-### Cociente
+#### Cociente
 
 Sirve para las consultas que incluyen la expresion "para todo". S(el divisor) debe estar incluido en R. Se define, una tupla t esta en r % s $\Leftrightarrow$
 
@@ -108,10 +110,97 @@ Este operador es un buen ejemplo de porque se considera procedural, hay que tene
 
 ![Ejemplo de uso de cociente](graphics/cociente.png)
 
-## Definicion: Relaciones compatibles
+### Definicion: Relaciones compatibles
 
 Dos relaciones r(A1, A2, ..., An) y a (B1, B2, ..., Bn) son compatibles si tienen el mismo grado N y si dom(Ai) = dom(Bi) para todo i entre 1 y N.
 
 > **Nota**: Para nosotros no tienen que tener igual dominio, sino que deben ser compatibles. Por ejemplo, `int` con `long`.
+
+## Calculo relacional
+
+El lenguaje de consulta puro y no procedural esta basado en el calculo de predicados de primer orden de la logica matematica.
+
+Hay dos tipos de calculo relacional:
+
+- Calculo relacional de tuplas.
+- Calculo relacional de dominios.
+
+### Calculo relacional de tuplas
+
+Las queries tienen la forma:
+
+{ T | formula(T)}
+
+T representa las tuplas y la formula es la que deben verificar las tuplas de respuesta. 
+
+#### Atomos
+
+Hay dos formatos de atomos:
+
+- r (V), variable(tupla) V pertenece a relacion r
+- V\[i\] op U\[j\], comparar algun atributo de las variables. 
+- V\[i\] op c
+
+Las variables que figuran en las formulas pueden ser libres(glbales) o ligadoas(locales).
+Las ligadas son las que estan dentro del alcance de un cuantificador existencial o universal(existe o para todo).
+
+> Las unicas variables libres que pueden aparecer en una expresion del calculo relacional de tuplas son aquellas ligadas con un existe o un para todo.
+
+#### Formulas
+
+Pueden ser:
+
+- Atomo
+- f1 $\lor$ f2
+- f1 $\land$ f2
+- $\neg$fi
+
+- ($\exists$ U) ($f_u$)
+- ($\forall$ U) ($f_u$)
+
+#### Tipos
+
+- **Seguras**: Devolver al usuario una consulta en un intervalo finito de tiempo y que este bien definida. 
+- **No segura**: Devuelve una relacion, pero esta es infinito / no esta bien definida. Entonces, no es interesante(como una especie de loop infinito).
+
+
+> **Nota**: Prestar atencion a esto, las no seguras aparecen generalmente con negacion y cuantificador universal.
+
+El **dominio activo** de una BS son los valores que estan presentes dentro de las relaciones, 
+entonces formalmente una formula segura no puede formular consultas que extiendan el dominio activo de la BD.
+
+Hay que usar leyes de logica para transformar una formula no segura a una segura, las que mas vamos a usar dos:
+
+- ($\forall$ X) ($p_X$) se puede reemplazar por ($\neg \exists$ X) ($\neg p_X$)
+- ($\exists$ X) ($p_X$) se puede reemplazar por ($\neg \forall$ X) ($\neg p_X$)
+
+> **Nota**: Ver equivalencias entre algebra y el lenguaje en campus.
+
+Es declarativo!
+
+### Calculo relacional de dominio
+
+{ X1, X2, ..., Xn | formula(X1, X2, ..., Xn) }
+
+#### Atomos
+
+- r(X1, X2, ..., Xn)
+- Xi op Xj
+- Xi op c
+
+#### Formulas
+
+ - Un atomo
+ - F1 $\lor$ F2
+ - F1 $\land$ F2
+ - $\neg$F1
+ - ($\exists$ U) (FU)
+ - ($\forall$ U) (FU)
+
+ > **Nota**: Es valido poner ($\exists$ X1, X2, ..., Xn) en vez de ($\exists$ X1) ($\exists$ X2) ... ($\exists$ Xn)
+
+#### Tipos
+
+Igual concepto que con las de tupla, solo cambia de tupla a dominio.
 
 

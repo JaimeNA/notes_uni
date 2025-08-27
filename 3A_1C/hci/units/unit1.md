@@ -993,3 +993,152 @@ La idea es que los colores esten alineados con el diseno final que podamos tener
 4. Terciario
 
 Los colores **fixed** no cambian entre modo claro y modo oscuro.  
+
+## Evaluacion de usabilidad
+
+Ahora estamos en la etapa de evaluacion del sistema. La evaluación de usabilidad es la medición 
+o identificación de los posibles problemas que afectan a los atributos de usabilidad de un sistema 
+o dispositivo utilizado por determinados usuarios, realizando tareas específicas, 
+en contextos particulares
+
+Existen tres enfoques distintos que pueden utilizarse para realizar una
+evaluación de usabilidad:
+
+- Evaluación predictiva / inspección (heurística)
+- Evaluación empírica / experimentación (observación)
+- Evaluación participativa / indagación (entrevistas)
+
+### Evaluacion predictiva
+
+Busca predecir los problemas o éxitos que el usuario tendrá al hacer uso del sistema.
+Debido a que este tipo de evaluación se encuentra basada
+en predicciones, permite producir resultados basados en los artefactos de diseño no
+funcionales y **no requiere de la participación de los usuarios reales**.
+
+### Evaluacion heuristica
+
+Representa uno de los métodos más populares de evaluación
+predictiva.
+
+Durante una evaluación heurística, un número pequeño de
+evaluadores (generalmente entre 3 y 5) examinan de manera
+independiente el sistema o dispositivo y juzgan su conformidad
+respecto de un conjunto de reglas que describen propiedades de
+interfaces usables, llamadas heurísticas.
+
+Las observaciones realizadas por cada evaluador luego deben ser
+consolidadas para resumir aquellos aspectos del sistema o dispositivo
+que necesitan ser mejorados.
+
+Constituye una forma temprana, rápida y “relativamente económica”
+de retroalimentacióm.  Los expertos entrenados en usabilidad a veces son difíciles de
+encontrar y pueden ser costosos.
+
+Jakob Nielsen sugiere que, con cinco evaluadores, se deberían poder identificar hasta el 75% 
+de todos los problemas. Si bien aumentar el número de evaluadores ayudará a encontrar más 
+problemas, puede que no valga la pena el tiempo y el esfuerzo.
+
+Principios de Jakob:
+
+- Visibilidad del estado del sistema
+- Coherencia entre el sistema y el mundo real
+- Controles y libertad del usuario
+- Consistencia y estándares
+- Prevención de errores
+- Reconocimiento en lugar de memoria
+- Flexibilidad y eficacia en el uso
+- Diseño estético y minimalista
+- Ayudar a los usuarios a reconocer, diagnosticar y recuperarse de errores
+- Ayuda y documentación
+
+Los 10 principios de usabilidad de Jakob Nielsen para el diseño de
+interfaces de usuario no son la única heurística disponible.
+
+La elección de la heurística puede depender de varios factores, por
+ejemplo, de la fidelidad del prototipo que se esté evaluando. Incluso
+en ciertas ocasiones puede ser necesario que debamos generar
+nuestra propia heurística.
+
+### Evaluacion empirica
+
+La evaluación empírica o pruebas de experimentación es un método
+de evaluación en el que se pide a un usuario o un grupo de usuarios
+ejecutar un prototipo y evaluarlo, con el objetivo de recolectar
+información para mejorar la usabilidad de un producto.
+
+Este tipo de evaluación consiste en medir los atributos de usabilidad a
+partir de la observación de los usuarios reales interactuando con
+prototipos o con los sistemas funcionales
+
+Generalmente hay dos formas de observación:
+
+- **Directa**: El investigador está presente durante la tarea.
+- **Indirecta**: Cuando la tarea es vista por otro medio tal como video o fotografía de un
+intervalo de tiempo.
+
+### Evaluacion participativa
+
+Consiste en la recopilación de
+información sobre los atributos
+de usabilidad directamente de los
+usuarios sobre a partir de la
+indagación.
+
+Una de las ventajas de este tipo
+de evaluación es su capacidad
+para captar las necesidades de los
+usuarios, sus deseos, los procesos
+de pensamiento y experiencias
+que son difíciles de obtener de
+otro modo.
+
+Las técnicas utilizadas en este método para la colección de
+información más comunes son:
+
+- **Encuestas**: son preguntas interactivas. No poseen un carácter estructurado
+ni se organizan formalmente.
+- **Cuestionarios**: son comunes los formatos de listas de las preguntas,
+suponen un esfuerzo adicional por parte del usuario, para contestar y
+enviar de vuelta el cuestionario al evaluador.
+- **Entrevistas**: se rigen bajo la filosofía estímulo-respuesta. Aunque no se deja
+de proponer hasta ahora, mecanismos para desarrollar preguntas efectivas
+y aplicar las técnicas de forma apropiada.
+
+Preguntas a tener en cuenta:
+
+- ¿Cuál es su primera impresión del sitio / aplicación?
+- Mencione algunos adjetivos que describan el sitio / aplicación.
+- ¿Cuál es su opinión respecto de cómo se encuentra organizada la
+información que ofrece el sitio / aplicación?
+- ¿Qué es lo que más le gustó del sitio / aplicación? ¿Y lo que menos le
+gustó?
+- Si usted fuera el desarrollador del sitio / aplicación, ¿cuál sería la
+primera cosa que haría para mejorarlo?
+- ¿Hay alguna cosa que usted considere que le falta al sitio / aplicación?
+(por ejemplo: contenido, funcionalidad, etc.)
+
+--- 
+
+Generalmente, se tiende a realiza en primer lugar evaluaciones
+predictivas seguidas luego por evaluaciones empíricas y/o
+participativas.
+
+Las hipótesis sobre posibles problemas detectados durante las
+evaluaciones predictivas pueden utilizarse para diseñar las tareas que
+los usuarios deberán realizar luego durante las evaluaciones empíricas.
+
+Los resultados de la evaluación predictiva no necesariamente deben
+ser consistentes con los resultados de la evaluación empírica.
+
+### Recomendaciones
+
+Algunos aspectos que deben contemplarse a la hora de realizar
+evaluaciones de usabilidad son:
+
+- Probar el sistema y NO a los usuarios
+- Tomar métricas de rendimiento (tasa de éxito, tiempo, cantidad de errores,
+etc.) y subjetivas (nivel de satisfacción, etc.)
+- Hacer uso de lo aprendido
+- Encontrar la mejor solución dentro de las restricciones del proyecto
+(tiempos, presupuesto, recursos, etc.)
+

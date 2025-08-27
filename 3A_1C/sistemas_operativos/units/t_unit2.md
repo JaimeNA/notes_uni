@@ -169,3 +169,33 @@ Entonces, si el hijo termino, pero no se borro el PCB, se coloca el estado **zom
 alguien ejecute `wait()`. Si muere el padre, los hijos quedan en estado **huerfano** y son adoptados por `init`, 
 de manera que rapidamente dejan de ser huerfanos, es decir, esta el estado, pero dura muy poco. 
 Entonces, para evitar que se acumulen los huerfanos, `init` hace `wait()` a todos estos procesos.
+
+> **Nota**: En el TP02 los registros se guardan en el stack(el mismo del proceso que estoy frenando).
+
+Cuando se interrumpe un programa, se crea un nuevo stack para el scheduler/interrupt handler que no sea accesible por el programa que acabo de ejecutar.
+No es buen diseno que sea el mismo stack que el programa anterior pues ese stack sera usado por funciones del kernel y eso no es bueno por cuestiones 
+de seguridad(uno con el stack puede ver un monton de datos, como valores de variables locales, etc.).
+
+Porque necesita uno por proceso el kernel?
+
+Porque hay funciones que por ahi no retornaron de un proceso, no haria falta un stack por proceso si se hace todo y se popea todo del stack antes 
+de volver al programa. Sin embargo, las funciones que bloquean como`wait()` no retornan inmediatamente y todas esas funciones tienen su direccion 
+de retorno en el stack del kernel, por eso hay un stack del kernel por proceso.
+
+## Modelado multiprogramacion
+
+Caso:
+
+- Un proceso usa el CPU el 20% del tiempo, el resto esta esperando por I/O(mientras corre).
+- Entonces 5 procesos mantendrian el CPU al 100%.
+
+Realista?
+
+NO. Sera alrededor del 70%, por ese motivo la multiprogramacion es muy efectiva.
+Permite aprovechar el hardware tanto como se pueda.
+
+
+
+
+
+
