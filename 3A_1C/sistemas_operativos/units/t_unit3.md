@@ -100,3 +100,61 @@ Ventajas de los pipes:
 Pipe tambien es mas rapido, pues en caso de que haya un disco(podria no haberlo en UNIX) es muy lenta la escritura a disco.
 Se puede lograr practicamente lo mismo, pero al final del dia es mucho mas conveniente usar pipe.
 
+## Sockets
+
+Permite comunicar procesos a traves de una red, es bidireccional(full duplex).
+Un socket se identifica con una IP y un puerto, generalmente sirve para una aplicacion cliente - servidor.
+
+### FIFO vs Unix Domain Sockets
+
+Los pipes que usamos son simples, tienen una sola direccion. Los sockets se pueden usar por muchos procesos a la vez, 
+tienen un hilo escuchando conexiones entrantes y apenas llega una comunicacion se crea un socket paralelo para la comunicacion, 
+pero eso no se muestra, desde afuera parece un solo socket(transparente para el cliente).
+
+Como la radio de un puerto, todos van al canal 16, pero luego prefectura los manda a otro canal y libera el 16,
+la unica diferencia es que hay un canal individual para cada embarcacion en caso de sockets.
+
+> **Nota**: Las signals son async, ya que el programa que recibe una signal no esta esperando la signal, sino que esta corriendo y es interrumpido.
+
+## Signals
+
+Basicamente como kill es una syscall, el SO se encarga de buscar el proceso al que se le envio la signal y en base a la entry en el SO 
+del programa se llama al handler. Pero el handler no lo llama el SO, sino que modifica el stack y los punteros del programa receptor de 
+la signal para que la proxima instruccion que ejecute sea la del handler(el handler se corre en el contexto del programa).
+
+No hay signals anidadas, pero tampoco es que no se recibe la signal. Lo que ocurre es que se recibe la signal y se espera a que termine el handler, 
+una vez termina el SO procesa la otra signal. No hay un concepto re `ret` en un handler, el programa se interrumpte y luego de 
+terminar el handler continua la ejecucion, pero no tiene porque hacer algo. Se podria definir una variable que se modifique en el 
+handler para notificar al programa que este se ejecuto, pero nada mas.
+
+## Race condition
+
+Una situación en las que dos o más procesos están leyendo o escribiendo datos
+compartidos y el resultado final depende de quién corre en cada momento.
+
+No es sinonimo de estado inconsistente, sino que el resultado depende de la ejecucion. Es muy feo debuggear programas donde ocurren
+condiciones de carrera.
+
+Esto se soluciona con una especie de patron de sincronizacion, es decir, el programa que escribe tiene acceso exclusivo y 
+una vez termina libera el acceso exclusivo. Esto no impide que el escritor sea interrumpido, 
+pero si hay garantia que ningun otro proceso podra escribir al mismo lugar. No es inmune al **context switch**. 
+
+Se ejecuta de manera atomica uno y despues se ejecuta otro.
+
+### Region critica
+
+Es una parte de un programa, la parte que accede a la memoria compartida. 
+
+### Mecanismos de sincronizacion
+
+- **Semaforos**: El wakeup waiting bit se plantea(Dijkstra - 1965) como entero representando la cantidad de wakeups disponibles, 
+el cual llamaremos semaforos. Tiene dos operaciones: **down** y **sleep**.
+
+> **Nota**: Mutex es basicamente **mutual exclusion**.
+
+Si dos quieren acceder al mismo semaforo, el primero que llega "gana el semaforo". Es una especie de race condition, 
+pero no importa porque no afecta el resultado del problema.
+
+El semaforo mutex es solo para proteger el acceso a la zona critica, mientras que el otro semaforo simplemente bloquea alguno de los dos procesos.
+
+

@@ -186,3 +186,120 @@ Kubernetes:
 - Balancea la carga entre instancias.
 - Tiene una gestion declarativa, trata de cumplir tus pedidos.
 
+## Planificacion
+
+Necesitamos transmitir ideas de un sistema de software de forma directa y sencilla. 
+
+### Modelo
+
+Una representacion simplificada de un sistema que nos ayuda a comprender o visualizar un aspecto del mismo.
+
+Reduce el esfuerzo intelectual requerido para copmrender el contenido representado.
+
+#### Caracteristicas
+
+- **Mapeo**: Representacion de algo natural o artifical que a su vez puede ser un modelo en si mismo.
+- **Reduccion**: Un modelo no captura todos los atributos del original sino solo los relevantes.
+- **Pragmatismo**: Esta orientado a algo util, si no se indica la funcionalidad no sirve. 
+
+#### Propiedades
+
+- Abstraccion
+- Comprensibilidad
+- Precision
+- Poder de prediccion
+- Economia de recursos
+
+### Aplicaciones de modelos
+
+- Modelos como bossquejos(sketches)
+- Modelos como planos(blueprints)
+- Modelos como programas o especificaciones ejecutables
+
+Podemos pensar en los modelos como ubicados en un gradiente: Dependiendo del sistema que estamos construyendo, 
+vamos a queres ir mas o menos en detalle.
+
+### Los modelos en software
+
+Dada la importancia que tiene todo esto uno pensaria que la practica modelada esta muy extendida.
+
+Sin embargo, la mayoria de los modelos que nos encontramos en el mundo laboral no cumple con estos criterios.
+
+Hoy en dia el modelado esta comenzando a resurgir.
+
+### UML
+
+#### Diagrama caso de uso
+
+Que se esta describiendo(el sistema), quien interactua con el sistema(los actores), y que pueden hacer los actores(los casos de uso).
+
+Estos diagramas pueden incluir multiplicidad, es decir, dentro de un caso de uso pueden participar mas actories. 
+
+Tambien establecen relaciones entre casos y relaciones entre actores. Hay que tener cuidado, podes decir que se necesitan dos actores para realizar una tarea o que alguno de los dos actores puede realizar la tarea.
+
+#### Errores a evitas
+- Los diagramas de caso de uso no modelan procesos o flujos de trabajo.
+- Los actores no son parte del sistema, deben ir afuera de las lineas de contorno del mismo.
+- Casos de uso que apuntan al mismo objetivo se pueden agrupar en uno solo. Por ejemplo, crear/editar/ eliminar cursos -> gestionar cursos.
+- Los distintos pasos de un mismo caso de uno no representand casos separados.
+
+
+#### Diagramas de clase
+
+Similares a los vistos en OOP, son una herramienta importante para simplificar los requerimientos.
+
+Lo unico obligatorio es el nombre de la clase, luego se pueden agregar atributos y operaciones.
+
+Estos diagramas permiten tener asociaciones binarias, con multiplicidad. Tambien hay agregacion compartida, herencia, etc. 
+
+#### Maquina de estados
+
+Permite modelar los posibles estados de un sistema o de un objeto en cuestion. 
+Basado en el concepto de automatas finitos(que que se ve en teoria de automatas).
+
+#### Diagrama de secuencia
+
+Mientras que los de maquina de estado modelan el comportamiento intre-objetos, el diagrama de secuencia modela interacciones entre objetos.
+Permite seguir una traza de alguna interaccion a lo largo del tiempo.
+
+#### Diagrama de actividad
+
+Tipico diagrama de flujo.
+
+### Herramientas para hacer diagramas
+
+#### Basadas en texto
+
+- Mermaid
+- PlantUML
+- D2
+- SequenceDIagram
+- Structurizr
+
+#### Basadas en interfaces graficas
+
+- Draw.io
+- Excalidraw
+- Lucidchart
+
+### Sugerencias
+
+- Evitar detalles innecesarios.
+- Evitar cruces de lineas.
+- Es mejor hacer distintos cortes transversales al sistema que itentar poner todo en un mismo diagrama.
+- Cada diagrama debe tener un titulo.
+- Las herramientas basadas en texto tienen una curva de aprendizaje mas alta, pero suelen ser mas eficientes y mejoran la colabotacion a la larga.
+
+## C4 architecture
+
+Creado por Simon Brown entre 2006 y 2011, es una tecnica de notacion grafica ajustada para modelar la arquitectura de sistemas de software. 
+Antes cada equipo(incluso dentro de la misma empresa) tenia una version diferente para modelar.
+
+El modelo toma una metodologia top-down se llama C4 porque tiene los siguientes niveles:
+
+1. **Context**: Muestra alcance del sistema y su relacion con los usuarios y otros sistemas.
+2. **Containers**: Descomponen un sistema en contenedores interrelacionados. Un contenedor es un subsistema ejecutable e implementable.
+3. **Components**: Descomponen los contenedores en componentes interrelacionados y relacionan los componentes con otros contenedoresu otros sistemas.
+4. **Classes**: Proporcionan detalles adicionales sobre el diseno de los elementos arquitectonicos que se pueden asignar al codigo.
+
+De mayor a menor nivel. Dividiendo en cajas mas chicas. 
