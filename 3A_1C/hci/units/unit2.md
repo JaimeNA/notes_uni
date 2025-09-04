@@ -181,4 +181,45 @@ Pero W3C era muy lento, entonces surgio WHATWG para agilizar al proceso, el cual
 JavaSeript no esta controlado por W3C pues no se usa unicamente para la web, entonces ECMA se encarga de generar los estandares. 
 C# tambien esta estandarizado por ECMA. 
 
+### DOCTYPES
+
+Debido a la existencia de multiples versiones HTML, cada pagina debe indicar al navegador su version de HTML. 
+Su uso tambien ayuda al navegador a representar correctamente a la pagina.
+
+## Herramientas para el desarrollo web
+
+- W3C HTML Validation Service ayuda a validar HTMLS. 
+- WAVE testea usabilidad.
+- Devtools, estan en todos los navegadores con alguna que otra diferencia.
+- Vue y Vuetify
+- Vue.js, obligatorio
+- Vue router
+- Pinia, permite manejar el estado de una pagina(que se guarde la sesion, formulario, etc.)
+
+## CSS
+
+Cascading Style Sheets.
+
+- Permite controla el diseño de las páginas Web para que sean más
+atractivas
+- Permite crear reglas que especifican como debe mostrarse el
+contenido de un elemento
+- Por ejemplo, se puede especificar que el fondo de la página debe
+mostrarse de color crema, los párrafos deben mostrarse de color gris
+utilizando la tipografía Arial o que todos los encabezados de primer
+nivel deben mostrarse en color azul, en itálica y con la tipografía Times
+- Luego de comprender la forma en la que se escribe una regla CSS,
+aprender CSS mayoritariamente implica aprender las diferentes
+propiedades que se encuentran disponibles
+
+(Ver apuntes para cosas mas especificas como `<link>`)
+
+Para cambiar especificidad, se puede usar `!important`, aunque se recomiendo no usarla(solo en casos muy especiales).
+
+### Color
+
+- RGB
+- HSL/HSLA
+- 
+
 
