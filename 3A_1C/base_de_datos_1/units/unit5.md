@@ -231,3 +231,5 @@ PostgreSQL no permite `=ANY` y `=SOME` con listas fijas.
 Los vistos en logica.
 
 > **Nota**: Los query nunca van a ser no seguro, pues no existe la negacion. El prompt siempre es positivo.
+
+> **Nota**:  `SET datestyle to DMY;`
