@@ -233,3 +233,59 @@ Los vistos en logica.
 > **Nota**: Los query nunca van a ser no seguro, pues no existe la negacion. El prompt siempre es positivo.
 
 > **Nota**:  `SET datestyle to DMY;`
+
+### Operadores sumarizacion
+
+- `COUNT`
+- `SUM`
+- `MAX`
+- `MIN`
+- `AVG`
+
+Estas funciones son para `SELECT` y `HAVING`, se aplican a un conjunto de valores y devuelven un solo valor. Algunas 
+aceptan un atributo en el argumento. `COUNT`, `SUM` y `AVG` pueden aceptar `DISTINCT` como atributo.
+
+Presentan varias restricciones:
+
+- Solo en `SELECT` o `HAVING`
+- No pueden anidarse
+- Si aparece una funcio de agregacion en esas clausulas, todo atributo que aparezca en ella debe o bien ser agregado o participar de `GROUP BY`.
+- La clausula `HAVING` no puede usarse si no hay `GROUP BY`.
+
+> **Nota**: Menos `COUNT`, todas las funciones de agregacio no se aplican sobre valores `NULL`. 
+Si se aplican sobre un conjunto vacio devuelve una unica tupla con valor `NULL`.
+
+> **Nota**: `COUNT(nombreColumna)` no se aplica sobre atributos `NULL`(se descartan antes). 
+Si se aplica sobre una tupla vacia devuelve una unica tupla con valor 0. Si es `COUNT(\*)` no se descartan los valores `NULL`.
+
+#### `GROUP BY`
+
+Permite agrupar en base a alguna de las clausulas, `SELECT nombre, MAX(precio)` es valido en este caso si tiene un `GROUP BY nombre`, 
+devuelve los maximos de cada nombre, pues agrupo los precios por nombre.
+
+Aunque dos valores `NULL` no se pueden comparar, en el `GROUP BY` todos los `NULL` van al mismo grupo. No es trivial esto.
+
+#### HAVING
+
+Sirve para filtrar en los grupos, se expresa siempre en funciones de agregacion. Un ejemplo:
+
+``` SQL2
+SELECT trabaja_en
+FROM empleado
+GROUP BY trabaja_en
+HAVING COUNT(*) >= 3
+```
+
+> **Nota**: Hay que conocer todas las opciones de cociente, nos puede preguntar cualquiera.
+
+### Transformacion de expresiones
+
+Metodos o tendencias escalares:
+
+- **`CASE`**: Transforma un escalar en otro. Devuelve el resultado al primer valor que verifica la expresion.
+- **`COALENSCE`**: Transforma un escalar en otro. Devuelve el primer resultado que se evalue como `<> NULL`.
+- **`CAST`**: Transforma un tipo escalar en otro.
+
+> **Nota**: Importante recordar el order de operaciones. En esta clase no acerte ninguna, quede mal.
+
+

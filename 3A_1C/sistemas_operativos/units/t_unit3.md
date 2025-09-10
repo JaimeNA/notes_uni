@@ -155,6 +155,13 @@ el cual llamaremos semaforos. Tiene dos operaciones: **down** y **sleep**.
 Si dos quieren acceder al mismo semaforo, el primero que llega "gana el semaforo". Es una especie de race condition, 
 pero no importa porque no afecta el resultado del problema.
 
-El semaforo mutex es solo para proteger el acceso a la zona critica, mientras que el otro semaforo simplemente bloquea alguno de los dos procesos.
+El semaforo mutex es solo para proteger el acceso a la zona critica, mientras que el otro semaforo simplemente bloquea alguno de los dos procesos. Ver problemas clasicos de los apuntes.
+
+## Deadlock
+
+Un conjunto de procesos está bloqueado (en estado de deadlock) si cada proceso del conjunto está
+esperando un evento que solo puede causar otro proceso del conjunto.
+
+
 
 
