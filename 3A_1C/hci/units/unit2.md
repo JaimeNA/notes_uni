@@ -220,6 +220,84 @@ Para cambiar especificidad, se puede usar `!important`, aunque se recomiendo no 
 
 - RGB
 - HSL/HSLA
-- 
+
+## Vite
+
+Traductor de elementos, basicamente pasa bloques de codigo a HTML, CSS y JavaScript. 
+Nosotros vamos a usar la version 3 de Vue.js. 
+Divide el codigo en dos grandes partes:
+
+- Dependencias
+- Codigo
+
+Como las dependencias no cambian tanto con el tiempo, las empaqueta en un paquete altamente optimizado con **rollup**. 
+Para el codigo, hace paquetes mas chicos y solo actualiza los que tengan codigo actualizad, de una forma granulada(HRM).
+Es dogmatico y tiene configuraciones preconfiguraras, pero es altamente extensible a traves de sus API y API de JavaScript.
+
+## Vuetify
+
+Se busca un diseno atractivo, pero eso lleva mucho esfuerzo. Existen un monton de frameworks que resuelven esas problematicas, con **design systems**.
+Estos garantizan que una interfaz se comporte de manera consistente. Por ejemplo, Material Design es un design system.
+
+Pero no es la unica alternativa, existen otras como:
+
+- Bootsrap
+- Tailwind
+- Foundation
+- Bulma
+- Skeleton
+
+Estos pueden estar basados en:
+
+- Clases utilidad
+- Componentes
+
+Hay frameworks que cumplen con las dos categorias, Vuetify es un ejemplo.
+A la hora de utilizar estos framworks, hay que tener en cuenta que hace el mercado. Si nadie lo usa y no hay soporte, entonces no conviene.
+
+No se puede usar vuetify sin tener Vue.js, pues esta construido sobre Vue.js. 
+Esta construido de acuerdo con la especificacion de **Material Design**. Esto facilita y simplifica la manera de construir sitios Web.
+Tambien es compatible con todos los navegadores modernos, con soporte no oficial para otros navegadores con **polyfills**, los cuales son basicamente parches de compatibilidad(agregan funcionalidad).
+
+Cuando se hace:
+
+```
+npm create vuetify@latest
+```
+
+Se crea lo que es un CLI, basicamente viene una version basica funcional que tiene todas las dependencias y una estructura de proyecto.
+Un problema es que el CLI de Vuetidy no es el mismo que el CLI de node.js, lo cual provoca un monton de problemas si se quiere cambiar de uno a otro.
+
+> **Nota**: Se recomienda solo crear Vue/Vuetify, la primer opcion, e ir agregando manualmente el resto de las cosas que necesitamos.
+
+Si se hace la version estatica, hay que usar `build`, lo cual genera HTML, CSS y JavaScript. Sino es mucho mas pesado y tedioso, que esta bien para desarrollas.
+
+> **Nota**: En la segunda entrega en las instrucciones de instalacion especificar lo de build.
+
+Hay varios componentes que sirven para no repetir codigo, se mencionan en las siguientes opciones. N.vue.web son las distintas paginas.
+
+### XView.vue
+
+En una region de la pagina, pero no la pagina entera.
+
+### X.vue
+
+Es una fraccion de la pagina, como un boton. Podriamos tener `ShoppingList.vue`
+
+---
+
+Cada componente tiene tres partes:
+
+- `<template>`, tiene el HTML
+- `<style>`, tiene el CSS
+- `<script>`, tiene el JavaScript
+
+> **Nota**: NO olvidarse de poner el script `setup`, para que el framework se encargue la inicializacion.
+
+Todos los tags que tengan el prefijo `v-` son componentes propios de Vuetify,
+estos son posible de interpretar por el navegador solo porque existe un plugin que pasa todo a html antes de pasarlo a la pagina.
+
+> **Nota**: El `@` se usa para incluir archivos de src/ sin escribir todo el path.
+
 
 
