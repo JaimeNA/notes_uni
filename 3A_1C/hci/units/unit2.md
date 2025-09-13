@@ -299,5 +299,25 @@ estos son posible de interpretar por el navegador solo porque existe un plugin q
 
 > **Nota**: El `@` se usa para incluir archivos de src/ sin escribir todo el path.
 
+Todos los componentes van dentro de `v-app`, muchos elementos no funcionaran si no estan detro del contenedor.
+Para buscar iconos es muy util el mdi icon search de la documentacion de Vuetify.
+
+### Componentes
+
+Muy utiles, basicamente son botons, navigation bars, icons, etc. Son componentes prefabricados muy utiles para desarrollar mas rapido.
+Los `slots` permiten agregar componentes a otros componentes que no vendrian juntos de fabrica.
+
+Flex es muy util para hacer menus, con `justify` y todo lo demas.
+Permite ordenar elementos en listas, filas o columnas.
+
+### Grid system
+
+Construido sobre **flexbox**, donde la pantalla esta dividida en 12 columnas y cada elemento ocupa N columnas.
+Todo sistema de grilla necesita un container para funcionar. Por default, todo contenedor(al menos que se especifique `fluid`) no ocupara 
+la totalidad del ancho de la pantalla(debido a que si ocuparia todo nada llamaria la atencion del usuario y mucho quedara perdido en los bordes).
+Ese ancho reducido son las 12 columnas ya mencionadas.
+
+
+
 
 
