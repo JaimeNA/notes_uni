@@ -1,8 +1,8 @@
 # Teorica 4: Threads
 
-Tradicionalmente un proceso tiene su espacio de direcciones y un nuico hilo(thread) de ejecucion.
+Tradicionalmente un proceso tiene su espacio de direcciones y un unico hilo(thread) de ejecucion.
 
-Existen casos en los que es muy util tener multiplas hilos en un mismo espacio de direcciones corriendo de forma pseudo paralela como 
+Existen casos en los que es muy util tener multiples hilos en un mismo espacio de direcciones corriendo de forma pseudo paralela como 
 si fueran procesos separados, salvo por el espacio de direcciones.
 
 Un proceso solo ejecuta una instruccion en particular en cualquier momento, no confundir esto con la nocion de threads.

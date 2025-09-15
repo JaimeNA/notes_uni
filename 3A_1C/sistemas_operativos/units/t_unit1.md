@@ -48,6 +48,7 @@ Replicar los núcleos independientes. Pueden soportar múltiples threads.
 ### Memoria
 
 Idealmente la memoria debería ser:
+
 - Extremadamente rápida (más que la ejecución de una instrucción)
 - Absurdamente grande (para albergar a todos los procesos juntos)
 - Asquerosamente barata
@@ -65,7 +66,7 @@ Un dispositivo consta de 2 partes:
 
 Hay 3 formas de IO:
 
-- Busy waiting(polling), en este caso, el cpu pregunta(es un derperdicio)
+- Busy waiting(polling), en este caso, el cpu pregunta(es un desperdicio)
 - Interrupción
 - DMA (Direct Memory Access)
 
@@ -89,7 +90,7 @@ Proceso de booteo(una vez se determina cual es el dispositivo de booteo:
 2. Escanea buses PCIe y PCI en busca de dispositivos instalados.
 3. Determina el dispositivo de booteo.
 4. Se carga el primer sector en memoria y se ejecuta
-5. Este sector suele leer una tabla de particiones y se se carga un segundo sector
+5. Este sector suele leer una tabla de particiones y se le carga un segundo sector
 6. Se carga en memoria el SO y se ejecuta.
 7. El SO consulta a la BIOS los dispositivos conectado
 
@@ -137,7 +138,7 @@ Por otro lado, el SO se entera de que termino por la llamada a `exit()`(la cual 
 
 ### Kill
 
-Manda una aenal que alerta a otro proceso, simplemente le avisa, pero no necesariamiente lo mata. Ahora, si envio la senal -9 ahi si termina. Cada programa tiene un handler para las senales, 
+Manda una senal que alerta a otro proceso, simplemente le avisa, pero no necesariamiente lo mata. Ahora, si envio la senal -9 ahi si termina. Cada programa tiene un handler para las senales, 
 entonces los handlers se general en runtime y se setean con syscalls. Esto permite que un programa en vez de terminar muestre una ventana que pregunte al usuario si esta seguro de que 
 quiere terminar el proceso. 
 

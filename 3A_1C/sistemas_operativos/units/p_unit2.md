@@ -1,9 +1,11 @@
-# Unit testing
+# Practica 2: Herramientas de trabajo
+
+## Unit testing
 
 No nos lo van a pedir, pero sirve un monton. Puede haber un bug en el codigo, pero tambien puede haber un bug en el codigo que prueba el codigo.
 Para evitar esta situacion hay varias tecnicas.
 
-## Unit test
+### Unit test
 
 Se utilizan para probar por separado todas las partes de forma independiente, si se cambia el codigo entonces se pueden detectar errores.
 
@@ -11,11 +13,11 @@ Se utilizan para probar por separado todas las partes de forma independiente, si
 
 Sin embargo, puede ocurrir que se pasen todos los test y al integrar no funcione nada. De manera que hay que prestar especial atencion a la integracion.
 
-## Test driven development
+### Test driven development
 
 Se utilizo en otros cuatrimestras, pero fue descartado. Basicamente se comienza con los test y luego se va al codigo.
 
-## Testing en C
+### Testing en C
 
 Hay varias maneras:
 
@@ -23,25 +25,25 @@ Hay varias maneras:
 - Hacer tu propia libreria de testeos
 - Usar frameworks de terceros
 
-## CuTest
+### CuTest
 
 Framework para realizar testeos, conviene usar este ya que es muy simple y lo suficientemente completo para el alcance de la materia.
 Corre todos los test, no aborta, y presenta mensajes mas detallados. Ademas, tiene mayor variedad de funciones, entonces mejora la calidad.
 
-### Terminos
+#### Terminos
 
 - Test unitarios: Funciones que reciben por parametro un `CuTest *` e invocan alguna funcion de la libreria.
 - Suite de test: Funcion que retorne un `CoSuite *` y tiene al menos un test unitaro. Engloba los test que pertencen a un modulo en particular.
 
 > **Nota**: Tener un archivo separado para cada suite.
 
-## Unit test structures & patterns
+### Unit test structures & patterns
 
 - Behavior-Driven Development(BDD), Given-When-Then(Precondiciones-Determidado caso-Entonces)
 
 Repo de materia con ejemplo: https://github.com/alejoaquili/c-unit-testing-example
 
-## Git hooks
+### Git hooks
 
 Son scripts que Git ejecuta antes/despues de algun evento. Estan en `.git/hooks`, eventos
 
@@ -52,12 +54,12 @@ Son scripts que Git ejecuta antes/despues de algun evento. Estan en `.git/hooks`
 
 Si falla, corta el commit. 
 
-# Workflow GIT
+## Workflow GIT
 
 Workflow basico de git para poder trabajar de manera ordenada y minimizar errores. La idea es tener un sistema de tracking de cambios
 de un set de archivos,
 
-## Branch
+### Branch
 
 Representa un espacio de trabajo que contiene el codigo del repositorio y sobre la cual se pueden generar distintas versiones.
 
