@@ -37,5 +37,9 @@ el estado, cuanta memoria esta asignada y cuanta esta libre.
 - Fragmentacion.
 - Alineacion de memoria con el tamano de palabra con la arquitectura en la que estemos trabajando.
 
+### Buddy allocation
 
+- Trabaja con un arbol binario.
+- Se puede ver en el libro mencionado en la presentacion.
+ 
 
