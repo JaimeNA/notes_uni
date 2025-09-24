@@ -111,5 +111,5 @@ Uno de los threads(del user space) bloquea todo el proceso, entonces se solucion
 
 - Notificar al kernel(thread manager) para que se entere de la situacion y cree otro thread, y 
 le de el control al run-time system a traves de ese nuevo thread(de kernel).
-- Viola la estructura de un sistema de cpas
+- Sin embargo, viola la estructura de un sistema de capas con el **upcall** del kernel al user space.
 
