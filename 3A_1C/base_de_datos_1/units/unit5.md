@@ -288,4 +288,140 @@ Metodos o tendencias escalares:
 
 > **Nota**: Importante recordar el order de operaciones. En esta clase no acerte ninguna, quede mal.
 
+### Modificacion
+
+Para las tablas persistentes:
+
+- Con la tabla destino preexistentes:
+
+``` SQL2
+INSERT [Tabl
+SELECT ...
+``` 
+
+Las tuplas insertadas en la tabla no tienen relacion con las tuplas de la tabla original.
+
+- Creacion de una tabla a partir de otra:
+
+``` SQL2
+CREATE TABLE nombre_tabla
+(LIKE vieja_tabla)
+```
+
+No incluye PK ni FK, NOT NULL y defaulr. Solo genera columnas.
+
+- Creacion de una tabla a partir de una consulta
+
+``` SQL2
+CREATE TABLE nombre_table
+AS (SELECT ...)
+```
+
+Se generan menos restricciones que la anterior, solo nombres de columnas y tipos. Esto se debe a que se esta 
+generando a partir de un `SELECT` el cual hace simplemente un **dump**.
+
+Para tablas temporarias:
+
+- **Alcance dentro de la consulta**: Select anidados
+- **Alcance dentro de la sesion**: Catalogadas o no cat(No la vamos a usar nosotros)
+
+## Vistas
+
+Las vistan proveen un mecanismo de seguridad y autorizacion. 
+La vista, o tambien llamada tabla virtual, toma algo de una o varias tablas que referencia a tablas subyacentes. 
+En la vista no se copia, solo se referencia, de manera que si algo cambia en la tabla original, esto se vera reflejado en la tabla virtual.
+
+``` SQL2
+CREATE VIEW nombre_vista [nombre_columnas]
+AS select_que_la_define
+```
+
+Para borrarla se una `DROP VIEW`. No se puede creat una tabla virtual a traves de `SELECT` que contenga una clausula `ORDER BY`.
+Eso es normalmente, pero PostgreSWL si lo permite, solo hay que saber que no en todos los motores de base de datos funciona.
+
+Cosas que **NO** se pueden hacer(restricciones):
+
+- Actualizar un atributo derivado
+- Actualizar una vista que se deriva de nua junta
+- ActualizaSr donde hay funciones de agregacion
+- Etc.(Depende del DBMS).
+
+> **Nota**: Depende de la ordanizacion que dejo hacer o no a los distintos perfiles de usuario.
+
+## Permisos
+
+El **DBA** siempre va por encima de todo, maneja permisos(ademas del owner).
+En SQL 2 se agrega la posibilidad de crear un SCHEMA;
+
+Para crear areas separadas dentro de la misma base de datos, por ejemplo, en la del ITBA cada alumno tendra su namespace para 
+hacer la practica, sino nadie podria trabajar ya que no se permiten nombres repetidos en la tabla.
+
+``` SQL 2
+CREATE SCHEMA nombre_esquema
+    AUTORIZATION nombre_usuario;
+```
+
+Si estoy trabajando sobre mis tablas, generalmente no se le agrega el prefijo, pero los demas que quieran usar mis tablas 
+tendran que precisar con el namespace.
+
+Hay dos niveles de privilegios en todos los DBMS(Ver apunte).
+
+## Es el algebra relacional equivalente al calculo relacional seguro?
+
+Si, Codd lo demostro. Mas aun, definio que un lengiaje es **relacionalmente completo** si puede realizar todas las operaciones que tiene el 
+algebra.
+
+Por otro lado, Chandra y Horel tiene una definicin mas estricta:
+
+> Un lenguaje es completo si es capaz de expresar exactamente el conjunto de todas las consultas computables(Turing-computable).
+
+El calculo relacional no es ralacionalmente completo. Aho y Ullman mostraron que hay cierto tipo de consultas que el algebra 
+relacional no puede computar, por ejemplo: Calculo de la clausura transitiva de una relacion.
+
+## Clausura
+
+Una relacion que no cumple con la transitividad puede **clausurarse** para que si sea transitiva.
+Para lograr que SQL este resuelto hay que agregar una sentencia: la clausula `WITH`. ]
+
+### Clausula `WITH`
+
+Sirve para generar tablas temporarias
+
+``` SQL2
+WITH [RECURSIVE] nombreRelacion(listaArgumentos) AS (ConsultaGeneradora
+    <SELECT que accede a nombreRelacion>;
+```
+
+Sirve para no anidar tanto en el `FROM`.
+En SQL 3, el algoritmo recurrente sera:
+
+``` SQL3
+WITH RECURSIVE
+SuperiorDe(X, Y) AS
+    (SELECT p1, p2 FROM JefeDe)
+    UNION
+    (SELECT Sup1.X, Sup2.Y
+    FROM SuperiorDe Sup1, SuperiorDe Sup2
+    WHERE Sup1.Y = Sup2.X)
+
+SELECT X, Y FROM Superior De;
+```
+
+De no poner `RECURSIVE` no podria usar la tabla superior de adentro. En principio, si se implementa eso se consigue el algoritmo.
+Pero hay un problema, SQL 3 admite solo recursion lineal. De manera que la version final sera:
+
+``` SQL3
+WITH RECURSIVE
+SuperiorDe(X, Y) AS
+    (SELECT p1, p2 FROM JefeDe)
+    UNION
+    (SELECT SuperiorDe.X, JefeDe.p2
+    FROM SuperiorDe, JefeDe
+    WHERE SuperiorDe.Y = JefeDe.p1)
+
+SELECT X, Y FROM Superior De;
+```
+
+
+
 
