@@ -12,7 +12,9 @@
 - Bajan nota si se hace esto, la lectura del teclado es un loop preguntando por mas caracteres. Esto valia en arqui, pero ahora no se puede hacer. Ahora el read debe ser bloqueante, no se debe consumir CPU. Muy facil de implementar con semaforos(una vez los hayamos implementados).
 - La shell es la demostracion de que todo funcione, sino se ponen a ver el codigo, pero no es lo ideal.
 - Una vez se llega a procesos, se puede comenzar a separar tareas para semaforos, comandos de la shell, etc.
-
+- Para ver la cantidad de memoria disponible, chequear manual de pure64.
+- La decision de que memoria organizar, depende de cada uno. Podemos manejar la memoria del kernel(Tomar analogia del bibliotecario) o no, 
+tenemos la libertad de decidir.
 
 ## Memory management
 
