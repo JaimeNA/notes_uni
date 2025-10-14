@@ -139,4 +139,38 @@ elegir aquel proceso con la menor proporcion.
 
 Trata de garantizar una distribucion igualitaria de tiempo de CPU, dando prioridad siempre a aquel con la menor proporcion.
 
+### Interactivo: Lottery Scheduling
 
+El siguiente a correr es una loteria, repartimos tickets a procesos y se sortea el uso del CPU.
+Para darle mas prioridad a un proceso, simplemente hay que darle mas tickets 
+para que tenga mas probabilidad de ganar. 
+
+**Para que podria servir esto?**
+
+Para algunos contextos es mas sencillo asignar prioridades, para darle el doble de prioridad a 
+un proceso solo hay que darle el doble de tickets.
+
+Procesos que cooperan entre si pueden compartir tickets. 
+Por ejemplo: upongamos que en el campeonato de 
+ChompChamps hay una categoria donde el bot que hicimos compite contra si mismo. Si puede detectar 
+que es el mismo bot(su oponente), entonces se asigna uno como ganador y el ganador recibe los 
+tickets del que se asigno como perdedor.
+
+**La intervencion de quien seria necesaria para que se puedan compartir los tickets?**
+
+Es necesaria la intervencion del SO mediante syscalls.
+
+### Interactivo: Fair-share scheduling
+
+Si empieza a tener presente la nocion de usuario, si un usuario tiene 50 procesos y otro solo 1.
+Primero se corre un proceso del primero, luego un proceso del segundo, etc.
+
+Si uno tiene procesos ABCD, y el otro solo tiene a E:
+
+A E B E C E D E A B E....
+
+> **Nota**: Correr `cat &` se bloquea y termina con una signal, esto ocurre porque no tiene sentido leer en background.
+
+
+Para saber si un proceso esta bloqueado o ignorando una signal, el kernel simplemente se fija 
+como esta configurado el proceso que hizo la syscall.
