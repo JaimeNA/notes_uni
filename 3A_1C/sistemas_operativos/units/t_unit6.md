@@ -98,3 +98,112 @@ como una funcion matematica que ademas **verifica permisos**(lectura, escritura 
 Cada acceso a memoria es supervisado por la MMU, es lo que verifica que la interposicion 
 sea completa. Cada direccion virtual que sale del procesador se traduce a una direccion fisica 
 chequeando los permisos con la MMU.
+
+> **Nota**: Todos y cada uno de los accesos a memoria deben ser auditados por el kernel.
+
+## Como se resuelven los problemas
+
+El SO evita colisiones simplemente no dando el mismo bloque de memoria a dos procesos distintos.
+
+
+Por otro lado no mapea areas de memoria que no deben ser accedidas.
+
+Una libreria en el EDF puede estar mapeada en multiples EDV.
+
+El SO puede retringir los permisos de cada area de memoria mapeada.
+
+Areas fragmentadas del EDF pueden ser mapeadas desde un area continua en el EDV al igual que 
+areas que crecen dinamicamente.
+
+Si no hay memoria suficiente usa memoria virtual, guardando en disco para hacer 
+espacio. No es un problema tener un programa que use mas memoria de la que esta instalada.
+
+Similarmente, todo el codigo del programa no tiene porque estar completamente cargado en memoria.
+
+En conlusion, hasta ahora nunca tubimos que ocuparnos del pasaje de memoria virtual a 
+fisica de manera que sea transparente para el proceso(similar a lo que hacia overlay).
+
+> Cada procesos tienen sus propios espacios de direcciones(diferentes!), esto es pregunta de examen.
+
+Es decir, cada proceso tiene una unica funcion propia(funcion en el sentido matematico).
+
+---
+
+Hasta ahora nunca hablamos de paginas, hasta podriamos haber estado hablando de una subdivision a nivel de bytes(aunque no sea conveniente). 
+Esto se debe a que memoria virtual y paginacion son cosas totalmente distintas(que sualen ser mostradas en la misma teoria, pero podes tener cada uno por su cuenta).
+
+De manera que memoria virtual soluciona colisiones, falta de memoria, librerias compartidas. Esas son problemas que soluciona, no necesariamente ventajas.
+
+## Paginacion
+
+Ahora comenzamos a hablar de granularidad con permisos y todo lo demas. Entonces, 
+es agrupar bytes contiguos en bloques de igual tamano.
+
+Todos los permisos van a ser a nivel de pagina, no podriamos hacer que parte de pagina si y parte de pagina no.
+
+La pagina virtual esta en memoria virtual y el marco de pagina esta en memoria fisica(VP y PF respectivamente).
+
+### Tabla de paginas
+
+Es basicamente la definicion de la funcion de memoria por partes, donde cada parte es una pagina. Posee una entrada por cada VP, traduce de a paginas enteras.
+
+La DV(seria dentro de la MMU) se divide en dos partes:
+
+- **Bits mas significativos**: Numero de VP(indice en la tabla).
+- **Bits menos significativos**: Offset dentro de la pagina.
+
+En la entrada de la tabla hay varias flags que indican:
+
+- PF number
+- Present/absent(para cargar dinamicamente el codigo de un programa, indica si se guardo alguna vez en disco o nunca se cargo)
+- Protection
+- Modified
+- Referenced(indica si se referencio en el pasado cercano, se usa para saber cual bajar a disco). 
+
+Los bits se verifican en el momento que se produce(en especial el de proteccion).
+
+> **Nota**: Hay **una** tabla de paginas por proceso.
+
+### Page fault
+
+Ocurrio alguna violacion de acceso, generalmente salta debido a estos bits:
+
+- Present/absent
+- Protection
+
+La MMU lanza una excepcion antes de que se acceda a la memoria y le pasa el control al SO: 
+
+- Si el PF no esta presente, se trae del disco(hard) o se mapea si ya esta en memoria(soft).
+- Si se violan los permisos, se mata el proceso. A menos que sea un caso de COW.
+- Si se accede a una VP que no esta mapeada directamente, se mata el proceso. A menos que hablemos de **asignacion lazy**(en este caso el kernel no lo cargo realmente y lo tiene que hacer en ese momento, es decir, no lo hace hasta que sea estrictamente necesario).
+
+> Not in memory **USUALMENTE** significa que no esta en memoria. Caso contrario, significaria que esta en otro lugar(el kernel lo puede guardar como quiera, mismo con el estado de un proceso en un context switch, no necesariamente tiene que ir a disco o a memoria).
+
+### No todo es color de rosa
+
+Tenemos el dilema de como manejar la memoria libre, hay que usar un algoritmo para determinar donde colocar las cosas, que esta libre y que esta ocupado. 
+Esto ya lo tubimos que solucionar en el TP02, hay dos enfoques: 
+
+- **Bitmap**: se divide la memoria en bloques y cada bit representa su estado.
+- **Free list**: cada proceso y espacio libre tiene un nodo con inicio, longitud y el puntero al siguiente.
+
+Pero, como se busca el bloque libre? Hay varias opciones:
+
+- First fit(Comienza desde el principio)
+- Next fit(Comienza donde quedamos)
+- Best fit(Bloque que mejor se adapta)
+- Worst fit(Buscar bloque mas grande)
+- Quick fit(4 free lists de bloques de 4KB, 8KB, 12KB y 16KB. Elije el primer bloque de la lista correspondiente)
+
+Porque worst first tiene sentido? Porque best fit generalmente deja un pedazo muy chico de memoria sin usar(generalmente no se encuentra exactamiente el bloque requerido). Eso es muy malo y causa mucha fragmentacion, worst fit no hace eso y deja bloques libres razonables. De manera de worst fit es mejor que best fit.
+
+El problema de quick fit es que va a haber block sizes mas demandados que otros, entonces se van a acabar mas rapido mientras los otros sobran.
+
+Por otro lado, la traduccion tiene un costo(por mas que es a nivel de hardware). 
+Cada acceso a memoria debe traducirse.
+
+Tercer punto, si la EDV es grande, la tabla de paginas sera grande.
+
+Finalmente, con que criterio se determina que pagina se baja a disco.
+
+
