@@ -71,8 +71,8 @@ en el caso que exista una tarea muy larga y que lleguen siempre tareas mas corta
 
 Es preemptive(el que tenemos que implementar con algun que otro agregado), es la version preemptive del Batch:FIFS.
 
-A cada proceso se le asigna un itnervale de tiempo(quantum) para correr), si al finalizar sigue ready, se le quita el CPU de todos modos. 
-Si se bloquea antes de que venga el quantim, se pasa al siguiente.
+A cada proceso se le asigna un intervalo de tiempo(quantum) para correr), si al finalizar sigue ready, se le quita el CPU de todos modos. 
+Si se bloquea antes de que venga el quantum, se pasa al siguiente.
 
 Se van corriendo en orden de llegada, pero de a pedazos y se repite ciclicamente(como aplicar FIFO un monton de veces). 
 Es facil de implementar con una lista de procesos ready. 
