@@ -46,7 +46,7 @@ pero Leticia tiene una forma de pasar a tercera sin pasar necesariamente por las
 
 Las primeras 3 fueron propuestas por Codd, las otras(de las funcionales) fueron propuestas por Codd y Boyce.
 
-#### Primera forma normal
+#### Primera forma normal 
 
 Un esquema de relacion R se encuentra en primera forma normal si sus atributos son atomicos.
 
@@ -80,4 +80,43 @@ informacion, pero si podria ocurrir que haya perdida de dependencias
 
 ### Basados en dependencias multivaluadas
 
+Una dependencia multivaluada es, teniendo dos conjuntos $\alpha$ y $\beta$, la dependencia $\alpha \rightarrow \rightarrow \beta$
+es multivaluada si para todo par de tuplas de la relacioni r que coinciden en todos los valores de los atributos de $\alpha$, al intercambiar los valores de los atributos de $\beta$ se obtienen
+tuplas que tambien son de la relacion.
+
+> **Nota**: El concepto de trivialidad no es lo mismo
+
+#### Axiomas
+
+**No son los mismos** que con dependencias funcionales.
+Tambien hay reglas que se derivan de los axiomas.
+
+#### Cuarta forma normmal
+
+(Ver apuntes)
+
+Es similar a BCNF, 
+
+#### Errores en el DER
+
+Clase de errores q
+ue ocurre cuando el analista no entiende a fondo los requisitos o ocurrio un 
+cambio de negocio.
+
 ### Basados en Dependencias de junta
+
+(Ver ejemplos en apuntes)
+
+#### Quinta forma normal
+
+Toda dependencia multivaluada puede expresarse en junta.
+
+Se puede usar tableau, mientras cambian las variables van produciento una valuacion 
+$/ro$(T).
+
+Dos tableau son equivalentes si tienen la misma valuacion.
+Existe chase(T) respecto de CR. 
+
+(Ver metodo y teoremas en apuntes)
+
+
