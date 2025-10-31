@@ -238,4 +238,77 @@ Otra caracteristica es la convevncion de nombre, donde cada uno debe tener `UiSt
 
 > Modificar el estado tiende a generar bugs.
 
-El ViewModel no tiene internamente desperdiagadas todas las variables(podria, pero no es lo mas adecuado). Lo que sucede es que el dato va a venir del Data Layer y va a ir hasta el ViewModel, donde se creara el estado de la aplicacion. Este `UiState` sera recibido por UI elements donde se construira la interfaz.
+El ViewModel no tiene internamente desperdiagadas todas las variables(podria,
+pero no es lo mas adecuado). Lo que sucede es que el dato va a venir del Data Layer y va a ir 
+hasta el ViewModel, donde se creara el estado de la aplicacion. Este `UiState` sera recibido por 
+UI elements donde se construira la interfaz.
+
+## Efectos Secundarios
+
+Un efecto secundario de compose es que un cambio en el estado de la aplicacion ocurre fuera de la 
+funcion de compose, de manera que surgieron los **efectos** y otros tipos que solucionan estos 
+efectos secundario. 
+
+### Effects
+
+Funcion de composicion que no emite una IU y que permite que se ejecuten los efectos secundarios 
+cuando se complete la composicion.
+
+> Bajo ninguna circunstancia usar esto para llamar a la API.
+
+- `LaunchedEffect` ejecuta funciones de suspencion en el alcance de la funcion de composicion.
+Cuando ingresa a la composicion, inicia una corrutina(como threads, pero mejor).
+Esto se usa para resolver las animaciones, se lanza la corrutina y esta se encarga de la animacion.
+- `DisposableEffect`: Realiza limpieza despues de que cambian las claves o si la funcion 
+abandona la composicion. MUY importarnte implementar el `onDispose` como sentencia final.
+- `SideEffect`: Permite generar estado de Compose que no esta en compose, se podria usar para obtener imagenes. Pasa datos que no son de Compose en un estado compatible con Copmose.
+
+> Cuidado con `derivedStateOf`, es muy constoso.
+
+## Navegacion
+
+Es super importante y en Android hay muchos principios que debemos seguir para que se adapte al 
+modelo mental de usuario. La libreria **Navigation** es la encargado de esto, como un router.
+
+> NO mostrar el cartel de "Esta seguro que quiere salir de la aplicacion?" si el usuario va para atras hasta el final, viola los principios.
+
+### Boton up y boton back
+
+No son lo mismo, se comportan parecido, pero no son lo mismo y hay que implementarlos.
+El de abajo va para atras en el stack y el boton de arriba para atras en la jerarquia.
+
+### Deep link
+
+Van a una pantalla profunda de la aplicacion que el usuario no hubiera podido llegar directamente, 
+lo que hay que hacer es simular la pila como si el usuario habria llegado a esa pantalla de forma 
+normal.
+
+> Para no violar con los principios de navegacion hay que implementar esto.
+
+## Disenos canonicos
+
+Son disenios versatiles y comprobados que proporcionan una experiencia del usuario fluida.
+Basicamente, son patrones de diseno para interfaces moviles.
+
+Algunos son:
+
+- NavBar
+- Feed
+- Panel complementario
+
+En Android hay una diferencia entre diseno responsivo y diseno adaptable, responsivo implica que 
+cosas puntuales de la aplicacion responden a input, mientras que adaptable es mas en general, al 
+dispositivo en el cual se esta ejecutando.
+
+> No usar `if` en cada componente para que se adapte, sino que hay que usar lo que ofrece compose, 
+teniendo en cuenta las clasificaciones de pantalla existentes(hay calificadores por ancho y por 
+alto).
+
+Cada vez que quiero tomar una desicion hay que chequear `WindowSizeClass`, el cual es el tipo 
+de pantalla pasado como parametro a las funciones de composicion.
+
+No solo alcanza con el size de la pantalla, lo ideal es que los componentes individuales 
+no se fijen en que tipo de pantalla estan. Sino que se debe chequear a nivel macro y 
+a partir de ahi se acomodan las funciones de composicion.
+
+
