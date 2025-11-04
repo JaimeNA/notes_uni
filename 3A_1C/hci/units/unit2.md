@@ -317,7 +317,62 @@ Todo sistema de grilla necesita un container para funcionar. Por default, todo c
 la totalidad del ancho de la pantalla(debido a que si ocuparia todo nada llamaria la atencion del usuario y mucho quedara perdido en los bordes).
 Ese ancho reducido son las 12 columnas ya mencionadas.
 
+## Ajax
 
+Tecnica de desarrollo web(es una texnoca que combina varias tecnologias, **no es una tecnologia**). Trata de traer una porcion de la pagina sin tener 
+que traer todo.
 
+### Modelos de sitios web
+
+Hay dos modelos:
+
+- **Modelo clasico**: El usuario pide algo, se hace request y se procesa la solicitud y se responde. Esto tarda y hace que la pagina quede inactiva. Recarga todo, sincronico, menos fluido.
+- **Modelo Ajax**: El navegador no tiene control, no sabe lo que estamos haciendo. No se recarga la pagina, el navegador no se da cuenta que nos 
+comunicamos con el servidor. Actualizaciones parciales, interaccion asincronica, mas fluida.
+
+XMLHttpRequest, precesor a Ajax y la unica opcion que tenian los desarrolladores antes. Pero tiene muchas etapas que hacen que el codigo sea 
+muy dificil de leer y entender.
+
+### JSON 
+
+(Ver apuntes, basicamente que es un JSON)
+
+### Serializacion
+
+Agarrar algo en memoria y transformarlo en algo que pueda ser guardado y/o enviado a otra computadora.
+En caso de JSON, se hace con `parse()` y `stringify()`.
+
+### Promesa
+
+Tiene varios estados, sirve para recibir data de forma asincronica. Estados:
+
+- Pending
+- Fulfilled
+- Rejected
+
+La promesa esta **settled** si se cumple o se rechaza.
+
+### Aplicaciones single-page
+
+Sitio web JavaScript que requiere la carga de una unica pagina, Vue.js implementa esto.
+Sin embargo, hay riesgos, no funcionan si se deshabilita JavaScript. El estado de la pagina tambien cambia entre usuarios, 
+incluso con la misma URL. Esto se debe a que se guarda un estado, esta la opcion de mandar la URL con toda la data de estado 
+embebida. 
+
+Es importante que se maneje de manera correcta el historial cuando se usa Ajax.
+
+Otro riesgo, es la seguridad, hay que tener cuidado con XSS(mencionado en client-side JavaScript). Tambien, hay que informar al usuario 
+cuando se esta cargando algo(ya que el navegador no tiene conocimiento de esto.
+
+### Usos de Ajax
+
+- Validacion en tiempo real de formularios.
+- Autocompletado.
+- Carga bajo demanda.
+- Controles de UI y efectos sotisficados.
+- Refresco de informacion.
+- ENvio parcial de informacion.
+- Mashups(aunque esto ya esta en desuso).
+- La pagina como aplicacion.
 
 
