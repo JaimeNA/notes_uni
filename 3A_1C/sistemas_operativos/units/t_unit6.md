@@ -206,4 +206,162 @@ Tercer punto, si la EDV es grande, la tabla de paginas sera grande.
 
 Finalmente, con que criterio se determina que pagina se baja a disco.
 
+## Analisis de costos
+
+Hay que tener dos cosas en cuenta:
+
+- La traduccion de DV a DF debe ser rapida.
+- Si el EDV es grande, la tabla de paginas sera grande.
+
+Habria que hacer dos lecturas a memoria por cada lectura, es decir, hay una lectura extra la cual 
+involucra buscar la traduccion de la direccion virtual a la direccion fisica en la tabla de 
+paginas.
+
+Con DV de 32 bits tendriamos una tabla de paginas de 4MB, esto es mucho. Entonces hay que buscar un 
+punto medio, que no este totalmente en memoria y que no este totalmente en un registro.
+
+## TLB
+
+Esto se soluciona con una **Translation Lookaside Buffer**, pero primero, que ocurre?
+
+- Los procesos hacen muchas referencias a pocas paginas.
+- Los procesos hacen pocas referencias a muchas paginas.
+
+Debido a que el codigo se encuentra contiguo, lo mismo ocurre con el stack, termina siendo verdadera 
+la primera opcion. 
+
+Es mucho mas chica, ya que un proceso accede a un conjunto chico de paginas, asi que solo tiene 
+256 entradas. Es muy parecido a la tabla de paginas. El primer acceso a una pagina va a terminar 
+funcionando como cuando teniamos antes, con dos accesos a memoria. Sin embargo, el segundo acceso 
+ya va a ser con la TLB, la cual tendra una entrada generada por la primera vez. Si se queda sin 
+espacio, habra que descartar alguna entrada.
+
+Cuando viene un pedido, hay un hardware especial que permite comparar todas las entradas de la 
+TLB de manera simultanea. Chequea permisos y devuelve la direccion fisica.
+
+> Es exactamente el trabajo que hace la tabla de paginas.
+
+Una entrada de la TLB desalojada no hay que pisarla simplemente, sino que hay que actualizar la 
+tabla de paginas pues podria haber cambiado el bit **modified** o el **page frame**(notar igual 
+que el bit de presencia no esta en la TLB).
+
+(Investigar mejor, ver clase alrededor de 19:15, porque se modifica el page frame).
+
+De todas maneras, todavia no solucionamos el problema de una EDV muy grande, hay dos enfoques:
+
+- Tabla de paginas multinivel
+- Tabla de paginas invertidas
+
+### Tabla de paginas multinivel
+
+Evita tener toda la tabla en memoria, solo tenemos lo necesario. Basicamente es lo mismo que 
+el directorio de tablas de paginas visto en arqui.
+
+En el nivel principal(PT1) tengo 2^10 entradas, luego en el PT2 otras 2^10 y finalmente el offset 
+de 2^12 posibles valores.
+
+Cuanto ocupa cada tablita? 2^10 * 4B, oh casualidad, entra exactamente en una pagina. Esto 
+no es casualidad, sino que fue pensado deliberadamente. Entonces, no tengo todas las entradas, 
+puede empezar con cuatro tablas y listo. En caso de necesitar una pagina que no este, vamos a 
+tenes que reservar una nueva pagina para la nueva tabla, pero sigue siendo mucho menos espacio.
+
+Esto fue usado por Intel, lo que conocemos como page directory - page table, tambien conocido como 
+esquema 2^10 2^10 2^12. Diez anos despues se extienden las entradas a 64 bits con el Pentium Pro, 
+entonces se uso un esquema 2^9 2^9 2^2 2^12, basicamente para que entre en una pagina.
+
+Sin embargo, ahora que se incorporo el soporte completo a 64 bits se agrega un cuarto nivel con 
+un esquema 2^9 2^9 2^9 2^9 2^12 = 2^45. Page Map Level 4.
+
+A partir de 2017, se incorpora un quinto nivel de paginacion en algunos procesadores llamado PLM5
+(Page Map Level 5). Con esquema 2^9 2^9 2^9 2^9 2^9 2^12 = 2^52.
+
+### Tabla de paginas invertidas
+
+Hasta ahora las tablas que vimos tenian una entrada por cada pagina, pero ahora tenemos una entrada 
+por cada PF en lugar de cada VP. Ahora hay que buscar toda la pagina hasta encontrar la VP, 
+para solucionar esta busqueda se usa una tabla hasheada. 
+
+La TLB sigue sirviendo, una vez tenemos la informacion se puede guardar en la TLB. Sin embargo, 
+una TLB miss requerira recorrer toda la tabla para encontrar la VP. Si no se encuentra una VP, 
+entonces es similar a un Page Fault y se debera buscar un lugar libre y actualizar la tabla.
+
+## Algoritmo de reemplazo de paginas
+
+Con memoria virtual(no paginacion) podemos darnos el lujo de no tener todo el proceso en memoria 
+para que funcione y cuando hace falto un PF que no esta presente se trae del disco a memoria.
+Ahora, que PF vamos a desalojar?
+
+### Optimo
+
+Es facil de describir, pero imposible de implementar(no se puede predecir el futuro).
+Si se pudiera clasificar las paginas de acuerdo a cuando van a volver a ser referenciadas en el 
+futuro, entonces se va a desalojar a que que tardara mas en ser usado. Se quiere postergar traer 
+una pagina del disco tanto como sea posible.
+
+Entonces, para que se menciona si es imposible? Porque se puede usar para saber que tan cerca 
+se esta del optimo, al ser el optimo tenemos una cota superior de lo mejor que podria ser un 
+algoritmo.
+
+Pero, como se puede medir que tan optimo es un algoritmo? Podemos evaluar el optimo haciendo un 
+poco de trampa: Hacer una ejecucion en condiciones controlares y medir cuando se accede a 
+cada pagina. Luego repetir la ejecucion, pero usando la informacion obtenida para saber que 
+pagina hay que desalojar. Una manera de evaluar esto seria midiendo el overhead o cantidad de 
+accesos a discos.
+
+### Not recently used(NRU)
+
+Usa los bits R(referenciado) y M(modificado) para tomar las decisiones de reemplazo. 
+El bit R se resetea periodicamente, pues sino no sirviria mucho y resetearlo permite saber 
+si se referencio hace poco. Pero no se resetea M ya que se usa para otra cosa, si no se modifico 
+entonces no hace falta actualizar su version en disco y se evita el costo.
+
+En funcion a los dos bits tenemos cuatro clases diferentes:
+
+- **Clase 0**: ~R & ~M
+- **Clase 1**: ~R & M
+- **Clase 2**: R & ~M
+- **Clase 3**: R & M
+
+De manera que se elije dependiendo de la clase, prefiriendo la clase 0 antes que la 1, etc.
+
+### First-in first-out(FIFO)
+
+Simplemente se registra el tiempo en el cual cada pagina fue cargada en memoria y de desaloja 
+la que mas tiempo estuvo en memoria.
+
+Pero bueno, que sea la primera no implica que sea la menos usada. Cuando se quita la mas antigua, 
+puede que se vuelva a usar y pasa a ser la mas nueva.
+
+### Second Change(SC)
+
+Modifica el FIFO y le agrega el bit R. Se sigue usando reseteando en R periodicamente y si 
+la ultima pagina tiene el bit en 1, se la modifica y se la manda al comienzo de la fila sin 
+tener que bajarla a disco. Si todas fueron referenciadas, vuelve a ser FIFO comun.
+
+### Clock(C)
+
+....
+
+
+### Least recently used(LRU)
+
+Las paginas muy usadas recientemente suelen seguir siendo muy usadas, mientras que las 
+escasamente usadas recientemente suelen seguir sin ser muy usadas.
+
+Desaloja la pagina que no a sido usada el mayor tiempo, no es mas que una estimacion de lo que 
+ocurrira en el futuro. Tiene dos enfoques:
+
+- Tener una lista de paginas ordenada por tiempo de acceso. Desalojar a la mas antigua.
+- Tener un registro especial que cuente instrucciones y equipar a cada entrada de la tabla con 
+espacio para este registro. Cuando se referencia una pagina se actualiza su contador. Desalojar 
+a la que tenga el contador mas chico.
+
+### Not frequently used(NFU)
+
+Se requiere de un contador por software para cada pagina y periodicamente se suma el bit R de 
+cada pagina a su contador. Entonces, se desaloja la pagina con el contador mas chico. Durante 
+toda la vida del proceso se mantiene el contador, asi que nunca se va a desalojar la pagina 
+incluso si el proceso dejo de usarla. Hay que esperar hasta que otras paginas le ganen.
+
+
 
