@@ -311,4 +311,77 @@ No solo alcanza con el size de la pantalla, lo ideal es que los componentes indi
 no se fijen en que tipo de pantalla estan. Sino que se debe chequear a nivel macro y 
 a partir de ahi se acomodan las funciones de composicion.
 
+## Como usar Navigation
 
+Tenemos:
+
+- NavHost
+- NavGraph
+- NavController
+- NavDestination
+- Route
+
+Primero vamos a tener que crear el `NavController` con `RememberNavController`, hay que hacerlo 
+lo mas arriba posible de la jerarquia.
+
+Existen tres tipos de destinos:
+
+- Hosted(default)
+- Dialog(destino parcial)
+- Activity(pantallas o funciones unicas, **no hay que utilizarlo**)
+
+> No exite conccepto de pantalla y dialogo por separado, son como vecinos.
+
+El activity existe solo para soportar cosas **legacy**, no deberiamos usarlo y deberiamos 
+limitarnos a las primeras dos.
+
+> En Kotlin, data class tiene solo atributos y no metodos, mientras que class si tiene metodos.
+
+**Nunca** generar el `NavController` arriba y pasarselo por parametro a los hijos y que los mismos 
+puedan modificarlo desde donde estan, eso viola los principios de compose. 
+Lo que hay que hacer es que cada componente le indique al que le paso el controller lo que 
+hay que cambias.
+
+### Vinculos directos para un destino
+
+Pueden ser explicitos o implicitos, un vinculo directo explicito podria ser una notificacion.
+Para ello hay que usar `NavDeepLinkBuilder`.
+
+### Manejo de historial de navegacion
+
+Usa un stack, cada vez que se usa el metodo `Navigate` se hace push al stack. 
+
+Un problema posible es que el punto de acceso sea login, entonces una vez el usuario inicia sesion 
+va a ir a la pagina principal de la app. Pero entonces, cuando haga back, el usuario podra volver 
+a la pantalla de login incluso si esta logeado, mal. Hay que ver como evitar que se pushee al stack.
+
+Otro problema, es que si el usuario cambia entre pantallas 1, 2, 3, etc. usando la barra de 
+navegacion cuando haga back ira por toda la secuencia de navegacion hasta llegar a la home. Esto 
+esta mal y deberia volver a home directo, habra que borrar todo lo innecesario del stack y dejar 
+solo home.
+
+Ha distintas estrategias para mitigar estos errores:
+
+1. `navigate().popUpTo()`
+2. Congelar todo en un stack y a partir de otra pantalla se tiene otro stack.
+
+Para la segunda opcion, se conserva el stack viejo porque quiero que cuando el usuario 
+vuelva a la pantalla donde se dividio se restaure el historial antiguo. Es decir, se descongela 
+cuando el usuario vuelve a esa pantalla en particular.
+
+> La segunda opcion no es necesaria para nuestro caso(TPE).
+
+## Conectividad con API
+
+No exite API fetch, pero si cosas parecidas. Lo que vamos a tener es un framework llamado 
+RetroFit, el cual coordina otros frameworks:
+
+- **OKHTTP**: El que coordina el canal de comunicacion entre la API y la app.
+- **KotlinSerializer**: Se encarga del el formato mediente el cual se transmite la informacion.
+
+Hay que usar el serializer, el cual es mucho mas performante pues realiza todo en compilacion y 
+no en runtime. El antiguo **converter** era una libreria de google que era muy poco 
+performante.
+
+La parte de asincronico no se maneja con `await` sino que con un **pool de threads**, de manera 
+que no se bloquea toda la ejecucion.
