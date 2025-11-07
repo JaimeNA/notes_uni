@@ -385,3 +385,52 @@ performante.
 
 La parte de asincronico no se maneja con `await` sino que con un **pool de threads**, de manera 
 que no se bloquea toda la ejecucion.
+
+Muy util **Coil** para cargado de imagenes, si no la necesitamos hay que sacarlas de dependencias.
+
+Si nos da error o warning en `jvmTarget` hay que transformar la seccion en un bloque que esta en los 
+ejemplos subidos.
+
+### Contruir clase a partir de JSON
+
+Originalmente pensado para java, es muy util y tiene variantes para kotlin. 
+A partir de un JSON de ejemplo construye la clase necesaria.
+
+json2kt.com
+
+Hay que tener cuidado pues hay cosas que no son faciles de inferir con un solo ejemplo, entonces hay 
+que revisar. Es importante tener `Serialable` o algo asi. 
+
+### Estado global
+
+La complejidad esta mayormente en conectar los datos obtenidos con la UI. Como hay que elevar el estado 
+lo mas alto posible, pero lo ideal es tenerlo incluso fuera de la funcion `App`. Idealmente, 
+el estado estara en el `ViewModel` para que las funciones de composicion sean lo mas atomicas 
+posibles.
+
+Podemos tener uno o muchos `ViewModel`, depende de la implementacion. Como ya vimos, hay dos formas 
+de guardar un estado:
+
+- Todas las partes del estado en variables separadas.
+- Usar `UIState` en conjunto con el `ViewModel`, el cual contiene todo el estado en un solo objeto.
+
+**Error comun con `ViewModel`**: Al crear un `ViewModel` en `App` **no** se usa el contructor, eso esta 
+mal. El problema de hacerlo de esa manera es que cada vez que se recomponga la funcion se va a estar 
+creando una nueva instancia. Lo que que hay que hacer es llamar al **factory**, de manera que 
+se cree una nueva instancia solo si no existe previamente, caso contrario se usa la instancia que 
+ya este creada.
+
+## Conectarse a internet
+
+Para poder conectarse a internet, hay que mandar un permiso en el `manifest`:
+
+``` xml
+<permission android:name="android...
+```
+
+(Parece que lo sacaron, asi que no hay que hacer nada)
+
+> El layout inspector permite ver todas las llamadas de funciones de composicion, 
+util para debuggear y funciona con el celular por usb y con el emulador.
+
+
