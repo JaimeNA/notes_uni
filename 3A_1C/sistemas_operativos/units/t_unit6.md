@@ -363,5 +363,93 @@ cada pagina a su contador. Entonces, se desaloja la pagina con el contador mas c
 toda la vida del proceso se mantiene el contador, asi que nunca se va a desalojar la pagina 
 incluso si el proceso dejo de usarla. Hay que esperar hasta que otras paginas le ganen.
 
+### Simulacion LRU
+
+Si no se referencia en 4 ticks entonces sera 00001XXX. El LRU sera mas detallado, tiene todo el 
+historial. De manera que el pasado lejano se conserva. Con LRU se tiene todo el historial, pero 
+en la simulacion sera de los ultimos 8 ticks, evitando guardar tanta informacion.
+
+Esto funciona, pues el comportamiento reciente de una pagina es muy buen estimador de lo que 
+va a ocurrir en un futuro cercano. Entonces, no es tan granular, pero es mas realizable.
+
+Se dice simular pues se trata de simular el contador de instrucciones mediante software, no es un 
+registro sino que lo tenemos nosotros en memoria.
+
+**Como se podria llamar esta tecnica?** Se podria decir que el valor envejece, de manera que 
+es una forma de aging.
+
+## Algunos conceptos
+
+### Demand paging
+
+Basicamente, no subir todas las paginas de una para un proceso. Sino que traerlas a demanda.
+
+### Locality of reference
+
+Ya lo venimos mencionando, un proceso puede hacer referencia a un grupo reducido de paginas 
+o hacer referencia a paginas distribuidas por todos lados. Tenemos un conjunto de paginas muy 
+usado y otro conjunto que practicamente no se usan. Hay mas probabilidad a que haya referencias 
+cercanas a que sea totalmente random.
+
+### Working set
+
+Conjunto de paginas siendo usado actualmente.
+
+### Trashing
+
+Con todo el working set en memoria, es una situacion ideal. Sin embargo, si no entra todo el 
+working set vamos a tener que ir y venir del disco constantemente. Esto es malo y estariamos usando 
+al disco como "memoria". Este escenario se denomina **trashing**. No hay nada que hacer, 
+por mas optimo que sea el algoritmo de reemplazo, el working set no entra en la memoria.
+
+### Working set model - prepaging
+
+En sistemas multiprogramados, se prepara la memoria para que quede la memoria exclusiva para el 
+proceso actual. Se bajan todas las paginas de un proceso a disco y se cargan las de otro 
+proceso a memoria en un context switch. 
+
+Esto es muy costoso, asi que teniendo la idea de un working set, se podria observar el working 
+set de un proceso y levantar dichas paginas antes de que sean accedidas. 
+
+## Seguimos con algoritmos
+
+### Working set
+
+El working set se un proceso tiene un comportamiento asintotico y llega a un punto en el cual 
+tiene un size constante. De manera que la funcion w(k, t) determina el size de un working 
+set para un tiempo t basado en las ultimas k referencias a memoria.
+
+> Podemos decir que un proceso no tendra un WS de 1000 paginas basado en el principio de 
+**locality of reference**.
+
+Ariel difiere del libro, dice que w(k, t) es el working set y en el libro lo muestran como 
+el size del working set.
+
+Una vez se determina k, se obtiene una cota superior. Una vez armada una lista de working set, 
+se puede volver a ver que pagina no fue referenciada y sacarla en tal caso.
+
+Al igual que LRU, la idea es muy buena, pero la implementacion no es tan simple. 
+De manera que se utilizan aproximaciones para que no sea tan costoso, una aproximacion consiste 
+en reemplazar referencias a memoria por unidades de tiempo, entonces, en lugar de actualizar la 
+lista en cada referencia se guarda el timestamp de la ultima referencia. 
+
+Entonces, se usa el bit R(reseteandolo periodicamente), de manera que si la pagina no 
+fue referenciada y su ultimo timestamp es mayor a t, es candidato ideal para reemplazar.
+Esto es analogo a reemplazarlo despues de 10 millones de referencias, pero de una manera 
+menos costosa.
+
+### Working set clock
+
+Recorrer toda la tabla en cada page fault hace ineficiente al algoritmo WS, entonces WSC 
+combina clock y WS, en apuntes se pueden ver los pasos. Este algoritmo es muy utilizado en 
+la practiva por su simplicidad y eficiencia.
+
+Un parametro de este algoritmo puede ser el size de la lista circular para evitar recorrer muchas 
+paginas. Esta bueno discutir con que criterio se va a mirar para determinar cual desalojar, 
+se puede tener una politica local o una global(desalojar de otro proceso 
+o del mismo proceso que se esta ejecutando).
+
+> Tendria que revisarlo, pero creo que la global era la mas optima. Tiene mas sentido.
+
 
 
