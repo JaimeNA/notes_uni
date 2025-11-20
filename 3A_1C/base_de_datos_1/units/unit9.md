@@ -1,8 +1,48 @@
 # Unidad 9: Programacion embebida - C
 
-(Completar, clase 18/11/25 de 13hs a 13:45hs)
+En este caso el lenguaje host no es el motor, en esta parte vamos a ver C con SQL embebido de 
+manera estatic(podria ser de manera dinamica). En este caso no podemos usar GCC directamente, 
+sino que vamos a usar un precompilador que es proveido por cada DBMS. 
+
+Los precompiladores agarran el codigo fuente y lo modifican ligeramente, luego se puede 
+usar un compilador de C comun.
+
+## Host variable
+
+Es una variable que usa el lenguaje C y tambien es usada por SQL, entonces para utilizarla en C se 
+usa normalmente mientras que en SQL debera usarse como:
+
+``` SQL
+:nombre
+```
+
+## Conexion con DB
+
+Para ello hay que usar `CONNECT` y `DISCONNECT`.
 
 ## Manejo de errores
+
+Como puede C manejar los errores generados por SQL?
+
+### Forma implicita antigua
+
+Usando el SQLCA permite comunicarse con la DB para saber si ocurrio un error. 
+Permite leer `sqlcode` para determinar si la operacion fue exitosa.
+
+### Forma implicita moderna
+
+Un alias a la forma anterior, solo hay que usar las variables `SQLCODE` y `SQLSTATE` en vez de 
+un struct(pues el struct puede variar entre motores de bases de datos).
+
+### Forma whenever
+
+Evita utilizar un `if` como en las opciones anteriores, se puede realizar el chequeo y 
+accion **inline**.
+
+> Es valido desde donde se lo setea hasta el final del lote fuente.
+
+Basicamente, la declaracion se puede redefinir todas las veces que quiera, una declaracion es 
+valida hasta que se declare la siguiente.
 
 ### Variable indicator
 
