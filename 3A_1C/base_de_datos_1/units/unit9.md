@@ -171,6 +171,88 @@ Por eso es el default, pero si se necesita performance se podria relajar las res
 > **Nunca** comenzar una transaccion cuando se abre una ventana de dialogo. Realizar 
 transacciones atomicas.
 
+# Unidad 9: Programacion embebida - Java
 
+Microsoft invento ODBC, una de las buenas cosas que hizo. Hizo un driver para los motores de 
+base de datos(DB2, Orgacle, MySQL, etc.), de manera que cada motor implementa su driver 
+para ODBC. Entonces, se obtubo una manera estandar de conectarse dinamicamente a cada motor.
 
+El problema que los clientes que estaban pagando licencias de los motores para usar sus 
+funcionalidades avanzadas no les gusto nada. De manera que no duro mucho esta propuesta 
+por mas buena que parecio al principio.
 
+Mas adelante surgio JDBC, basado en Java sigue la misma idea de ODBC. Registracion es lo 
+que se conoce como elegir el driver deseado del pool.
+
+## Formas de cargar drivers
+
+### Primera forma
+
+Se importa la clase manualmente en el codigo(estatica).
+
+El unico problema que tiene es que hay que saber el nombre de las clases que implementa 
+el driver. Entonces, solo se podria usar en un contexto interno, no para un cliente.
+
+### Segunda forma
+
+Importando un string con el nombre del driver dinamicamente.
+
+### Tercera forma
+
+Pasando el driver por linea de comando.
+
+### Cuarta forma
+
+Por variable de entorno, esta ultima solo durante el desarrollo.
+
+> A partir de Java 8 ya no esta la indireccion JDBC-ODBC.
+
+## Tipos de drivers
+
+Hay cuatro tipos y cada uno tiene un tipo de indireccion diferente.
+
+> Oracle y DB2 soportan todos los tipos, PostgreSQL soporta solo drivers tipo 3 y 4.
+
+## Conseguir estancia
+
+Hay dos maneras de obtener un handle/estancia.
+JDBC siempre devuelve un cursor, no hay cursores implicitos(es mi responsabilidad hacer `next()`).
+
+La ventaja de `executeQuery` con `execute` es la cantidad de lineas de codigo.
+
+> **No** usar executeUpdate
+
+### CreateStatement
+
+No se pueden parametrizar los comandos, ya debe estar completo el string a la hora de ejecutar.
+Es muy completo y potente.
+
+Sin embargo, tiene una desventaja, al no aceptar parametrizacion puede haber problemas de seguridad.
+Debido a que el string se puede armar concatenando, realizar SQL injection sea muy sencillo.
+
+### PreparedStatement
+
+Permite parametrizar, se especifica el parametro con un `?`, luego es responsabilidad mia pasar 
+los argumentos. Se pasa una sola vez el statement por la red y luego solo es cuestion de 
+ir parando argumentos.
+
+> No olvidar cerrar conexiones.
+
+**Siempre** es conveniente usar `preparedStatement` a menos que haya un tipo de dato que todavia 
+no se conozca(haciendo imposible pasarlo como tal salvo que se pase a string).
+
+## Nuevas versiones de JDBC
+
+Una de las principales causas fue la aparicion de SQL3. Algunos cambios:
+
+- Manejo de serial
+- Manejo de blobs(datos de gran size)
+- Invocacion de PSM o funciones no escalares(`CallableStatement`, no usar prepared o create)
+- Simplificacion conexion(habia muchas maneras de especificar la direccion)
+
+## Pool de conexiones
+
+En vez de darle una conexion a cada usuario, usar un pool de conexiones. Se especifican la 
+cantidad de conexiones que aceptan, entonces se evita que se rompa el sistema o se sobrecargue.
+Entonces, si el pool esta lleno el usuario debe esperar, en caso de que el pool este siempre lleno 
+se tendra que comprar mas capacidad para el sistema.
