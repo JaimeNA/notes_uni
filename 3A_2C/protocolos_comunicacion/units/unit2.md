@@ -1,4 +1,4 @@
-# Unidad 1: HTTP
+# Unidad 2: HTTP
 
 Antes, para obtener archivos se utilizaba un protocolo llamado **FTP**. En base a las referencias se debia acceder a otro sitio FTP y 
 descargar el/los textos deseados. Surge la necesidad de aplicaciones basadas en **hipertextos**, para no tener que hacer todo manualmente, 
@@ -209,5 +209,18 @@ Redirecciona el trafico internamente a distintos servidores, por ejemplo, **NGIN
 
 ![Reverse proxy server](graphics/reverse_proxy.png)
 
+> En el cache del browser/proxy esta `last-modified`, `max-age`, etc.
 
+## Cookies
+
+La idea es que cuando pida un recurso, en el header esten las cookies. Entonces, cuando el servidor me manda cookies
+(`set-cookie` res header), a ese servidor en particular, cuando pida un recurso le voy a mandar las cookies(`cookie` req header).
+
+Es un texto de informacion enviado por el servidor y almacenado en el servidor, se usa para mantener un estado entre 
+el cliente y el servidor. Tiene dos tipos de persistencia:
+
+- Session cookie
+- Persistent cookie
+
+Tambien hay **third-party** cookie y **secure** cookie.
 
