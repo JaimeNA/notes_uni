@@ -47,11 +47,11 @@ pocos numeros que se pueden representar sin error.
 La distancia entre dos numeros consecutivos crece al aumentar el numero considerado. Donde:
 
 $$
-x_i = (1 + m) /mdot^E
+x_i = (1 + m) \cdot^E
 $$
 Y el siguiente:
 $$
-x_{i+1} = (1 + m + \text{eps}) \mdot 2^E
+x_{i+1} = (1 + m + \text{eps}) \cdot 2^E
 $$
 
 Donde $m$ es la mantisa y $E$ el exponente. Ademas, eps es el epsilon de la computadora, 
@@ -60,8 +60,19 @@ el incremento mas chico posible.
 ### Numeros especiales
 
 - **Cero**: Se representa con todos 0
-- **eps**: Numero mas chico posible
-- **realmax**: Numero mas grande posible
+- **eps**: Incremento mas chico posible. $2^{-52}$
+- **realmin**: Numero mas chico posible. $2^{-1022}$
+- **realmax**: Numero mas grande posible. 
 - **Inf**: Cualquier numero mayor a realmax. Sale cuando, por ejemplo, se divide por 0
+
+### Formula para pasar a decimal
+
+$$
+(-1)^{\text{bit signo}} \cdot 2^{E-1023} \cdot (1+m)
+$$
+
+Donde $E$ es el exponente y $m$ la mantisa.
+
+> El error relativo de esta implementacion es $\frac{1}{4} \cdot \text{eps}$
 
 
