@@ -92,7 +92,98 @@ interface Servlet {
 }
 ```
 
+## POJO
 
+Con todo lo agregado de Entreprise y de las distintas librerias, hubo opocicion, pues 
+se deviaba mucho de Java. Surgieron los **Plain Old Java Object**(POJO), donde se 
+sigue la idea de **convention over configuration**, evitando que el usuario de dichas 
+librerias no se tengan que preocupar por implementar interfaces, crear clases, etc.
 
+El framework implementara un modelo MVC el cual se conecta con la aplicacion mediante un **front 
+controller**(En nuestro caso seria el browser). El modelo va a tener un monton de responsabilidades, 
+tendra que implementar persistencia, entidades de dominio, logica de negocio, etc. 
 
+> Es muy facil, sin darse cuenta, meter logica en el controller. Para evitar esto, 
+conviene implementar el patron **facade**.
 
+El patron **facade** esconde operaciones complejas detras de interfaces sencillas.
+Con esto se puede restringir la visibilidad del controller sobre el modelo.
+
+## Maven
+
+Con herramientas tipo Makefile, todo es muy minimalista, se puede compilar y no mucho mas. 
+Luego, deja de ser acerca de como automatizar tareas, surge **Apache Maven**, el cual extiende a 
+**Apache Ant**(extensible). Apache Maven, ademas de ser extensible, tiene:
+
+- Gestion de ciclo de vida
+- Gestion de dependencias(forma estandarizada)
+
+> La gestion de dependencias de Maven fue tan buena, que todas las herramientas que aparecieron 
+despues mantienen compatibilidad con Maven.
+
+### Dependencias
+
+Fue tan buena la implementacion que resolvio el problema de dependencias, cada dependencia se 
+identifica por:
+
+``` maven
+groupId: ar.edu.itba.pay
+artifactId: pay-webapp2026a
+version: 1.0.0
+<classifier>: jar // javadoc, sources, etc.
+```
+
+Una ventaja es que los identificadores de version son inmutables, si o si hay que cambiarlos para 
+agregar algo mas o correjir algun bug. Esto requiere que el programador se encargue de mantener 
+las dependencias al dia, pero tambien evita problemas de seguridad. Un problema de seguridad seria 
+que un actor malicioso quiera cambiar el codigo de una dependencia, solo podra publicar los 
+cambios en versiones nuevas.
+
+Hay distintos parametros que afectan el proceso de compilacion/ejecucion de cada dependencia:
+
+| Scope         | Compile main  | Compile test  | Run main      | Run test      |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| test          | NO            | YES           | NO            | YES           |
+| compile       | YES           | YES           | YES           | YES           |
+| runtime       | NO            | NO            | YES           | YES           |
+| provided      | YES           | YES           | NO            | NO            |
+
+> **Provided** significa que es provisto por el entorno de ejecucion.
+
+`runtime` es una de las configuraciones mas potentes(No llegue a entender porque).
+
+## Arquitectura proyecto Maven
+
+Siguiendo la implementacion de Maven, para nuestro proyecto vamos a tener **capas jerarquicas**, 
+en la capa de arriba(punto de entrada) estara el front controler. Abajo de eso estara la facade, 
+y debajo estaran los detalles de dominio. Si la web en el momento de compilacion solo puede ver 
+el contrato de facade, no va a tener alternativa que usar eso(forzando la implementacion).
+Nos permite asegurarnos que cualquier cambio en la parte de abajo se va a ver reflejado en las capas 
+mas altas, no va a haber manera de hacer un **bypass**.
+
+```
+WebApp --> Services(facade) --> Persistence --> Models(entities) -->  RDBMs
+```
+
+Cuidado cuando Maven genera los distintos modulos, queremos que esten configurados igual.
+Esto se soluciona configurando las propiedades en el **POM** padre pues Maven hara que los 
+modulos hereden la configuracion. Una de las cosas a cambiar seria la version de Java, 
+algunos modulos tendran Java 17, otros Java 8, etc. Queremos que todos tengan Java 21.
+
+> Spring tiene un monton de dependencias, vamos a especificar solo los modulos que necesitemos.
+
+(Ver ejemplo de proyecto minimalista)
+
+Pero, hay un problema: Como mantengo y como gestiono el segun que contexto y que entorno tengo, 
+cual configuracion voy a usar. Recordar que hasta ahora lo estabamos hardcodeando. 
+Para solucionar esto, vamos a implementar dos patrones:
+
+- Dependency injection
+- Inversion of control
+
+Spring tiene un motor de injeccion de dependencias, de manera que no vamos a tener que hacer todo 
+esto a mano. Es como en POO cuando usabamos collections, a nuestro metodo no le importaba si era 
+`ArrayList` o `LinkedList`(Probablemente tomaba cualquier objeto iterable), 
+depende del cliente decidir cual es la implementacio concreta mas conveniente para su implementacion.
+
+> Es bastate importante hacer lo de `contracts` en las dependencias internas.
