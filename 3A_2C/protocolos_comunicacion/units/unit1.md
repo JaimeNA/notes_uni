@@ -61,6 +61,14 @@ Aca aparecen los servicios mas conocidos: HTTP, POP3, SMTP, DNS, SSH, etc.
 
 > Comando que vamos a usar en todas las practicas: `tail -f /var/log/syslog` (-f es de follow)
 
+## Serializacion
 
+- Se puede transmitir numeros entre computadoras? Si y no, dependera como codifica el 
+numero(little endian o big endian) una computadora y como lo decodifica la otra. 
+Para solucionar esto, en los protocolos de comunicacion se transmite todo en big endian.
+La mayoria de las computadoras hoy en dia usan little endian.
+- Cuando tenemos que calcular la longitud de un string codificado en unicode, y tiene 
+caracteres especiales, surgen problemas pues los caracteres podrian ocupas mas de un 
+byte.
 
 

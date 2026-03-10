@@ -105,9 +105,15 @@ Mientras que para saber cuando termina el cuerpo se indica en el header con `con
 - `4XX`: Error en cliente
 - `5XX`: Error en servidor
 
+La diferencia entre **moved permanently**(301) y **found**(302), a pesar de que 
+ambos solo redireccionan, es que el primero es permanente, no va a cambiar. 
+Por lo tanto, uno es una regla que no va a cambiar, permitiendo que el navegador se 
+lo guarde y lo use para no gastarse en mandar de vuelta el request.
+
+
 ## Tipos de informacion
 
-HTTP solo transmite texto, utiliza **MIME** para describir contenido multimedia, cada objeto es etiquetado por el web server.
+HTTP solo transmite texto, utiliza **MIME** para describir contenido multimedia, cada objeto es etiquetado por el web server. Se define en el header `accept`.
 
 - `text/html`
 - `text/plain`
@@ -120,6 +126,12 @@ HTTP solo transmite texto, utiliza **MIME** para describir contenido multimedia,
 
 La idea es que el `GET` sea idempotente. Puede ser cacheado, el browser los mantiene en el historial, pueden ser **bookmarked**, 
 tienen logitud acotada y solo son para recibir datos.
+
+Idempotente es que puedo hacer `GET` todas las veces que pueda y el estado del servidor 
+seguira siendo el mismo(`PUT` no es idempotente, puede cambiar el estado en el primer 
+request y en el segundo el estado sera otro).
+
+> `DELETE` es idempotente tambien.
 
 Mientras que el `POST` nunca es cacheado, no se mantienen en el historial del browser, no pueden ser bookmarked, no tienen 
 longitud de datos maxima.
@@ -163,7 +175,10 @@ Como se menciono anteriormente, finaliza conuna linea en blanco.
 - **Upgrade**: solicita que use otro protocolo
 - **Range**: solicita un rango (en bytes) del recurso 
 
-> Referer esta mal escrito(va con *rr*, fue un error y quedo asi :/.
+> Referer esta mal escrito(va con *rr*), fue un error y quedo asi :/.
+
+> `accept` es lo que le mandamos al servidor, pero despues el servidor especifica 
+cual te manda en `content-type`.
 
 ## Headers de respuesta
 
@@ -223,4 +238,28 @@ el cliente y el servidor. Tiene dos tipos de persistencia:
 - Persistent cookie
 
 Tambien hay **third-party** cookie y **secure** cookie.
+
+> Un RFC es un pedido a un estandar, se publica, es revisado por un monton de gente. 
+Si se aprueba pasa a ser un estandar.
+
+## Curl
+
+A la hora de descargar archivos: 
+
+``` 
+curl <url-archivo> --output <archivo>
+```
+
+Si lo detengo a la mitad y vuelvo a correr el comando, curl va a empezar de nuevo. 
+Para que continue con lo que ya tenia hay que agregar `--continue-at`:
+
+```
+curl <url-archivo> --output <archivo-nuevo> --continue-at <archivo>
+```
+
+Curl asume que el archivo que le das para continuar es la primer parte de la 
+descarga, caso contrario se unen dos archivos y queda algo raro que no sirve.
+
+> Es muy buena la documentacion de **Mozilla* para referenciar.
+
 
