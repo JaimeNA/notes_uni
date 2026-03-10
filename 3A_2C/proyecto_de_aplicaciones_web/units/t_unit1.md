@@ -186,4 +186,5 @@ esto a mano. Es como en POO cuando usabamos collections, a nuestro metodo no le 
 `ArrayList` o `LinkedList`(Probablemente tomaba cualquier objeto iterable), 
 depende del cliente decidir cual es la implementacio concreta mas conveniente para su implementacion.
 
-> Es bastate importante hacer lo de `contracts` en las dependencias internas.
+> Es bastate importante hacer lo de `contracts` en las dependencias internas. Fuerza la 
+programacion contra interfaces y no contra la implementacion.
