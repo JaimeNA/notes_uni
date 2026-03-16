@@ -81,7 +81,7 @@ Si $f$ es una funcion continua, $a < b$, $f(a) \cdot f(b) < 0$, y llamamos $L = 
 Si queremos hallar la solucion de $f(x) = 0$ con un error menor que un numero 
 $\epsilon > 0$ por el metodo de biseccion deberemos calcular $s_n$ con:
 $$
-n = [ \text{ln}_2 (\frac{L}{\epsilon} - 1) ]
+n > [ \text{ln}_2 (\frac{L}{\epsilon}) - 1 ]
 $$
 
 donde para un numero real positivo $x$ el numero $[x]$ denota un numero netural $n$ tal que 
@@ -139,3 +139,67 @@ E_{n+1} \approx \frac{m-1}{m} \cdot E_n
 $$
 
 > Converge muchisimo mas rapido que el metodo de biseccion 
+
+## Metodo de los puntos fijos
+
+Tiene que ver con sucesiones, que parten de un punto inicial. Una propiedad interesante de estas 
+es que pueden converger, entonces, nos interesa saber a donde convergen.
+
+### Observaciones
+
+- Para que una sucesion de iteracion ente bien definida es necesario que la imagen de $g$ este 
+este contenida en el dominio de $g$.
+- Supongamos que $g:[a, b] \rightarrow [a, b]$ es continua. Si existe 
+$p = \text{lim}_{n \rightarrow \infty} p_n$, entonces:
+
+$$
+g(p) = g(\text{lim}_{n \rightarrow \infty} p_n) = \text{lim}_{n \rightarrow \infty} g(p_n) = \text{lim}_{n \rightarrow \infty} p_{n+1} = p
+$$
+
+$g$ continua, entonces puedo llevar el limite afuera.
+
+### Definicion
+
+Sea $g: U \rightarrow \R$ una aplicacion. Un punto $p \in U$ es un punto fijo de $g$ si $g(p) = p$.
+
+### Teorema
+
+Si $g: [a, b] \rightarrow [a, b]$ es continua entonces existe $p \in [a, b]$ tal que 
+$g(p) = p$.
+
+Para demostrar este teorema se usa el **Teorema del valor intermedio** que ya vimos y podemos 
+asumir como verdadero, este dice que:
+
+Sea $f: [a, b] \rightarrow \R$ una funcion continua. Si $f(a) < 0$ y $f(b) > 0$, entonces 
+existe $a < c < b$ tal que $f(c) = 0$.
+
+> La demo esta en los apuntes de clase.
+
+### Unicidad
+
+Sin embargo, esto tiene un problema, puede haber muchos puntos fijos. Como garantizamos unicidad? 
+Para eso tenemos el siguiente teorema.
+
+### Teorema
+
+Si $g$ es derivable en $(a, b)$ y existe $0 < K < 1$ tal que $|g'(x)| < K$, $\forall x \in (a, b)$ 
+entonces existe un unico punto fijo.
+
+--- 
+
+Ahora, con una hipotesis mas fuerte se llega al siguiente teorema.
+
+### Teorema
+
+Sea $g: [a, b] \rightarrow [a, b]$ una funcion de clase $C^1$. Sea $p_0 \in [a, b]$ 
+y sea $p$ un punto fijo de $g$. Entonces:
+
+1. Si existe $0 < K < 1$ tal que $|g'(x)| < K$, $\forall x \in [a, b]$ entonces 
+la sucesion definida por iteracion con $g$ converge al unico punto fijo $p$ de $g$. En 
+ese caso se dice que $p$ es un punto atractivo. 
+
+2. Si $|g'(x)| > 1$, $\forall x \in [a, b]$ entonces la sucesion definida por iteracion con $g$ no 
+converge a $p$. En ese caso la sucesion tiene divergencia local.
+
+> La demo esta en los apuntes de clase.
+
