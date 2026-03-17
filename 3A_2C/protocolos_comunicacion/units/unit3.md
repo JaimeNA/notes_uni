@@ -181,4 +181,4 @@ una IP falsa en nombre del servidor DNS.
 Inyecta otras resoluciones a una simple pregunta para ensuciar el cache del servidor. 
 Pisa las resoluciones anteriores.
 
-
+![DNS Poisoning](graphics/dns-poison.png)
