@@ -1,4 +1,4 @@
-# Capitulo 1: Aproximacion y error
+# Unidad 1: Aproximacion y error
 
 ## Calculo numerico
 
