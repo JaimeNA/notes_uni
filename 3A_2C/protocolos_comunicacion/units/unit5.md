@@ -96,4 +96,5 @@ mismo tiempo tener acceso a eso.
 con certificados no conffiables
 - Algunas aplicaciones y navegadores alertan sobre certificados sospechosos
 
-
+> Let's encrypt usa una query DNS para saber que dominios son validos, los dominios 
+los saca de nuestra configuracion de nginx.
