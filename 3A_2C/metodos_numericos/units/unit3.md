@@ -238,5 +238,6 @@ Como hay 4 incognitas hay libertad para elegir valores, hay 3 metodos para elegi
 - **Metodo de Euler modificado**: $a = 0$, $b = 1$, $p = q = 0.5$
 - **Metodo de Ralston**: $a = \frac{1}{3}$, $b = \frac{2}{3}$, $p = q = \frac{3}{4}$
 
-
+> Un método de Runge Kutta de orden n tiene la misma convergencia que un método de Taylor
+de orden n.
 
