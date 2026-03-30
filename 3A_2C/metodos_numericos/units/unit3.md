@@ -156,3 +156,87 @@ siguiente:
 2. Se construyen soluciones aproximadas $\tilde{y}_1$ con paso $h = \frac{b − a}{M}$ y 
 $\tilde{y}_2$ con paso $\frac{h}{2}$
 3. Comparar $y_1(k)$ con $y_2(2 \cdot K)$ para $k = 1, . . . , M$
+
+## Limitaciones del metodo de Euler
+
+El metodo de Euler presenta varias limitacioes: 
+
+- Inestabilidad
+- Modelos oscilatorios
+- Euler mejorado
+
+Con Euler, converge muy lentamente y no siempre es estable, por ejemplo, el metodo crece cuando 
+la solucion no crece y se debe tomar un $h$ muy chico para solucionarlo.
+
+### Modelos oscilatorios
+
+Descriptos por la siguiente ecuacion:
+
+$$
+u''(t) + \omega^2 \cdot u(t) = 0
+$$
+
+La solucion del metodo de Euler no sera exacta al menos que se tome un $h$ muy chico. Se puede 
+solucionar, pero eso trae una diferencia de fase que solo empeora a medida que se avanza.
+
+> Runge Kutta es el metodo mas usado.
+
+## Metodo de Taylor de orden superior
+
+Para usar taylor de orden 2 se debe:
+
+1. Derivar $y'$ utilizando la regla de la cadena. 
+2. Dividir $[a, b]$ en $M$ pedazos iguales.
+3. Definir puntos:
+
+$$
+    t_k = a + k \cdot h \text{, donde } h = \frac{(b - a)}{M}
+$$
+
+entonces $t_{k+1} = t_k + h$.
+
+4. Definir recusivamente:
+
+$$
+y_{k+1} = y_k + h \cdot f(t_k, y_k) + \frac{h^2}{2} f'(t_k, y_k)
+$$
+
+5. Tomar la poligonal que pasa por puntos $(t_k, y_k)$.
+6. Esta poligonal esta definida por una funcion $\tilde{y} (t)$ que es la solucion aproximada.
+
+## Metodos de Runge Kutta
+
+Se quiere evitar calcular derivadas como es el caso del metodo de Taylor.
+
+### Metodos de orden 2
+
+Sale de tomar $y_n = y(t_n)$, 
+
+$$
+k_1 = h \cdot f(t_n, y_n)
+$$
+
+$$
+k_2 = h \cdot f(t_n + p \cdot h, y_n + q \cdot k_1)
+$$
+
+y
+
+$$
+y_{n+1} = y_n + a \cdot k_1 + b \cdot k_2
+$$
+
+donde $p$, $q$, $a$, $b$ son coeficientes a determinar. Se debe cumplir:
+
+- $a + b = 1$
+- $a \cdot q = 0.5$
+- $b \cdot q = 0.5$
+
+Como hay 4 incognitas hay libertad para elegir valores, hay 3 metodos para elegirlos:
+
+- **Metodo de Heun**: $a = b = 0.5$, $p = q = 1$
+- **Metodo de Euler modificado**: $a = 0$, $b = 1$, $p = q = 0.5$
+- **Metodo de Ralston**: $a = \frac{1}{3}$, $b = \frac{2}{3}$, $p = q = \frac{3}{4}$
+
+
+
