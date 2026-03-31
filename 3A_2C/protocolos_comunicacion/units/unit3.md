@@ -182,3 +182,14 @@ Inyecta otras resoluciones a una simple pregunta para ensuciar el cache del serv
 Pisa las resoluciones anteriores.
 
 ![DNS Poisoning](graphics/dns-poison.png)
+
+> Si pedis el servidor MX por lo general tambien te devuelve A y AAAA pues es muy probable que 
+sino harias otra consulta para averiguar eso.
+
+## Notas practica
+
+- Como se sabe si un servidor es root? Basicamente, hay 13 IPs hardcodeadas.
+- Los autoritativos nunca hablan con los clientes, ese es el trabajo de los cache, estos si 
+hablan con los autoritativos.
+- Si preguntan porque no funciona una zona(porque a x no le aparece?), generalmente se 
+debe a un error boludo, tipo poner mal el serial.
