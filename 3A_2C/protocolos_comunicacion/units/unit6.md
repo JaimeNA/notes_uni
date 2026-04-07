@@ -189,4 +189,8 @@ Un firewal opera en el nivel mas bajo de red:
 
 > Lo vamos a ver mas adelante
 
+## Notas practica
 
+- UDP es un wrapper de IP.
+- UDP tiene algo muy importante, que usa puedos(TCP tambien). Esto 
+permite identificar al proceso.
