@@ -94,4 +94,16 @@ sino que en estado de guerra y era social con intervencion del estado.
 > Riqueza de las naciones 1776, opone a El Capital. Manual perfecto para 
 entender la epoca.
 
+## Tarea
 
+Investigar:
+
+Marx, Engels, Specen, Schumpeter
+
+Hacer un timeline, un libro fundamental de cada uno, un link a algun parafo real de que 
+piensan de la segunda revolucion industrial. 
+
+Entregar: 
+
+Vemos que aplica a la IA, decir que cosas interesantes dijieron que se puede 
+aplicar a la IA.
