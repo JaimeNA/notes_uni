@@ -62,3 +62,43 @@ de logging que se convierte en estandar. Esta es **SLF4**, un framework estandar
 implementacion, como spring. Para programar contra los contratos de SLF4 se tiene **Logback**, 
 el cual soluciona varios problemas de log4j y mantiene el codigo lo mas puro posible.
 
+## Nuevo paradigma: Aspect Oriented Programming
+
+OOP presenta una forma jerarquica de contruir una aplicacion, con composicion de objectos. 
+Esta vision esta muy atada al dominio(los datos), y no al comportamiento. Entonces, si 
+tenemos algo que aplica a capas enteras de nuestra implementacion, por ejemplo, todos 
+los controles deben tener acceso al usuario loggeado, tenemos que crear un getter en cada 
+parte del codigo. 
+
+Estariamos usando herencia para algo que no fue disenado y limitando nuestros controllers(solo 
+puedo extender una clase). Este tipo de responsabilidades cruzadas no se llevan bien y nosotros 
+queremos tener un comportamiento comun en varios lugares. Estas cosas trasversales se 
+denominan **aspects** o **traits**. 
+
+AspectJ fue una de las primeras librerias en permitir definir aspectos trasversales, lo hacia 
+de una manera poca ortodoxa. Hoy en dia hay dos maneras de hacer esto:
+
+- Runtime weaving(Muy compleja, hace cosas de bajo nivel)
+- Reflection(la forma que vamos a usar)
+
+Reflection, va a usar, dinamicamente, un objecto generado en tiempo de ejecucion que tiene 
+los mismos metodos que otra clase que querramos usar. Podemos pedir que la clase sea 
+`transactional` o metodo por metodo. Lo que vamos a hacer es definir todos los metodos 
+como `transactional`, incluso si es una operacion de solo lectura. Es util, pues con 
+`readOnly` se replica la base de datos para que se pueda leer sin problema de las 
+secundarias(las secundarias son solo lectura). Esto soluciona tener muchas mas lecturas 
+que escrituras.
+
+> Mockito usa java.lang.reflect tambien
+
+# TODO:
+
+- Diferenciar los niveles de logs dependiendo de donde viene(libreria o de mi app). 
+Definiendo appenders separados.
+- Poner logs dentro de la aplicacion. Cuidado con imports, deben ser de SL4J. No 
+concatenar, es costoso, usar placeholders. Hay una forma nueva, mejor.
+- Agregar reflection, gestionar transaccionalidad en la capa de servicos.
+- Hacer los mails async mediante un proxy por reflection. Solo cuando no importa darle 
+feedback al usuario o es un **fire and forget**.
+- UserAdvice. 
+- Chequear que esta bien lo de mostrar mensajes de error propios.
