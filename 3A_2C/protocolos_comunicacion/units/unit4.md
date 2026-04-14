@@ -126,5 +126,14 @@ autorizados para mandar mails de ese dominio.
 El servidor que envia el mail verifica que el usuario realmente es el de su dominio, 
 se le agrega un sello para garantizar que no fue alterado.
 
+## Notas practica
+
+- Soluciona la necesidad de que ambos host deban estar online para recibir o enviar 
+mensajes, se lo delega a los servidores de mail.
+- `TXT` indica que servidores estan autorizados a enviar mails a nuestro servidor. 
+Importa el orden en los comandos, se puede especificar un rango de IPs. `-all` 
+indica que ignore todo lo demas.
+- El primero en hablar no es el cliente sino que el servidor.
+- `HELO` es con la version vieja. `EHLO` es con la version nueva que soporta encabezados.
 
 
