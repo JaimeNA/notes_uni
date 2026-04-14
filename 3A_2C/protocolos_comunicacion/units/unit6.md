@@ -122,7 +122,7 @@ Si esta la conexion y no tengo nada para mandar, de ambos lados se mandan datos
 Si se manda el `ACK 120` y se envia informacion `seq=180`, este se guarda en el buffer. 
 Luego, se puede recibir el `seq=120` esperado. Si se vuelve a mandar el `180`, se ignora.
 
-> El `FIN` lo puede mandar cualquiera de los dos.
+> El `FIN` lo puede mandar cua2lquiera de los dos.
 
 ### Control de flujo
 
@@ -194,3 +194,34 @@ Un firewal opera en el nivel mas bajo de red:
 - UDP es un wrapper de IP.
 - UDP tiene algo muy importante, que usa puedos(TCP tambien). Esto 
 permite identificar al proceso.
+- Hay que saber configurar la maquina virtual, mas especificamente la red:
+    - **NAT**: Permite vincular la red interna del VM con el internet, basicamente pone 
+    un router que conecta con el adaptador de red de la maquina real. Se pueden tener varias 
+    VMs conectadas a la misma red interna.
+    - **Host-only**: Parecido a NAT, pero a la maquina host tambien le pone un adaptador virtual 
+    entonces, la VM puede hablar con el host.
+    - **Bridged adapter**: La maquina deja de estar en su red interna y pasa a ser parte de la 
+    red real. Usa la enp1s0. En la maquina virtual siempre se vera como wired.
+- xinetd, muy util.
+- X11 es un protocolo que usa unix sockets.
+- Quien manda el primer byte una vez se establecio la conexion(sin contar el handshake)? El 
+servidor
+- La window no es solo cuanto acepta el otro lado, sino que es cuanto puedo mandar antes de 
+parar, cuanto esta en cable.
+- En 1987 hubo algunos accidentes en internet, cada tanto el internet colapsaba. Se arreglaba 
+reiniciando todos los routes. Entonces, obervaban que la velocidad bajaba un monton 
+antes de caerse. Lo que ocurrio fue que los routers encolaban los paquetes para no perderlos, 
+entonces, se llenaban las colas y se perdian paquetes. Basicamente, no llegaban, se mandaban 
+de nuevo, se multiplicaba la cantidad de informacion y colapsaba internet. Asi surge el 
+control de congestion, sin esto el internet no funcionaria. Simplemente se empieza con un 
+window size chico y se sube hasta que se pierdan paquetes.
+
+### Telnet
+
+Predecesor a ssh, deprecado, va todo en texto plano, hasta la password. Para instalarlo:
+
+```
+sudo apt install telnetd
+```
+
+
