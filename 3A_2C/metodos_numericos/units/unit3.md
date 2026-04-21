@@ -241,3 +241,75 @@ Como hay 4 incognitas hay libertad para elegir valores, hay 3 metodos para elegi
 > Un método de Runge Kutta de orden n tiene la misma convergencia que un método de Taylor
 de orden n.
 
+### Metodo de orden 4
+
+La idea es obtener el orden de convergencia de un metodo de Taylor de orden 4 tomando una ecuacion 
+en diferencias del tipo:
+$$
+y_{k+1} = y_k + w_1 \cdot k_1 + w_2 \cdot k_2 + w_3 \cdot k_3 + w_4 \cdot k_4
+$$
+sin necesidad de derivar, donde los $k_i$ tienen la forma:
+$$
+k_1 = hf(t_k, y_k)
+$$
+$$
+k_2 = hf(t_k + a_1h, y_k + b_1k_1)
+$$
+$$
+k_3 = hf(t_k + a_2h, y_k + b_2k_1 + b_3k_2)
+$$
+$$
+k_4 = hf(t_k + a_3h, y_k + b_1k_1 + b_5k_2 + b_6k_3)
+$$
+
+La eleccion de parametros usual permite simular el desarrollo de Taylor, estos son:
+$$
+a_1 = \frac{1}{2}
+$$
+$$
+a_2 = \frac{1}{2}
+$$
+$$
+a_3 = 1
+$$
+$$
+b_1 = \frac{1}{2}
+$$
+$$
+b_2 = 0
+$$
+$$
+b_3 = \frac{1}{2}
+$$
+$$
+b_4 = b_5 = b_6 = 0
+$$
+
+Ademas:
+
+$$
+w_1=w_4=2w_3=2w_2= \frac{1}{6} \text{ para todo } k
+$$
+
+Por lo tanto, se termina usando:
+$$
+k_1 = hf(t_k, y_k)
+$$
+$$
+k_2 = hf(t_k + \frac{h}{2}, y_k + h(\frac{k_1}{2}))
+$$
+$$
+k_3 = hf(t_k + \frac{h}{2}, y_k + h(\frac{k_2}{2}))
+$$
+$$
+k_4 = hf(t_k + h, y_k hk_3)
+$$
+
+Debe ser de clase $C^5$, los errores son, global y local respectivamente:
+
+$$
+|e_k| = |y(t_k) = y_k| = I(h^4)
+$$
+$$
+|\epsilon_k| = |y(t_{k+1} - y_k - hT_k)| = O(h^5)
+$$
