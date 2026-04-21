@@ -185,3 +185,12 @@ whatsapp, el cual se encargara de enviar la informacion al destino. Esto no esta
 bueno pues gasta recursos de servidor entre medio, entonces se suele usar piping para 
 eso, establece una comunicacion point to point.
 
+## Notas practica
+
+- Para que sirve la capa de red?
+- En vez de ser una conexion directa, se parte la informacion 
+en paquetes, permitiendo que haya mas de una persona en la linea.
+- En internet, si se corta un cable los paquetes se routean por otro lado, no 
+se corta el servicio, igual si el cable esta saturado.
+- Si UDP no responde, ICMP es el que se encarga de responder.
+- En `route` usar `-n` porque no se va a entender nada sino.
