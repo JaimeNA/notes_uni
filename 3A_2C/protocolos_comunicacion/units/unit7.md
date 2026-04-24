@@ -141,6 +141,9 @@ Como podemos asignar una direccion IP a una computadora? Puede ser:
 - **Dinamico**: Puede ser Local-Link(El dispositivo se asigna una IP a si mismo) o 
 algun que otro protocolo(que se fueron deprecando): RARP, BOOTP y DHCP.
 
+> BOOTP era muy tedioso porque manualmente se tenia que configurar la IP de cada 
+host.
+
 ### DHCP
 
 Dynamic Host Configuration Protocol, esta casi deprecado, se basa en UDP, por lo 
@@ -150,7 +153,7 @@ con una IP asignada.
 
 **De parcial**: Que protocolo tiene un puerto de origen cisco? DHCP
 
-Son 4 paquetes:
+Son 4 paquetes(DORA):
 
 - DHCP DISCOVER
 - DHCP OFFER
@@ -162,8 +165,8 @@ Se usa el mismo **transaction id** durante la conversacion.
 Si tenemos varias redes con un router y un servidor DHCP, entonces el router pasa a 
 ser un DHCP relay. Cuando se llega al 50% del tiempo, la computadora pide renovar 
 su IP con un **renew request**, el cual es respondido con un ACK del servidor. 
-Ese era el tiempo T1, si el servidor no responde, hay un tiempo T2 en el que la 
-computadora vuelve a hacer DCHP DISCOVER. 
+Ese era el tiempo T1(50%), si el servidor no responde, hay un tiempo T2 en el que 
+la computadora vuelve a hacer DCHP DISCOVER. 
 
 Que ocurre si habia un servidor que tenia una IP asignada? Va a cambiar su IP y habra 
 que avisar al servicor DNS del cambio. Hay un cambio adicional en el DHCP REQUEST, 
@@ -173,6 +176,8 @@ DNS.
 ## Network Address Translation(NAT)
 
 (Ya lo anote en la unidad 6)
+
+> **Que header modifica SNAT de el paquete IP?** Modifica la direccion de origen. 
 
 ### DNAT(Destination NAT)
 
@@ -185,6 +190,144 @@ whatsapp, el cual se encargara de enviar la informacion al destino. Esto no esta
 bueno pues gasta recursos de servidor entre medio, entonces se suele usar piping para 
 eso, establece una comunicacion point to point.
 
+Existe UPnP(Universal Plug and Play), basicamente, si una aplicacion necesita 
+port fowarding simplemente usa este protocolo en vez de necesitar que un 
+administrador lo haga manualmente.
+
+> **Que necesita una interfaz para empezar a navegar?** Direccion IP, mascara de 
+red, direccion de gateway y direcciones de servidores DNS. 
+
+Holepunching se usa en cosas como llamadas de WhatsApp, para que en vez de tener 
+que pasar por el servidor, los telefonos obtienen la IP de cada uno mediante 
+el servidor y utilizan SNAT para comunicarse entre si directamente. El primer 
+paquete de uno a otro se descarta pues no hay conexion todavia, pero se logro 
+generar una entrada en el router. El que esta del otro lado tiene que hacer lo 
+mismo para crear las entradas y se establece la conexion.
+
+## ICMP
+
+Esta encapsulado dentro de IP, es una discusion teoria si esta en capa de red o de 
+protocolo. Tiene seccion de datos para hacer echo requests, asi que se podria 
+en teoria userlo para tranferir informacion, pero no conviene pues se bloquea(en 
+ese caso es mejor usar DNS). Si mandamos un ping a loopback se esta probando todo 
+lo que sea el funcionamiento interno del host. Si mandamos un ping a una computadora 
+dentro de la red se esta probando que todo este bien conectado.
+
+![Diagnostico de red](graphics/ping.png)
+
+## IPv6
+
+- Tienen un encabezado fijo(no hace falta padding)
+- No permite fragmentacion(Era muy cumplicado)
+- Estructura jerarquica de direcciones
+- Permite la configuracion automatica
+- Todos los dispositivos pueden tener una direccion exclusiva
+- IPSec incorporado en el design(Antes era opcional)
+
+### Notacion abreviada
+
+Hay reglas para poder escribir todo mucho mas rapido.
+Muchos ceros juntos --> `::`(solo una vez, sino no sabes cuantos faltan)
+Pero si hay mas de un grupo de ceros, entonces hay dos maneras de representarlos.
+
+### Tipos
+
+- **Unique local address**: IP privadas, no pueden ser ruteadas a internet
+    - **Local link address**: No pueden atravezar los router
+- **Global address**: Internet
+
+### Clases
+
+- `000`: Unspecified, Loopback, Embedded IPv4 addresses
+- `001`: Global Unicast Addresses
+- `010 - 110`:Reserved by IETG for future use
+- `111`: Link-local, Unique-local, Multicast addesses
+
+### Tipos(de otra forma)
+
+- Unicast
+- Multicast
+- Anycast
+
+Anycast es para el caso donde hay varios hosts con la misma IP publica, permite 
+conectarse al mas cercano que haya(pensando globalmente).
+
+### Interface ID
+
+Son 64 bits, hay dos formas de determinarlo:
+
+- **EUI**: Se basa en la direccion MAC
+- **EFC 7217**: Genera direcciones de forma aleatoria, pero estables
+
+La segunda opcion busca evitar que te puedan trackear, basicamente se podria 
+determinar en que redes estas pues siempre vas a tener la misma direccion.
+
+---
+
+**Flow Label** ayuda al router con el ruteo, indica la ruta que hay que hacer, haciendo 
+que lleguen mas ordenados y aliviendo la carga de TCP.
+
+### Ipv$-Mapped IPv6
+
+Se puede mapear una IPv4 mediante IPv6, para que se pueda usar una direccion similar.
+
+### NAT64
+
+Por si solas, las redes IPv6 no son compatibles con IPv4, para ello existe 
+**NAT64** y **DNS*64*. 
+
+### Tunneling
+
+Encapsular un protocolo en otro de **igual o mayor nivel**.
+
+> **Que pasa si al querer comunicarse entre dos IPv6, hay una red IPv4 en el medio?** 
+Se encapsula en IPv4, entonces habra dos headers IP mientras viaja en IPv4 y luego 
+vuelve a ser IPv6.
+
+En general se usa UDP si hay que encapsular pues tiene lo minimo necesario, hacer 
+de wrapper. 
+
+## Seguridad
+
+En una empresa normal(IT) siempre hay que garantizar confiabilidad, lo menos 
+importante es que esta andando el servicio. Caso contrario, si estamos en una 
+empresa que se centra en el proceso pasa lo opuesto(hay procesos que no se 
+pueden frenar). Sin embargo, en este ultimo caso no importa tanto si, por ejemplo, 
+alguien se entera a que temperatura funciona un horno.
+
+![Seguridad](graphics/ipsec.png)
+
+Entonces, en IPv4 tambien hay IPSec, pero es opcional. Tiene dos variantesL 
+
+- Modo transporte(entre dos hosts)
+- Encapsulamiento(mas seguro, mas autenticacion y mas de un header)
+- Modo tunel(VPN)
+
+## Firewalls
+
+Antes solo se filtraba por IP y puerto, luego se empezo a implementar a nivel 
+de circuitos(por si hacian como si ya tenian una conexion TCP establecida), 
+luego subieron a nivel de aplicacion para validar la sintaxis de la conversacion, y 
+finalmente se hace un filtrado dinamico, unieron circuit level con packet filter.
+
+### IP Tables
+
+Despues de routear decide si aplicar NAT, por ejemplo, si va de una interfaz interna 
+a otra interna, no hace falta cambiar la IP(si va de LAN a wifi). 
+
+![IP tables 1](graphics/ip_tables_1.png)
+![IP tables 2](graphics/ip_tables_2.png)
+
+Hay algunos comandos basicos: 
+
+- `MASQUERADE`: Aplicar la IP publica como origen cuando sale para afuera.
+- `SNAT`: Similar a `MASQUERADE` se puede ser lo mismo o tambien cosas extra como 
+cambiar el puerto.
+
+Solamente aplica esto al que inicia la conexion, no a todos los paquetes(chequear, 
+pregunta importante).
+
+
 ## Notas practica
 
 - Para que sirve la capa de red?
@@ -194,3 +337,4 @@ en paquetes, permitiendo que haya mas de una persona en la linea.
 se corta el servicio, igual si el cable esta saturado.
 - Si UDP no responde, ICMP es el que se encarga de responder.
 - En `route` usar `-n` porque no se va a entender nada sino.
+- La capa de red no se encarga de ordenar los paquetes, se encarga transporte.

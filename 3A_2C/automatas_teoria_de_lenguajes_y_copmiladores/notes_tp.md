@@ -29,6 +29,7 @@ sintactico(parser).
 - Se puede entregar con el pipeline roto pues los errores pueden salir de no 
 tener backend.
 - TOKEN = Lexema + Atributos(o metadata).
+- Sale un stream de tokens de Flex, es un stream porque no tiene inicio ni fin.
 - Flex le pasa a Bison los tokens(pedazos) que luego se usan para armar un arbol.
 - Flex escanea de izquierda a derecha y cada vez que encuentra una expresion, hace 
 un corte.
@@ -42,6 +43,20 @@ un corte.
 `initial` que es el 0, por eso nuestros contextos empiezan con 1.
 - El DFA es mucho mas eficiente que uno de pila. Uno es O(n) mientras que una 
 libre de contexto es O(n^2), por eso se usan ambos.
+- En Bison definimos nuestra gramatica.
+- Union es que todo esta en la misma posicion de memoria, se pisa si se escribe con 
+otro tipo.
+- **IMPORTANTE**: Lambda se representa como `%empty`
+- Cuando termina de parsear usa destructores
+- Los conflictos son shift/reduce y reduce/reduce, indican cuando la gramatica es 
+ambigua. Shift es leer un nuevo simbolo y reduce es aplicar una regla de produccion. 
+El punto indica donde esta parado `.`. Se resuelven con reglas de 
+precedencia definidas en bison.
+- Si no soluciono los conflictos, bison va a hacer shift, pero en la entrega 
+no puede ser asi. No hay que dejar que el analizador decida.
+- Los reduce/reduce indican que hay cosas ambiguas en la gramatica, hay dos 
+caminos para derivar la misma estructura. Son mas dificiles de resolver, hay 
+que reestructurar la gramatica.
 
 ### Backend
 
