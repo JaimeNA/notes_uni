@@ -124,4 +124,97 @@ donde $\varphi = \varphi(x)$($\varphi$ depende de $x$)
 
 > Si $f(x)$ es un polinomio de grado menor o igual que $n$, entonces $E(x) = 0$.
 
+## Metodo de Newton
+
+El problema del metodo de Lagrage es que no da algoritmos eficientes para la evaluacion. 
+Un metodo mejos en ese sentido es debido a Newton. La idea es tomar un polinomio de la forma
+$$
+P_n(x) = a_0 + a_1 \cdot (x - x_0) + \text{ ... } + a_x \cdot (x - x_0)...(x - x_n-1)
+$$
+
+Se utiliza la base de Newton
+$$
+N_0(x) = 1
+$$
+$$
+N_1(x) = (x - x_0)
+$$
+$$
+N_2(x) = (x - x_0)(x - x_1)
+$$
+
+El metodo de Newton da algo balanceado pues de pueden evaluar estos polinomios usando un 
+proceso iterativo.
+
+### Algoritmo de evaluacion
+
+Sea $q$ un punto donde se desea evaluar $P_n(X) se define
+
+1. $q_0 = a_n$
+2. $q_1 = a_{n-1} + (q - x_{n-1}) \cdot q_0$
+3. $q_2 = a_{n-2} + (q - x_{n-2}) \cdot q_1$
+4. ...
+5. Entonces $P_n(q) = q_n$
+
+Observar que se forma un sistema de ecuaciones donde su forma matricial es triangular 
+inferior
+$$
+y_0 = a_0
+$$
+$$
+y_1 = a_0 + (x_1 - x_0) \cdot a_1
+$$
+$$
+y_2 = a_0 + (x_2 - x_0) \cdot a_1 + (x_2 - x_0)(x_2 - x_1) \cdot a_2
+$$
+
+### Diferencias divididas
+
+Es una manera de calcular los coeficientes sin tener que resolver el sistema de ecuaciones.
+Las **diferencias divididas** se definen de modo recursivo por
+$$
+f[x_{k-j}, ..., x_k] = \frac{f[x_{k-j+1}, ..., x_k] - f[x_{k-j}, ..., x_{k-1}]}{x_k - x_{k-j}}
+$$
+
+Vale que
+$$
+a_k = f[x_0,...,x_k]
+$$
+
+## Limites de la interpolacion polinomica
+
+- Si hay demasiados puntos la curva oscila mucho.
+- A veces el polinomio se aleja de la tendencia de los datos.
+
+## Curvas de Bezier
+
+Una de las aplicaciones mas importantes de la interpolaciones. Es un sistema de aplines dados 
+por polinomios cubicos que se desarrollo cerca de 1960 para el trazado de dibujos tecnicos. 
+Los **splines** son funciones, pero nosotros vamos a centrarnos en polinomios. La idea 
+es que para cada par de puntos se utilizara un polinomio para unirlos de forma mas suave que 
+si se usaria un poligonal(se unen los puntos con una linea recta).
+
+### Polinomio de Bernstein
+
+Sea $n \in \mathcal{N}$. Para cada $0 \le i \le n$ se define el polinomio
+$$
+B_i^n(t) = \left( 
+\begin{array}{lcr}
+n \\
+i
+\end{array}
+\right) t^i (1 - t)^{(n-i)}
+$$
+
+### Formula general
+
+Sean $C_0, ..., C_n$ puntos de control. Tomando la curva parametrica
+$$
+\phi(t) = \Sigma_{i=0}^n B_i^n(t) \cdot C_i
+$$
+
+Vemos que por definicion del polinomio de Bernstein entonces
+$$
+\phi(0) = C_0 \text{ y } \phi(1) = C_n
+$$
 
