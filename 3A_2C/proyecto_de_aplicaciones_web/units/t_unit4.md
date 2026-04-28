@@ -91,14 +91,3 @@ que escrituras.
 
 > Mockito usa java.lang.reflect tambien
 
-# TODO:
-
-- Diferenciar los niveles de logs dependiendo de donde viene(libreria o de mi app). 
-Definiendo appenders separados.
-- Poner logs dentro de la aplicacion. Cuidado con imports, deben ser de SL4J. No 
-concatenar, es costoso, usar placeholders. Hay una forma nueva, mejor.
-- Agregar reflection, gestionar transaccionalidad en la capa de servicos.
-- Hacer los mails async mediante un proxy por reflection. Solo cuando no importa darle 
-feedback al usuario o es un **fire and forget**.
-- UserAdvice. 
-- Chequear que esta bien lo de mostrar mensajes de error propios.
