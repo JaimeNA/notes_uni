@@ -338,3 +338,14 @@ se corta el servicio, igual si el cable esta saturado.
 - Si UDP no responde, ICMP es el que se encarga de responder.
 - En `route` usar `-n` porque no se va a entender nada sino.
 - La capa de red no se encarga de ordenar los paquetes, se encarga transporte.
+- Hay dos tipos de broadcast, uno a nivel red y otro a nivel enlace, la 
+diferencia es como le llega a cada uno. Si haces un broadcast de capa 3, tiene 
+que ser tambien de capa 2.
+- Si tenes dos servidores DHCP en la misma red, los dos van a responder al 
+DISCOVER y se va a elegir la respuesta que tenga mas puntos a favor, es decir, 
+depende de la implementacion. Pero basicamente podes dejar a todos sin internet 
+si agarran el DHCP malo.
+- Si el DHCP en una red es centralizado y hay muchos routers en el medio, se pone 
+un **Relay agent**(puede o no ser el router, una compu). El agent hace de servidor 
+DHCP, responde los DISCOVER, pero consultando antes al servidor DHCP.
+- Los routers no propagan los broadcast.
