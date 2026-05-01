@@ -115,5 +115,6 @@ relacionar un IP con un MAC, lo que permite distintos tipos de ataque:
 
 > Algunos programas para experimentar: Arpspoof, Arpoison, Cain & Abel, Ettercap
 
-
+Hay varias maneras de mitigar esto, pero la mas sencilla es pasar a IPv6, que usa la 
+MAC en la misma IP address para identificar los host.
 
