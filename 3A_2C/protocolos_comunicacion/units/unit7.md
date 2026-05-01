@@ -350,3 +350,6 @@ un **Relay agent**(puede o no ser el router, una compu). El agent hace de servid
 DHCP, responde los DISCOVER, pero consultando antes al servidor DHCP.
 - Los routers no propagan los broadcast.
 - En el discover la mac tambien va con todos 1s: ff:ff:ff:ff:ff:ff
+- En el OFFER, la IP destino antes era 255.255.255.255, pero ahora se puede especificar 
+con un flag que se mande directamente la IP asignada, de manera que los demas lo pueden 
+ignorar.
