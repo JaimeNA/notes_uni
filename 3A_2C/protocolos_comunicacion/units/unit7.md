@@ -349,3 +349,4 @@ si agarran el DHCP malo.
 un **Relay agent**(puede o no ser el router, una compu). El agent hace de servidor 
 DHCP, responde los DISCOVER, pero consultando antes al servidor DHCP.
 - Los routers no propagan los broadcast.
+- En el discover la mac tambien va con todos 1s: ff:ff:ff:ff:ff:ff
