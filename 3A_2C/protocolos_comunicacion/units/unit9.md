@@ -118,3 +118,16 @@ relacionar un IP con un MAC, lo que permite distintos tipos de ataque:
 Hay varias maneras de mitigar esto, pero la mas sencilla es pasar a IPv6, que usa la 
 MAC en la misma IP address para identificar los host.
 
+## Notas practica
+
+- En CSMA-CD se definen restricciones sobre el size maximo de la trama y el largo 
+del cable(trama el doblde del minimo). Entonces no va a haber colisiones no 
+detectables(esto puede ocurrir si una maquina termina y luego ocurre la colision).
+- Los routers ayudan a separar las redes en dominios de colision(redes broadcast).
+- Un switch es como un router(en caso de ser un switch de capa 3), pero con mas 
+bocas. **No** se puede tener un loop de switched, sino ocurre una tormenta de broadcast. 
+- Hay protocolos que permiten que haya loops de switchs.
+- IP sirve para conectar distintas redes, cosa que no se podia con ethernet.
+- Trama es capa de enlace, paquete es IP.
+- Con ARP, cuando mandas broadcast, todos pasan a tener tu IP y MAC.
+- En IPv6 no hay ARP.
