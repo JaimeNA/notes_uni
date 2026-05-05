@@ -148,7 +148,7 @@ proceso iterativo.
 
 ### Algoritmo de evaluacion
 
-Sea $q$ un punto donde se desea evaluar $P_n(X) se define
+Sea $q$ un punto donde se desea evaluar $P_n(X)$ se define
 
 1. $q_0 = a_n$
 2. $q_1 = a_{n-1} + (q - x_{n-1}) \cdot q_0$
