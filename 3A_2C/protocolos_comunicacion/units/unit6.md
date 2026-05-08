@@ -41,7 +41,7 @@ UDP transporta datos de manera no confiable entre hosts.
 
 - No orientado a conexión
 - No confiable
-- No ofrece verificación de software para la entrega de segmentos
+##- No ofrece verificación de software para la entrega de segmentos
 - No reensambla los mensajes entrantes
 - No utiliza acuses de recibo (ACK)
 - No proporciona control de flujo
@@ -224,4 +224,52 @@ Predecesor a ssh, deprecado, va todo en texto plano, hasta la password. Para ins
 sudo apt install telnetd
 ```
 
+## SCTP 
 
+Disenado originalmente para transportar telefonia sobre IP:
+
+- Confiabilidad
+- Control de flujo
+- Secuenciacion
+- Orientado a mensaje
+- Permite aceptar mensajes fuera de orden
+- **Multihoming**, origen y/o destino con mas de una IP
+- Permite definir flujos paralelos, solucionar **Head Of the Line blocking**
+
+> Cualquier cosa que sea una pregunta sencilla conviene usar UDP. 
+
+Actualmente, se usa TCP incluso para cosas sencillas por motivos de seguridad, la 
+baja de performance es aceptable.
+
+SCTP es mas moderno que UDP y TCP(pero mas complejo), soluciona el problema de 
+TCP de perder conexion si se corta la conexion o me cambio de red. Venia a solucinar 
+todos los problemas de TCP y UDP. SCTP permite tener dos conexiones simultaneas, por 
+ejemplo, un socket por wifi y otro por ethernet(se puede elegir una o la otra tambien). 
+
+Head Of Line Blocking significa que implementa una conexion por recurso, de manera 
+que pueden ser pedidos en distinto momento y uno no bloquea a los demas por tener 
+que ir en orden. Es orientado a mensaje pues cada mensaje tiene un buffer propio, 
+no hace falta quedarse esperando a que el mensaje que estoy leyendo llegue completo.
+
+### Inicio protegido
+
+Tiene un 4-way handshake, mucho mas seguro y a diferencia de TCP, no reserva 
+recursos para la conexion hasta que recibe un COOKIE-ECHO. De todas formas, 
+con SCTP se puede empezar a recibir informacion a partir del primer mensaje.
+
+### Fin 
+
+A diferencia de TCP, si uno termina, se termina la conexion. 
+
+
+### Porque no se usa?
+
+- Compatibilidad limitada
+- Restricciones en firewalls y NATs
+- Solo se beneficia en comparacion con TCP, UDP no tanto
+- Falta de soporte en navegadores y aplicaciones
+- HTTP/2
+- HTTP/3
+
+QUIC usa UDP y es utilizado por HTTP/3, es un protocolo de aplicacion que funciona 
+como transporte, lo cual hace algo similar a SCTP y es mas practico.

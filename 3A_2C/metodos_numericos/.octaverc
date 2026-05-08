@@ -1,0 +1,159 @@
+function [k,X,E] = biseccion(f,a,b,prec,maxiter)
+  % RECIBE:
+  % f: la funcion
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % prec: el epsilon tal que el error sea mas chico (E < epsilon)
+  % maxiter: la cantidad de pasos maximos
+  % Recordar que si quiero que pare por el error, le pongo un maxiter grande (Ej: 1000)
+  % Si quiero que pare por cantidad de pasos, le pongo una precision chica (Ej: 10^-15)
+
+  % RETORNA:
+  % k: cantidad de pasos hechos
+  % X: vector de soluciones en cada paso
+  % E: vector de errores en cada paso
+  fa = feval(f,a); fb = feval(f,b);
+  err = (b-a)/2; c = (a+b)/2; k=0;
+  E=err; X=c;
+  while (err > prec)*(k < maxiter)
+    fc = feval(f,c);
+    if fa*fc > 0
+      a = c; fa = fc;
+    else
+      b = c; fb = fc;
+    endif
+    err = (b-a)/2;
+    E = [E;err];
+    c = (a+b)/2;
+    X = [X;c];
+    k = k+1;
+  endwhile
+ end
+
+ function [T Y]=euler(f,a,b,ya,N)
+  % RECIBE:
+  % f: la funcion f tal que y'(t)=f(t,y(t))
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % ya: condicion inicial en el punto a - y(a)
+  % N: la cantidad de pasos tal que luego, h=(b-a)/N
+
+  % RETORNA:
+  % T: vector de tiempos o abscisas
+  % X: vector de soluciones aproximadas
+h=(b-a)/N;
+T=zeros(N+1,1);
+Y=zeros(N+1,length(ya));
+T(1)=a;
+Y(1,:)=ya;
+for j=1:N
+  T(j+1)=T(j)+h;
+  K1=h*feval(f,T(j),Y(j,:));
+  Y(j+1,:)=Y(j,:)+K1;
+end
+end
+
+function [T,Y]=heun(f,a,b,ya,N)
+  % RECIBE:
+  % f: la funcion f tal que y'(t)=f(t,y(t))
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % ya: condicion inicial en el punto a - y(a)
+  % N: la cantidad de pasos tal que luego, h=(b-a)/N
+
+  % RETORNA:
+  % T: vector de tiempos o abscisas
+  % Y: vector de soluciones aproximadas
+h=(b-a)/N;
+T=zeros(N+1,1);
+Y=zeros(N+1,length(ya));
+T(1)=a;
+Y(1,:)=ya;
+for j=1:N
+  T(j+1)=T(j)+h;
+  K1=h*feval(f,T(j),Y(j,:));
+  K2=h*feval(f,T(j+1),Y(j,:)+K1);
+  Y(j+1,:)=Y(j,:)+(K1+K2)/2;
+end
+end
+
+function [k,X,E] = newton(f,fp,x0,prec,maxiter)
+  % RECIBE:
+  % f: la funcion
+  % fp: la derivada de la funcion
+  % x0: valor inicial de la sucesion
+  % prec: el epsilon tal que el error sea mas chico (E < epsilon)
+  % maxiter: la cantidad de pasos maximos
+  % Recordar que si quiero que pare por el error, le pongo un maxiter grande (Ej: 1000)
+  % Si quiero que pare por cantidad de pasos, le pongo una precision chica (Ej: 10^-15)
+
+  % RETORNA:
+  % k: cantidad de pasos hechos
+  % X: vector de soluciones en cada paso
+  % E: vector de errores en cada paso
+  e=1;k=0;X=x0;E=[];xn=x0;
+  while (e>prec)*(k<=maxiter)
+    xn1=xn-feval(f,xn)/feval(fp,xn);
+    e=abs(xn1-xn); E=[E;e];
+    xn=xn1;
+    k=k+1;
+    X=[X;xn];
+  end
+end
+
+function [k,X,E] = puntofijo(g,x0,prec,maxiter)
+  % RECIBE:
+  % g: la funcion tal que x_despejada = g
+  % x0: valor inicial de la sucesion
+  % prec: el epsilon tal que el error sea mas chico (E < epsilon)
+  % maxiter: la cantidad de pasos maximos
+  % Recordar que si quiero que pare por el error, le pongo un maxiter grande (Ej: 1000)
+  % Si quiero que pare por cantidad de pasos, le pongo una precision chica (Ej: 10^-15)
+
+  % RETORNA:
+  % k: cantidad de pasos hechos
+  % X: vector de soluciones en cada paso
+  % E: vector de errores en cada paso
+X=[x0]; E=[];
+for k=1:maxiter
+	p=feval(g,x0);
+  err=abs(p-x0);
+  E=[E;err];
+	x0=p;
+	X=[X; x0];
+        if (err<prec)
+              break;
+        end
+end
+
+if k == maxiter
+disp('numero maximo de iteraciones excedido')
+end
+end
+
+function [T,Y]=taylor2(f,fp,a,b,ya,N)
+  % RECIBE:
+  % f: la funcion f tal que y'(t)=f(t,y(t))
+  % fp: primera derivada
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % ya: condicion inicial en el punto a - y(a)
+  % N: la cantidad de pasos tal que luego, h=(b-a)/N
+
+  % RETORNA:
+  % T: vector de tiempos o abscisas
+  % X: vector de soluciones aproximadas
+h=(b-a)/N;
+T=zeros(N+1,1);
+Y=zeros(N+1,length(ya));
+T(1)=a;
+Y(1,:)=ya;
+for j=1:N
+  T(j+1)=T(j)+h;
+  K1=h*feval(f,T(j),Y(j,:));
+  K2=h^2/2*feval(fp,T(j),Y(j,:));
+  Y(j+1,:)=Y(j,:)+K1+K2;
+end
+end
+
+
