@@ -156,4 +156,63 @@ for j=1:N
 end
 end
 
+function y=rectangles_left(f,a,b,N)
+  % RECIBE:
+  % f: la funcion f tal que se quiere integrar
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % N: la cantidad de intervalos
 
+  % RETORNA:
+  % y: solucion
+h=(b-a)/N;
+x = a;
+y = 0;
+for j=1:N
+	y = y + f(x);
+	x = x + h;
+end
+
+y = y * h;
+
+end
+
+function y=rectangles_right(f,a,b,N)
+  % RECIBE:
+  % f: la funcion f tal que se quiere integrar
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % N: la cantidad de intervalos
+
+  % RETORNA:
+  % y: solucion
+h=(b-a)/N;
+x = a+h;
+y = 0;
+for j=1:N
+	y = y + f(x);
+	x = x + h;
+	x
+end
+
+y = y * h;
+
+end
+
+function y=trapezoid(f,a,b,N)
+  % RECIBE:
+  % f: la funcion f tal que se quiere integrar
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % N: la cantidad de intervalos
+
+  % RETORNA:
+  % y: solucion
+h=(b-a)/N;
+x = a;
+y = 0;
+for j=1:N
+	y = y + (h/2)*(f(x) + f(x+h));
+	x = x + h;
+end
+end
