@@ -84,4 +84,26 @@ asi no hay que ingresar con password.
 > Si no tengo usar una IP fija puedo usar pampero y conectarme por ssh. De esa manera 
 puedo conectarme a AWS desde pampero y luego a desde mi casa a pampero.
 
+## Bastions
 
+Donde hay un hosts con acceso a internet y a una red interna, si pasa el trafico por 
+ahi las claves no deben estar ahi por cuestiones de seguridad. Entonces, 
+como saben los hosts en la red interna que el bastion tiene las claves 
+privadas de el que se conecta desde afuera? Se usa algo llamado `ssh-agent`, el 
+cual crea un tunel que se usa en el bastion, de manera que se pueda completar el 
+challenge sin que la clave privada del host exterior salga de el.
+
+Para crear esto:
+```
+eval $ (ssh-agent)
+```
+
+## Notas practicas
+
+- No hay manera de protegerse de un man-in-the-middle en la primer conexion, 
+tenemos que confiar que el que esta del otro lado es quien dice ser.
+- `TCPKeepAlive`, desde el lado del cliente, permite mantener la conexion 
+con vida.
+- Root login debe estar con `no`, `prohibit-password` es poco seguro.
+- La principal diferencia con VPN es la capa en la que actua, por ejemplo, 
+SSH es a nivel de aplicacio:wqn y VPN a nivel de red.
