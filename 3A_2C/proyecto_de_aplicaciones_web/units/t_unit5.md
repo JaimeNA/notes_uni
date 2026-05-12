@@ -69,3 +69,74 @@ luego genera los identificadores y luego se conecta a la base de datos, chequea 
 chequea si esta bien el dialect especificado y configura varias cosas. 
 Mas especificamente, empieza a buscar las clases en el paquete que especificamos, las que 
 estan anotadas como entidad y realiza los mapeos.
+
+## Mapeo de relaciones
+
+Con JDBC el dominio y las relaciones estan intimamente relacionadas, guardamos las foreign 
+key en el modelo. Sin embargo, en el mundo de objectos no existe esto, lo que deberiamos hacer 
+es tener una instancia de la entidad siendo referenciada. JPA permite tenes esta abstraccion, 
+encargandose de la traduccion a la base de datos. Vamos a usar varias anotaciones:
+
+```
+@OneToMany
+@ManyToMany
+@ManyToOne
+@OneToOne
+```
+
+Por ejemplo:
+
+```
+@ManyToOne
+User author;
+```
+
+Propiedades reelevantes de estas anotaciones:
+
+```
+mappedBy
+target
+cascade
+optional
+fetch
+```
+
+`mappedBy` es importante, no ponemos nombre de columna, sino el nombre del atributo del objeto, 
+pues estamos en el mundo de objectos.
+
+Si se marca el `fetch` como `LAZY`, entonces, solo va a hacer la query cuando intente 
+accederlo. De manera que puede no explotar hasta el ultimo momento.
+
+## Que la sesion sobreviva transactional
+
+La forma de resolver esto es poner un filtro para que se le aplique a multiples servlet, 
+para que no libere la sesion hasta que se termine un request. Pero se tiene que tener mucho 
+cuidado, pues se creara una conexion con la base de datos independientemente si la base de datos 
+la necesita o no. La contracara es que perdemos control de que queries se estan ejecutando en que 
+momento.
+
+> Hay que revisar activamente que queries estoy haciendo y si estoy siendo ineficiente.
+
+Cuando sale de un contexto transaccional de escritura, revisa todos los objectos que se trajo de 
+la base de datos, si alguna fue modificada entonces se encarga de que eso se vea reflejado en la 
+base de datos. Se conoce como **dirty check**.
+
+> El mayor problema es que se pierde el control y no se puede interpretar del codigo. No abusar 
+de esto.
+
+## Mapear enums
+
+Como mapeamos una entidad Enum? JPA tiene una anotacion `Enumerated` para mapear un Enum. 
+Nosotros tenemos que decirle que estrategia queremos usar para mapear:
+
+- `ORDINAL`, por numero.
+- `STRING`, por nombre.
+
+Sin embargo, hay tradeoffs, desde una persceptiva de base de datos, queremos que el contenido de 
+las tablas sea legible. El uso de una u otra depende de la capacidad del programador de 
+modificar el codigo, con el nombre no importa que posicion ocupa, pero no voy a poder cambiarle el 
+nombre. En general se prefiere guardar el nombre, pues es autodescriptivo y mas flexible. 
+
+## Paginacion resultados 
+
+Mirar grabacion, se penaliza fuerte y error conceptual grave.
