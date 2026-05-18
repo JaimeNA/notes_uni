@@ -109,3 +109,37 @@ $$
 $$
 Q[f} = \frac{5}{9} f(\frac{ - \sqrt{3}}{\sqrt{5}}) + \frac{8}{9} f(0) + \frac{5}{9} f(\frac{\sqrt{3}}{\sqrt{5}})
 $$
+
+## Reglas compuestas
+
+Se usan cuando el intervalo es demasiado grande, y no conviene usar polinomios interpoladores 
+de grado alto ya que pueden ser muy distintos de la funcion. Estas reglas compuestas se 
+obtienen dividiendo el intervalo en pedazos iguales y aplicando la regla simple en cada 
+pedazo. 
+
+Como en cada intervalo se multiplica por $h$, se podria sacar como factor comun de la suma. 
+
+## Regla de Simpson compuesta
+
+Esta subdivide el intervale en $2n$ subintervalos iguales.
+
+## Errores
+
+### Regla trapezoidal 
+
+La formula de error para el intervalo $[a, b]$, suponiendo que $f$ es de clase $C^2$. 
+Entonces existe $c \in (a,b)$ tal que la aproximacion es:
+
+$$
+E[f] = \frac{-(b-a)f''(c)h^2}{12} = O(h^2)
+$$
+
+### Regla de Simpson
+
+Supongamos que $f$ es de clase $C^4$ en el intervalo $[a, b]$. Entonces exite $c \in (a, b)$ 
+tal que el error de aproximacion es:
+
+$$
+E[f] =\frac{-(b-a)f^{(4)}(c)h^4}{180} = O(h^4)
+
+$$
