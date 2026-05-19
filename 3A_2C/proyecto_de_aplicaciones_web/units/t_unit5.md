@@ -140,3 +140,22 @@ nombre. En general se prefiere guardar el nombre, pues es autodescriptivo y mas 
 ## Paginacion resultados 
 
 Mirar grabacion, se penaliza fuerte y error conceptual grave.
+
+## Herencia
+
+Hay entidades que son claramente distintas en el mundo de objectos que cuando se transforman al 
+mundo relacional son identicas, entonces se pierde informacion. Luego, luego vaya para el otro 
+lado va a haber que decidir como mapearla.
+
+Eventualmente se decide sacrificar las restricciones de la base de datos, perdiendo de esa manera 
+el rol de la base de datos como fuente de verdad. Por ejemplo, si tengo usuarios que pueden ser 
+alumnos o profesores. Ese es el motivo por el cual se utiliza cada vez menos logica en la base de 
+datos, es conveniente no tener mucho mas que datos. Esa es una de las razones por la cual hay que 
+definir las secuencias explicitamente en las entidades, sino Hibernate iba a usar la misma para 
+todo. De esa manera se podria mapear mejor los objetos como las relaciones. 
+
+Todas las estrategias que vimos son soportadas por Hibernate, por ejemplo `TABLE_PER_CLASS` o 
+`SINGLE_TABLE`. 
+
+Si tenemos una clase padre simplemente porque comparten atributos, NO es buena practica, 
+se puede hacer un `@MappedSuperclass`.
