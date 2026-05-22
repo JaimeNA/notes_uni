@@ -208,4 +208,23 @@ manera que se acumulan recursos mucho mas rapido que con UDP.
 > Muy importante
 
 Todos los ejemplo vistos manejan I/O en un solo canal, un server puede manerjar 
-varios canales.
+varios canales. Para lo que vamos a usar `fork()` es bastante pesado. `select` es la 
+alternativa que vamos a usar, recibe una lista de descriptores y se bloquea hasta que 
+alguno este listo para I/O. 
+
+> En la presentacion hay un ejemplo de un libro de como usar bien el `select()`.
+
+> `htons` Host To Network Source, porque generalmente se transmite en big endian y 
+nuestras computadoras estan en little endian.
+
+> `sendto` se puede bloquear, pero es muy raro. 
+
+## `pselect()` 
+
+Mejor que `select`.
+
+## `poll` y `epoll`
+
+En vez de tener bits de entrada y salida, `epoll` tiene un file descriptor para 
+registrar los sockets/file descriptors que quiero que me atienda. 
+Dicen que va a reemplazar `select`.

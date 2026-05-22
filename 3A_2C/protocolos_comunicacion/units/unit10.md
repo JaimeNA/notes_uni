@@ -107,3 +107,8 @@ con vida.
 - Root login debe estar con `no`, `prohibit-password` es poco seguro.
 - La principal diferencia con VPN es la capa en la que actua, por ejemplo, 
 SSH es a nivel de aplicacio:wqn y VPN a nivel de red.
+- Nmap escanea lento sin sudo porque solo puede usar `connect` y tiene que esperar 
+a que se termine el handshake. `-sS` es mas rapido.
+- `--top-ports` indica la cantidad maxima de puertos que va a escanear por host.
+- `-O` te deja ver el port(sigo hablando de nmap).
+
