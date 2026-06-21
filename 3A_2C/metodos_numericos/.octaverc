@@ -156,6 +156,32 @@ for j=1:N
 end
 end
 
+function [T,Y]=rk4(f,a,b,ya,N)
+  % RECIBE:
+  % f: la funcion f tal que y'(t)=f(t,y(t))
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % ya: condicion inicial en el punto a - y(a)
+  % N: la cantidad de pasos tal que luego, h=(b-a)/N
+
+  % RETORNA:
+  % T: vector de tiempos o abscisas
+  % Y: vector de soluciones aproximadas
+h=(b-a)/N;
+T=zeros(N+1,1);
+Y=zeros(N+1,length(ya));
+T(1)=a;
+Y(1,:)=ya;
+for j=1:N
+  T(j+1)=T(j)+h;
+  K1=h*feval(f,T(j),Y(j,:));
+  K2=h*feval(f,T(j)+(h/2),Y(j,:)+(K1/2));
+  K3=h*feval(f,T(j)+(h/2),Y(j,:)+(K2/2));
+  K4=h*feval(f,T(j)+h,Y(j,:)+K3);
+  Y(j+1,:)=Y(j,:)+(1/6)*(K1+2*K2+2*K3+K4);
+end
+end
+
 function y=rectangles_left(f,a,b,N)
   % RECIBE:
   % f: la funcion f tal que se quiere integrar
@@ -234,3 +260,69 @@ for j=1:(N/2)
 	x = x + h*2;
 end
 end
+
+function [k,X,E]=jacobi(A,Y,X0,prec,maxiter)
+  % RECIBE:
+  % A: la matriz del sistema de ecuaciones de n x n.
+  % Y: el vector columna n x 1 de los terminos independientes.
+  % X0: el vector inicial con el que comienza el metodo iterativo.
+  % prec: el epsilon tal que el error sea mas chico (E < epsilon)
+  % maxiter: la cantidad de pasos maximos
+  % Recordar que si quiero que pare por el error, le pongo un maxiter grande (Ej: 1000)
+  % Si quiero que pare por cantidad de pasos, le pongo una precision chica (Ej: 10^-15)
+
+  % RETORNA:
+  % k: cantidad de pasos hechos
+  % X: vector de soluciones en cada paso
+  % E: vector de errores en cada paso
+[n,m]=size(A);
+e=1;k=0;
+X=[X0];
+X0=X0(:);Y=Y(:);
+E=[];
+% Se escala cada ecuacion por el termino diagonal...
+for i=1:n
+  c=A(i,i);
+  for j=1:n
+      A(i,j)=A(i,j)/c;
+  end
+      Y(i)=Y(i)/c;
+end
+
+while((e>prec)*(k<maxiter))
+  x=X0+(Y-A*X0);
+  X=[X x];
+  e=max(abs(x-X0));
+  E=[E e];
+  k=k+1;
+  X0=x;
+end
+
+end
+
+function y=int_gauss_2_points(f,a,b,N)
+  % RECIBE:
+  % f: la funcion f tal que se quiere integrar
+  % a: extremo izquierdo del intervalo
+  % b: extremo derecho del intervalo
+  % N: la cantidad de intervalos, debe ser un numero par
+
+  % RETORNA:
+  % result: solucion
+
+x = @(a, b, t) (b-a)/2 * t + (b+a)/2;
+h=(b-a)/N;
+
+result = 0;
+
+for k=1:N
+
+ap = a + h*(k-1);
+bp = ap + h;
+
+result = result + f(x(ap, bp, -1/sqrt(3))) + f(x(ap, bp, 1/sqrt(3)));
+
+end
+result
+end
+
