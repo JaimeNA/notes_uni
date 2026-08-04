@@ -121,6 +121,8 @@ Luego, deja de ser acerca de como automatizar tareas, surge **Apache Maven**, el
 > La gestion de dependencias de Maven fue tan buena, que todas las herramientas que aparecieron 
 despues mantienen compatibilidad con Maven.
 
+> Todo lo que está en WEB-INF, META-INF, es público. En el WAR.
+
 ### Dependencias
 
 Fue tan buena la implementacion que resolvio el problema de dependencias, cada dependencia se 
