@@ -100,6 +100,44 @@ cosas trata relaciones juridicas directamente sobre la cosa. Mientras que el de 
 obligaciones trata relaciones entre dujetos que comercian bienes o derechos y/o se causan danos 
 entre si(derecho subjetivo). 
 
+## Obligaciones
+
+Relacion juridica(de interes para la ley) en virtud de la cual el acreedor tiene el 
+derecho a exigir del deudor una prestación destinada a satisfacer un interés lícito y, 
+ante el incumplimiento, a obtener forzadamente la satisfacción de dicho interés.
+
+### Tipos de prestación
+
+- De dar(entrega de cosa material) 
+- De hacer(ejecucion de acto u obra)
+- De no hacer(abstencion) 
+
+### Elementos de las obligaciones 
+
+- Sujeto(personas humanas capaces o juridicas)
+- Objeto
+- Causa(contrato, voluntad, hechos ilicitos)
+
+### Extincion de obligaciones 
+
+1. Por el pago 
+2. Por la novacion 
+3. Por la compensacion(las dos partes son acreedor y deudo reciprocamente) 
+4. Por la remision 
+5. Por la renuncia de los derechos del acreedor 
+6. Por la confusion 
+7. Por la transaccion
+8. Por la imposibilidad del pago 
+9. Por dacion en pago 
+
+## Responsabilidad civil
+
+Tiene tren funciones para determinar quien debe responder ante determinada 
+situacion: 
+
+- Preventica(evitar o disminuir el danio)
+- Punitiva(Castigo ejemplar, no debe ser excesivo)
+- Resarcitoria(puede ser por atribucion objetiva o subjetiva)
 
 
 
