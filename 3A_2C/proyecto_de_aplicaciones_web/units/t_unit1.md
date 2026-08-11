@@ -190,3 +190,15 @@ depende del cliente decidir cual es la implementacio concreta mas conveniente pa
 
 > Es bastate importante hacer lo de `contracts` en las dependencias internas. Fuerza la 
 programacion contra interfaces y no contra la implementacion.
+
+## MVC(Model View Controller) 
+
+Es uno de los patrones mas importantes de la actualidad, se utiliza para crear aplicaciones interactivas. 
+El controller(servlet) recibe el input, el model(dominio, incluye reglas de negocio) luego actualiza el 
+estado, y esto se termina viendo reflejado en la view(JSP) que luego el controller le devuelve al usuario. 
+
+Este patron busca minimizar que cierto tipos de cambios(de programacion) se propaguen a travez de todas 
+las capas, hay muchos cambios se podremos resolver en solo una y las otras no se tienen que enterar.
+
+Este patron esta viejo, vamos a usar un nuevo patron donde el controller manejara los POJOs y va a haber 
+un front controller(servlet) que se pondra delante de todo el sistema MVC.
