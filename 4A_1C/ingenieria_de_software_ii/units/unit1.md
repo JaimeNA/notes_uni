@@ -1,4 +1,4 @@
-# Unidad 0: Aclaraciones
+# Clase 1: Aclaraciones
 
 - Es diferente dependiendo de la comision
 - Es totalmente practica
