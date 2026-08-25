@@ -152,7 +152,8 @@ Hay distintos parametros que afectan el proceso de compilacion/ejecucion de cada
 
 > **Provided** significa que es provisto por el entorno de ejecucion.
 
-`runtime` es una de las configuraciones mas potentes(No llegue a entender porque).
+`runtime` es una de las configuraciones mas potentes porque garantiza que estamos programando 
+contra interfaces.
 
 ## Arquitectura proyecto Maven
 
