@@ -82,7 +82,113 @@ dependencia.
 - Creditos y deudas 
 - Inmueble 
 
-Los creditos y las deudas fueron generadas por el vendedor, no por el comprador. Se podria pactar, 
-pero no esta especificado. La venta del inmueble es totalmente ajeno al fondo de comercio.
+Los creditos y las deudas fueron generadas por el vendedor, no por el comprador. Se 
+podria pactar, pero no esta especificado. La venta del inmueble es totalmente ajeno 
+al fondo de comercio.
+
+## Derecho comercial 
+
+Para que haya derecho comercial, tiene que haber fin de lucro. Sin eso, es cualquier 
+otro derecho menos comercial.
+
+## Empresa 
+
+Organizacion de fuerzas economicas(capital, trabajo y tierra), el empresario va a 
+manejar la empresa para lograr resultados economicos. La empresa es mas grande que el 
+propio empresario. 
+
+Casi sinonimo de fondo de comercio, es debatido si son o no lo mismo. Se podria tener 
+mas de una empresa con un fondo de comercio cada una(mas de un local) y hacer la 
+transferencia total del fondo de comercio.
+
+## Seguros 
+
+Contrato comercial tipico, se escribe en un documento especial llamado poliza, tiene 
+que ser algo que no se sabe si va a suceder. Por ejemplo, suelen cubrir urto, pero no 
+robo(involucra violencia).
+
+> La denuncia de seguro debe ser en menos de 72hs despues de que paso
+
+### Prima 
+
+Costo del seguro, se calcula anualmente pues la poliza dura solo un anio.
+
+> La prima queda encajada 
+
+### Encaje 
+
+Plata fisica que se queda el banco que no puede prestar para poder responder ante un 
+pedido masivo de dinero. Esto es para evitar una corrida bancaria. 
+
+## Bolsa y mercado de valores 
+
+En la bolsa es un mercado donde se comercializa:
+
+- Acciones 
+- Publicos 
+- Obligaciones negociables 
+
+No hace nada mas que competir con el banco, cuando prestas plata al banco te da la 
+taza pasiva. Las sociedades que cotizan en bolsa, buscan ofrecer una taza mucho mayor 
+que la taza pasiva del banco. Es un mercado muy regulado pues cualquier cosa mala que 
+ocurra afecta a todo el mundo.
+
+## Cheque 
+
+Titulo de credito mediante el cual una persona a su banco pagarle una cantidad de dinero 
+a un tercero. No es contrato pues no es un acuerdo entre dos partes, sino que una 
+persona ordena a su banco darle una cantidad de plata a otra persona. Solo para cuenta 
+corriente, en el cheque comun(no se usa mas) solo habia una fecha, la de emision. 
+
+Ahora hay otro tipo de cheque(cheque de pago diferido) que tiene dos fechas, la de 
+emision y la de pago. Plazo minimo entre FE(fecha emision) y FP(fecha de pago) es un 
+dia, plazo maximo es un anio. 
+
+Si difiere el monto en digitos que el escrito, se toma el escrito y se considera 
+error de pluma. Si se modifica el cheque es considerafo fraude. Cuando se cambia el 
+destinatario, se **endosa**. Si el cheque endosado esta sin fondos, se reclama al 
+emisor del cheque. Siempre se puede ir para arriba, nunca para abajo, al destinatario 
+original el emisor no le puede reclamar. 
+
+### Cheque a la cruzado 
+
+Si o si se debe depositar en una cuenta bancaria. 
+
+### Cheque a la orden 
+
+Si el cheque no es a la orden impide que sea transferido. 
+
+## Consurso 
+
+Procedimiento especial que se lleva ante un juez en el cual se busca llegar a un 
+acuerdo, hay dos tipos: 
+
+- Concurso preventivo(se busca llegar a un acuerdo para continuar las actividades)
+- Quiebra(liquidar los bienes del deudor para pagar a los acreedores) 
+
+El juez debe tener un interes en la causa, hay que demostrarle al juez que tengo escaza 
+liquides, que estoy en cesacion de pagos. Esto hay que demostrarlo por todos los 
+hechos posibles de prueba. Participan todas las personas y las personas juridicas(solo 
+las entidades comerciales). No pueden participar los bancos, seguros, etc.).
+
+> Toda persona humana puede pedir quiebra 
+
+> Las excepciones son pregunta de examen 
+
+## Pregunta examen
+
+Que estados hay:
+
+- Nacional 
+- Proviciales 
+- Municipales
+- Iglesia catolica(porque lo dice el codigo civil, embajada del vaticano)
+- ANSES(seguridad social)
+- UBA 
+- ARCA
+
+Cuando el estado paga las deudas de las personas juridicas publicas, entonces 
+no pueden quebrar.
+
 
 
