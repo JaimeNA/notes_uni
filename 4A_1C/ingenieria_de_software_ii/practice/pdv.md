@@ -140,10 +140,100 @@ menos desventajas que no tener nada). En conclusion, lo hacemos stateless.
 - Stateless
 
 Asumimos el riesgo de que haya que reiniciar el load-balancer pues tarda 30ns en 
-reiniciar. 
+reiniciar. Tambien poner SPA(single page application). 
 
 > En el examen no importa el proceso, solo les importa el final y lo del medio lo 
 pasan por arriba
 
+### Como mejorar escalabilidad 
 
+Los picos de venta es otro orden de magnitud, un escenario es el dia de la madre con 
+x10 usuarios. El trafico ira a el load balancer, que esta hecho para eso, entonces 
+el cuello de botella va a ser la conexion o la implementacion de la API. 
+
+Entonces, se limitara mas que nada por los recursos que tenga el servidor. Sin embargo, 
+esto ya lo cubrimos anteriormente con el agregado de multiples servidores. La otra 
+limitante sera la DB, esto se resuelve dependiendo de el patron de acceso, para este 
+caso habra muchas lecturas y algunas escrituras. 
+
+Lo primero que se rompe en carga sera la base de datos, especialmente las lecturas. 
+Para asegurarnos que no sea un problema podriamos escalar la base de datos o cache. 
+Agregar mas instancias es mas complejo, que, por ejemplo, una instancia de la API, por 
+lo que no se podra hacer un escalamiento dinamico(estatico no sirve pues no es 
+constante). 
+
+Para cache, podemos usar Redis, guarda en memoria los datos y eso es lo que necesito. 
+Hay que ver que valores se guardan y por cuanto tiempo, hay que asegurarse que no 
+quede desactualizado. Si dura muy poco se pierde la utilida, si dura mucho se quedan 
+valores falsos. No todas las queries van a ser cacheadas. La aplicacion deberia 
+invalidar la key del cache en caso de realizar una operacion de escritura. 
+
+Super importante el orden, si primero se invalida y dsp se actualiza se podria llegar 
+a una condicion de carrera. La aplicacion se volvera muy compleja debido a que tendra 
+que manejar estos escenarios. Decir que la API corre en cluster no tiene sentido si 
+ya la defini como stateless.
+
+> Una aplicacion es cluster porque no solo son muchas corriendo en paralelo sino porque 
+tambien se pueden tratar como una sola. 
+
+Usando un Redis cluster dara flexibilidad, pero habra que gestionar todo eso. 
+Tambien hay que definir que consultas cachear. 
+
+Nuevo componente, ahora hay que volver a analizar los escenarios. No tener 
+disponible el Redis no debiera impactar en disponibilidad o algun otro. Pasamos 
+al siguiente escenario. 
+
+El proximo escenario es que falle la API, se podria hacer un escalamiento dinamico. 
+Para ello se puede usar Kubernetes aunque tiene su complejidad y requerimientos(todo 
+debe estar dentro de containers). El costo de Kubernetes debe ser justificado con 
+una gran demanda y cantidad de usuarios. No afecta los otros escenarios, pasamos a 
+otro escenario.
+
+### Como mejorar performance 
+
+Podemos garantizar busquedas de 5s? No. Queremos mejorar las busquedas, donde la 
+busqueda de texto libre es la parte mas compleja, pero por suerte esta resuelto. 
+Lucene soluciona este problema, indexando json y haciendo busqueda de texto libre. 
+Hay librerias que usan Lucene, las mas populares:
+
+- Solar 
+- OpenSearch
+- ElasticSearch 
+
+> Todas estas corren en Java. Al final del dia no importa cual pues la 
+performance es muy parecida 
+
+Elegimos ElasticSearch, donde va a tener lo minimo indispensable, apenas tenga un 
+id se busca en Redis. 
+
+### Como mejorar interoperabilidad 
+
+Quiero que funcione con muchos sistemas, escenario: Se cae un proveedor, pasamos 
+al siguiente y sobrevivie. Por ahora solo fueron escenarios en runtime, podemos 
+pensar de otra manera. Escenario: Hay un procesador nuevo y hay que integrarlo, 
+hay que modificar el sistema para poder conectar el nuevo procesador de pago. 
+
+Esto se debe implementar con una arquitectura que permite la facilidad de 
+implementacion, vamos a usar el patron **adapter**.
+
+## Riesgos 
+
+- Caida del LB -> reboot rapido 
+- Gestion de inconsistencia entre search, redis y debe
+
+## Supuestos 
+
+- Incremento del trafico de 10x 
+- Cientos de tiendas 
+
+## Tradeoffs 
+
+- Agregamos redis y elasticsearch con el tradeoff de que si caen esos el sistema deja 
+de funcionar.
+
+Fin.
+
+--- 
+
+Con esto llegamos a la arquitectura candidata. Asumimos y documentamos riesgos.
 
