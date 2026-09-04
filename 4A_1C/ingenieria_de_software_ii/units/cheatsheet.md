@@ -172,6 +172,8 @@ una instancia del backend.
 - Exponer una API con requests que sólo toleren lecturas para que otros servicios puedan integrar.
 Fault Tolerance
 - Fallo en la carga de un archivo necesario para generar un reporte -> el sistema sigue funcionando normalmente basándose en la información disponible.
+- Proceso ETL(Extraction, Transformation, Load), combina, limpia y organiza datos de 
+multiples fuentes en un unico conjunto de datos coherente.
 
 ### Accessibility
 

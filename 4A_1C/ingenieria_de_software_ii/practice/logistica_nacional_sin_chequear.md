@@ -53,36 +53,50 @@ en transporte de bienes.
 
 ### Interoperability
 
-- Routers con 5G, pues si se cae la conexion no funciona y no se investigo a fondo 
-- Generadores no pues no le podriamos pedir a la aduana que ponga uno 
+- Patron adapter para poder adaptarse a multiples sistema
+- 
 
 ### Availability 
 
-- Multiples bases de datos, muchas lecturas, SQL con muchas secundarias 
-- Multiples servidores con LB para manejo de carga, API stateless.
-- ...
+- Routers 5G pues la conectividad no esta garantizada
+- Grupo de generacion de electricidad
+- Multiples instancias de base de datos 
+- Multiples instancias de servidores -> API stateless
+- Replicas de las bases de datos externas por si se caen
 
 ### Precision 
 
+- Dos sensores 
+- Punto fijo 
+
 ### Auditability
+
+- Bases de datos NoSQL para obtener una gran cantidad de datos 
+- ETL con batch processing
 
 ## Riesgos 
 
-- 
-- 
+- Que se rompa un sensor GPS 
+- Seguridad
+- Performance
 
 ## No riesgos 
 
-- 
-- 
+- Corte de luz 
+- Perdida de conectividad
+- Que se caigan las DBs de sistemas externos 
 
 ## Supuestos 
 
-- 
-- 
+- Se haran mas lecturas que escrituras
+- Gran cantidad de bienes, por eso se considero Auditability
+- Servicio GPS funciona sin problema 
 
 ## Tradeoffs
 
-- 
+- Costo de implementar multiples instancias, escalamiento horizontal 
+- Performance al tener punto fijo 
+- Costos sobre proveedores de internet 
+
 - 
 
