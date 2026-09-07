@@ -98,5 +98,3 @@ en transporte de bienes.
 - Performance al tener punto fijo 
 - Costos sobre proveedores de internet 
 
-- 
-

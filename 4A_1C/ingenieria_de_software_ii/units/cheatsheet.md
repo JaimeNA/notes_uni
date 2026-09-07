@@ -183,11 +183,20 @@ multiples fuentes en un unico conjunto de datos coherente.
 - Alt en imagénes para lectores de pantalla
 - Sistemas de lectores de pantalla
 
-### Tradeoffs Comunes
+### Portability
+
+- PWA permite acceso desde dispositivos móviles
+
+## Tradeoffs Comunes
 
 - Availability vs Costos al tener escalamiento horizontal
 - Performance vs Security al tener encryption at rest
 - Precision vs Performance si se tienen operaciones de punto fijo
-- Performance vs Availability si se tienen websockets, ya que si se cae un nodo, ningún otro toma la conexión y se muere.
+- Performance vs Availability si se tienen websockets, ya que si se cae un nodo, ningún otro toma la   conexión y se muere.
+- Priorizamos seguridad por sobre usabilidad: para mantener la seguridad del sistema, se le 
+  va pedir a los usuarios contraseñas con ciertas restricciones, two factor authentication, etc.
+- Priorizamos disponibilidad por sobre costos, replicando la base de datos, instalando un 
+  generador eléctrico, duplicando el servidor.
+
 
 
