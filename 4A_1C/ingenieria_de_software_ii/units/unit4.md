@@ -45,7 +45,6 @@ Todas ofrecen un **Single Pane of Glass**, los developer pueden ver como esta to
 por detras, un lugar unico y central donde los equipos pueden entender y administrar sus 
 aplicaciones de punta a punta. 
 
-
 Productiza **Golden Paths** para que los equipos apliquen los guardrails practicas de 
 ingenieria organizacionales. 
 
