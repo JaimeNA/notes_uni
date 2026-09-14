@@ -187,6 +187,26 @@ multiples fuentes en un unico conjunto de datos coherente.
 
 - PWA permite acceso desde dispositivos móviles
 
+### Mantainability
+
+- Se implementan test continuos y automáticos para que, ante cualquier modificación, se pueda 
+  asegurar que el resto del sistema siga funcionando de manera adecuada
+- El sistema es CI/CD i.e de integración y distribución continuas.
+- El sistema esta modularizado permitiendo agregar cambios fácilmente, corregir errores, agregar 
+  funcionalidades, etc.
+- Mediante el uso de Ionic Framework podemos crear una aplicación web y Android a partir de una 
+  única base de código.
+
+### Usability 
+
+- El sistema soporta las últimas 10 versiones de Safari, Chrome, Mozilla, etc.
+- El sistema abarca todas las necesidades de todos los usuarios: se hacen pruebas empíricas  
+  para testear que cualquier tipo de usuario se sienta satisfecho a la hora de usarlo -> screen 
+  readers, speech to text, etc.
+- El sistema soporta las últimas versiones de Android.
+- El cliente tendrá conexión persistente con el servidor que le informará al cliente de cualquier 
+  modificación en los prestadores y/o los contratos mediante un server-push (server push vs polling).
+
 ## Tradeoffs Comunes
 
 - Availability vs Costos al tener escalamiento horizontal
