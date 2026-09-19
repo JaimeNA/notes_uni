@@ -218,5 +218,14 @@ multiples fuentes en un unico conjunto de datos coherente.
 - Priorizamos disponibilidad por sobre costos, replicando la base de datos, instalando un 
   generador eléctrico, duplicando el servidor.
 
+## Riesgos comunes 
 
+- No todos los usuarios tengan conexion a internet 
+- Debido a sharding de la BD se puede dar que algun dato quede inconsistente 
 
+## Supuestos comunes 
+
+- (sin scalability) suponemos que no va a escalar rapidamente y por lo tanto no es 
+  necesario que sea escalable 
+- (en caso de DSL por customizability) suponemos que se ponen de acuerdo en cuanto a 
+  la informacion provista y al formato en la que se presenta dicha informacion 
