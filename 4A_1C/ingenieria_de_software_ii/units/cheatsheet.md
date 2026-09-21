@@ -158,6 +158,7 @@ una instancia del backend.
 - Faltan mediciones -> interpolación de datos
 - Mediciones varían mucho -> Intervalos de confianza
 - Guardar datos como string en la base de datos
+- Validar que la UI permite presentar hasta x cifras decimales
 
 ### Scalability
 
