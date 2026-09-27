@@ -86,10 +86,53 @@ son:
 
 ### Validez del el contrato 
 
-De acuerdo al codigo argentino, el contrato es valido. La forma escrita, a pesar de ser una 
-servilleta es valida. Ambas partes dieron su aceptacion a la hora de celebrarlo. 
-Se tiene una causa, que es recibir la empresa a cambio de dinero. El objeto sera la empresa. 
-La interpretacion es innevoca.
+De acuerdo al codigo argentino, el contrato es invalido. No fue voluntario pues estaba 
+alcoholizado. La forma escrita, a pesar de ser una servilleta es valida. Ambas partes dieron 
+su aceptacion a la hora de celebrarlo. Se tiene una causa, que es recibir la empresa a 
+cambio de dinero. El objeto sera la empresa. La interpretacion es innevoca.
+
+## Sobre la forma 
+
+La forma es un elemento indispensable del contrato, al igual que: 
+
+- Consentimiento 
+- Objeto 
+- Contenido 
+- Causa 
+
+La forma en la que se realiza un contrato es libre, en algunas ocasiones puede ser prescripta 
+una forma determinada. 
+
+- El contrato es formal o solemne cuando la ley exige una forma 
+  determinada para la validez del acto. 
+- El contrato no es formal o no solemne cuando no impone una forma determinada.
+
+Los contratos formales o solemnes se anulan ante la falta de una forma determinada. Los 
+contratos que requieren forma escrita son: 
+
+- Transmision de la propiedad 
+- Transmision o constitucion de derechos reales sobre bienes inmuebles 
+
+Si las partes han convenido por escrito la adopción de una determinada
+forma para la conclusión del mismo, hay que presumir que dicha forma ha sido querida
+para su validez. Forma es la palabra hablada, la escrita, la mímica; forma es
+el silencio mismo. Toda manera de expresar algo es una forma.
+
+Existen contratos que dada su simplicidad juridica y material, valor economico, etc. pueden ser 
+realizados por los contratantes en la forma que ellos quieran. Generalmente elegiran la forma 
+mas sencilla, agil, dinamica y menos costosa. 
+
+Segun el nuevo Codigo Civil y Comercial argentino sólo son formales los contratos a los 
+cuales la ley les impone una forma determinada.  Además no es necesario consignar el lugar y
+fecha del otorgamiento (por supuesto con la clara excepción del “testamento ológrafo”),
+ni el nombre y domicilio de las partes ni sus demás datos personales. Se puede escribir
+tanto en letras cuanto en números y ser redactado en cualquier idioma o “dialecto” (sea
+lengua viva o muerta), sobre cualquier soporte y por cualquier persona -sea o no el otor-
+gante-, en forma manuscrita, con lapicera, bolígrafo, lápiz, mecanografiado o impreso.
+Tampoco se requiere, si acaso se ha incurrido en un error material, que éste se “salve”
+en el instrumento, siempre que sea entendible. Lógicamente tampoco se requiere la
+utilización de testigos.
+
 
 
 
