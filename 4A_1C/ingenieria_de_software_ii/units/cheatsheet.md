@@ -129,6 +129,12 @@ una instancia del backend.
 - Corte de luz -> Generador o doble servicio de luz
 - Caída de Internet -> Doble proveedor
 
+### Reliability 
+
+- Falla la DB -> DB secundaria
+- Se corta la luz -> grupo de electrogeno
+- Se cae el servidor -> Escalamiento horizontal 
+
 ### Security
 
 - Ataque DDoS -> Web Application Firewall
@@ -169,12 +175,15 @@ una instancia del backend.
 
 ### Interoperabilidad
 
-- **Patrón adapter**: patrón de diseño estructural que permite la colaboración entre objetos con interfaces incompatibles, actuando como un traductor que convierte la interfaz de una clase existente en otra interfaz que el cliente espera.
+- **Patrón adapter**: patrón de diseño estructural que permite la colaboración entre objetos con 
+  interfaces incompatibles, actuando como un traductor que convierte la interfaz de una clase 
+  existente en otra interfaz que el cliente espera.
 - Exponer una API con requests que sólo toleren lecturas para que otros servicios puedan integrar.
-Fault Tolerance
-- Fallo en la carga de un archivo necesario para generar un reporte -> el sistema sigue funcionando normalmente basándose en la información disponible.
+  Fault Tolerance
+- Fallo en la carga de un archivo necesario para generar un reporte -> el sistema sigue funcionando 
+  normalmente basándose en la información disponible.
 - Proceso ETL(Extraction, Transformation, Load), combina, limpia y organiza datos de 
-multiples fuentes en un unico conjunto de datos coherente.
+  multiples fuentes en un unico conjunto de datos coherente(sistema batch).
 
 ### Accessibility
 
@@ -223,6 +232,10 @@ multiples fuentes en un unico conjunto de datos coherente.
 
 - No todos los usuarios tengan conexion a internet 
 - Debido a sharding de la BD se puede dar que algun dato quede inconsistente 
+- Si es on premise, riesgo de incendio, inundacion, etc.
+- Se llena el queue mas rapido de lo que se procesa 
+- Falla el heartbeat (conexión entre pasivo-activo)
+- Que se caiga el switch o el load balancer.
 
 ## Supuestos comunes 
 
@@ -230,3 +243,42 @@ multiples fuentes en un unico conjunto de datos coherente.
   necesario que sea escalable 
 - (en caso de DSL por customizability) suponemos que se ponen de acuerdo en cuanto a 
   la informacion provista y al formato en la que se presenta dicha informacion 
+
+## Arbol de utilidad 
+
+Nodos intermedios como características (features) que contribuyen al
+atributo.
+
+### Security
+
+- Data confidentiality 
+- Data integrity 
+
+### Interoperability 
+
+- Third party systems 
+
+### Scalability 
+
+- Overwhelming demand 
+
+### Accessibility 
+
+- User experience 
+- Assistive technologies 
+
+### Testability 
+
+- Integration tesitng 
+- End-to-end Indentity API 
+
+### Performance 
+
+- Data latency 
+- Transaction throughput 
+
+### Availability 
+
+- Hardware failure 
+- Failsafe 
+- COTS(comercial off-the-shelf) failure 
