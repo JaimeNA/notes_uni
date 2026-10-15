@@ -144,3 +144,10 @@ Depende de:
 Por lo tanto, se usa punto fijo en vez de punto flotante, para asegurar el mismo nivel 
 de precision. 
 Resolver precision, termina asumiendo muchas como riesgos. 
+
+> Al final resulto que performance tenia mas peso que fault tolerance
+
+### Performance 
+
+- Se agragan caches para aumentar velocidad(pero no es necesario)
+- Lo que hicimos antes ya hace bastante
