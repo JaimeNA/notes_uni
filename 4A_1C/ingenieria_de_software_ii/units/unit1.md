@@ -1,4 +1,4 @@
-# Clase 1: Aclaraciones
+# Aclaraciones
 
 - Es diferente dependiendo de la comision
 - Es totalmente practica

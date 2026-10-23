@@ -1,4 +1,4 @@
-# Clase 2: Construccion de Arquitecturas de Software
+# Unidad 2: Construccion de Arquitecturas de Software
 
 De los requerimientos funcionales y de los atributos de calidad se debe producir una 
 arquitectura candidata. Es una forma de disenio llamada Attribute Driven Design.
