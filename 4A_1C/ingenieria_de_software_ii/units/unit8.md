@@ -37,5 +37,7 @@ Demostradas y corroboradas.
 - Las dos mayores causas de fallas en proyectos son una pobre estimacion y 
   requerimientos inestables
 - Si hay que reescribir mas del 20-25% de un componente, es mejor reescribirlo de cero 
- 
+- Una lectura rigurosa del codigo puede remover entre 60 y 90% de los errores antes 
+  de la primer ejecucion. Es mucho mas efectivo que testearlo a mano o escribir tests 
+  unitarios en costo/beneficio
 
