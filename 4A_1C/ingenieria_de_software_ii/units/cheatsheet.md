@@ -119,6 +119,10 @@ una instancia del backend.
 
 ## Problemas de calidad y su solucion 
 
+### Auditability 
+
+- Se guardan X para poder cruzar los datos y obtener trazabilidad
+
 ### Availability
 
 - Ataque DDoS -> Web Application Firewall (WAF)
@@ -178,8 +182,11 @@ una instancia del backend.
 - **Patrón adapter**: patrón de diseño estructural que permite la colaboración entre objetos con 
   interfaces incompatibles, actuando como un traductor que convierte la interfaz de una clase 
   existente en otra interfaz que el cliente espera.
-- Exponer una API con requests que sólo toleren lecturas para que otros servicios puedan integrar.
-  Fault Tolerance
+- Exponer una API con requests que sólo toleren lecturas para que otros servicios pueden acceder 
+  a informacion del sistema si lo requieren.
+
+### Fault Tolerance
+
 - Fallo en la carga de un archivo necesario para generar un reporte -> el sistema sigue funcionando 
   normalmente basándose en la información disponible.
 - Proceso ETL(Extraction, Transformation, Load), combina, limpia y organiza datos de 
@@ -227,6 +234,7 @@ una instancia del backend.
   va pedir a los usuarios contraseñas con ciertas restricciones, two factor authentication, etc.
 - Priorizamos disponibilidad por sobre costos, replicando la base de datos, instalando un 
   generador eléctrico, duplicando el servidor.
+- Ownership del sistema al hostear en cloud vs ahorro significativo
 
 ## Riesgos comunes 
 
