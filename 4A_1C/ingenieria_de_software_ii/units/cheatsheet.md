@@ -235,6 +235,10 @@ una instancia del backend.
 - Priorizamos disponibilidad por sobre costos, replicando la base de datos, instalando un 
   generador eléctrico, duplicando el servidor.
 - Ownership del sistema al hostear en cloud vs ahorro significativo
+- Auditability sobre seguridad al almecenar mas informacion sensible en el sistema.
+- Availability vs Performance - El LB permite balancear las cargas de manera
+  eficiente, mejorando la performance, pero es un SPOF que atenta contra la
+  disponibilidad.
 
 ## Riesgos comunes 
 
